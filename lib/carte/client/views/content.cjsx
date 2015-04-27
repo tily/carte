@@ -1,8 +1,8 @@
 # @cjsx React.DOM 
 React = require('react')
 List = require('./list.cjsx')
-WordCollection = require('../models/words')
-WordModel = require('../models/word')
+CardCollection = require('../models/cards')
+CardModel = require('../models/card')
 
 module.exports = React.createClass
   displayName: 'Content'
@@ -21,27 +21,27 @@ module.exports = React.createClass
     switch @props.router.current
       when "list"
         console.log 'list'
-        words = new WordCollection()
-        words.query = {sort_key: 'name', sort_order: 'asc'}
-        words.fetch()
-        <List key='list' words={words} showNav=true />
+        cards = new CardCollection()
+        cards.query = {sort_key: 'title', sort_order: 'asc'}
+        cards.fetch()
+        <List key='list' cards={cards} showNav=true />
       when "show"
         console.log 'show'
-        words = new WordCollection()
-        word = new WordModel(name: @props.router.name)
-        word.fetch
-          success: (word)->
-            console.log word
-            for l in word.get("lefts")
-              wordModel = new WordModel(l)
-              console.log 'adding l', wordModel
-              words.add wordModel
-            words.add word
-            for r in word.get("rights")
-              wordModel = new WordModel(r)
-              console.log 'adding r', wordModel
-              words.add wordModel
-        <List key='show' words={words} showNav=false />
+        cards = new CardCollection()
+        card = new CardModel(title: @props.router.title)
+        card.fetch
+          success: (card)->
+            console.log card
+            for l in card.get("lefts")
+              cardModel = new CardModel(l)
+              console.log 'adding l', cardModel
+              cards.add cardModel
+            cards.add card
+            for r in card.get("rights")
+              cardModel = new CardModel(r)
+              console.log 'adding r', cardModel
+              cards.add cardModel
+        <List key='show' cards={cards} showNav=false />
       else
         console.log 'else'
         <div>Loading ...</div>

@@ -2,7 +2,7 @@ Backbone = require('backbone')
 
 module.exports = class Router extends Backbone.Router
   routes:
-    ':name'     : 'show'
+    ':title'     : 'show'
     ''          : 'list'
 
   list: ()->
@@ -13,12 +13,12 @@ module.exports = class Router extends Backbone.Router
     console.log 'new'
     @current = 'new'
 
-  edit: (name)->
-    console.log 'edit', name
+  edit: (title)->
+    console.log 'edit', title
     @current = 'edit'
-    @name = name
+    @title = title
 
-  show: (name)->
-    console.log 'show', name
+  show: (title)->
+    console.log 'show', title
     @current = 'show'
-    @name = name
+    @title = title

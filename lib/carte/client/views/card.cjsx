@@ -2,14 +2,14 @@
 React = require('react')
 
 module.exports = React.createClass
-  displayName: 'Word'
+  displayName: 'Card'
 
   getInitialState: ()->
     showTools: false
     editing: false
     updating: false
-    name: @props.word.get('name')
-    description: @props.word.get('description')
+    title: @props.card.get('title')
+    content: @props.card.get('content')
 
   onMouseOver: ()->
     @setState showTools: true
@@ -18,10 +18,10 @@ module.exports = React.createClass
     @setState showTools: false
 
   onChangeName: ()->
-    @setState name: event.target.value
+    @setState title: event.target.value
 
   onChangeDescription: ()->
-    @setState description: event.target.value
+    @setState content: event.target.value
 
   onClickEdit: ()->
     event.preventDefault()
@@ -30,16 +30,16 @@ module.exports = React.createClass
   onClickOk: ()->
     @setState updating: true
     event.preventDefault()
-    attributes = {new_name: @state.name, description: @state.description}
+    attributes = {new_title: @state.title, content: @state.content}
     console.log attributes
-    @props.word.save attributes,
+    @props.card.save attributes,
       success: ()=>
         @setState editing: false
-        @props.word.set 'name', attributes.new_name
+        @props.card.set 'title', attributes.new_title
         @setState updating: false
       error: (model, response, options)=>
         message = ''
-        for key, errors of response.responseJSON.word.errors
+        for key, errors of response.responseJSON.card.errors
           for error in errors
             message += key + ' ' + error + "\n"
         console.log 'error', model, response, options
@@ -59,10 +59,10 @@ module.exports = React.createClass
             if @state.editing
               <form>
                 <div className="form-group" style={marginBottom:"5px"}>
-                  <input type="text" className="form-control input-sm" value={@state.name} onChange={@onChangeName} disabled={@state.updating} />
+                  <input type="text" className="form-control input-sm" value={@state.title} onChange={@onChangeName} disabled={@state.updating} />
                 </div>
                 <div className="form-group" style={marginBottom:"5px"}>
-                  <textarea rows="5" className="form-control input-sm" value={@state.description} onChange={@onChangeDescription} disabled={@state.updating} />
+                  <textarea rows="5" className="form-control input-sm" value={@state.content} onChange={@onChangeDescription} disabled={@state.updating} />
                 </div>
                 <button className="btn btn-default btn-xs" onClick={@onClickOk} disabled={@state.updating}>OK</button>
                 <a className="pull-right" href="javascript:void(0)" onClick={@onClickCancel}><small>Cancel</small></a>
@@ -71,7 +71,7 @@ module.exports = React.createClass
               <div>
                 <p>
                   <strong>
-                    {@props.word.get('name')}
+                    {@props.card.get('title')}
                   </strong>
                   <span className='pull-right' style={{visibility: if @state.showTools then 'visible' else 'hidden'}}>
                     <a href="javascript:void(0)" onClick={@onClickEdit}>
@@ -79,13 +79,13 @@ module.exports = React.createClass
                     </a>
                     &nbsp;
                     &nbsp;
-                    <a href={'#/' + @props.word.get('name')}>
+                    <a href={'#/' + @props.card.get('title')}>
                       <i className='glyphicon glyphicon-link' />
                     </a>
                   </span>
                 </p>
                 <p>
-                  {@props.word.get('description')}
+                  {@props.card.get('content')}
                 </p>
               </div>
           }

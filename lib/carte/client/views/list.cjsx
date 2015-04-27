@@ -1,14 +1,14 @@
 # @cjsx React.DOM 
 React = require('react')
-Words = require('./words.cjsx')
-WordCollection = require('../models/words')
+Cards = require('./cards.cjsx')
+CardCollection = require('../models/cards')
 
 module.exports = React.createClass
   displayName: 'List'
 
   getInitialState: ()->
     searchText: 'test'
-    query: {sort_key: 'name', sort_order: 'asc'}
+    query: {sort_key: 'title', sort_order: 'asc'}
 
   onChangeSearchText: ()->
     @setState searchText: event.target.value
@@ -17,23 +17,23 @@ module.exports = React.createClass
     if event.keyCode == 13 # ENTER
       console.log '13 enter'
       event.preventDefault()
-      @props.words.query = {name: @state.searchText, sort_key: 'name', sort_order: 'asc'}
-      @props.words.fetch()
+      @props.cards.query = {title: @state.searchText, sort_key: 'title', sort_order: 'asc'}
+      @props.cards.fetch()
 
   onClickAtoz: ()->
-      @setState query: {sort_key: 'name', sort_order: 'asc'}
-      @props.words.query = @state.query
-      @props.words.fetch()
+      @setState query: {sort_key: 'title', sort_order: 'asc'}
+      @props.cards.query = @state.query
+      @props.cards.fetch()
 
   onClickLatest: ()->
       @setState query: {sort_key: 'updated_at', sort_order: 'desc'}
-      @props.words.query = @state.query
-      @props.words.fetch()
+      @props.cards.query = @state.query
+      @props.cards.fetch()
 
   onClickRandom: ()->
       @setState query: {sort_order: 'random'}
-      @props.words.query = @state.query
-      @props.words.fetch()
+      @props.cards.query = @state.query
+      @props.cards.fetch()
 
   render: ->
     <div className="container" style={{paddingLeft:"5px",paddingRight:"5px",paddingBottom:"20px"}}>
@@ -48,7 +48,7 @@ module.exports = React.createClass
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href="#/" style={{padding: '6px 12px', fontWeight: if @state.query.sort_key == 'name' then 'bold' else 'normal'}} onClick={@onClickAtoz}>A to Z</a></li>
+              <li><a href="#/" style={{padding: '6px 12px', fontWeight: if @state.query.sort_key == 'title' then 'bold' else 'normal'}} onClick={@onClickAtoz}>A to Z</a></li>
               <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_key == 'updated_at' then 'bold' else 'normal'}} onClick={@onClickLatest}>Latest</a></li>
               <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_order == 'random' then 'bold' else 'normal'}} onClick={@onClickRandom}>Random</a></li>
             </ul>
@@ -70,5 +70,5 @@ module.exports = React.createClass
           </div>
         </div>
       } 
-      <Words words={@props.words} />
+      <Cards cards={@props.cards} />
     </div>
