@@ -1,14 +1,20 @@
-class History
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  field :name, type: String
-  field :description, type: String
-  field :version, type: Integer
-  belongs_to :word
-
-  before_create do
-    self.name = self.word.name
-    self.description = self.word.description
-    self.version = self.word.version
+module Carte
+  class Server < Sinatra::Base
+    module Models
+      class History
+        include Mongoid::Document
+        include Mongoid::Timestamps
+        field :title, type: String
+        field :content, type: String
+        field :version, type: Integer
+        belongs_to :card
+      
+        before_create do
+          self.title = self.card.title
+          self.content = self.card.content
+          self.version = self.card.version
+        end
+      end
+    end
   end
 end
