@@ -21,18 +21,24 @@ module.exports = React.createClass
       @props.cards.fetch()
 
   onClickAtoz: ()->
-      @setState query: {sort_key: 'title', sort_order: 'asc'}
-      @props.cards.query = @state.query
+      console.log 'atoz'
+      query = {sort_key: 'title', sort_order: 'asc'}
+      @setState query: query
+      @props.cards.query = query
       @props.cards.fetch()
 
   onClickLatest: ()->
-      @setState query: {sort_key: 'updated_at', sort_order: 'desc'}
-      @props.cards.query = @state.query
+      console.log 'late'
+      query = {sort_key: 'updated_at', sort_order: 'desc'}
+      @setState query: query
+      @props.cards.query = query
       @props.cards.fetch()
 
   onClickRandom: ()->
-      @setState query: {sort_order: 'random'}
-      @props.cards.query = @state.query
+      console.log 'rand'
+      query = {sort_order: 'random'}
+      @setState query: query
+      @props.cards.query = query
       @props.cards.fetch()
 
   render: ->
