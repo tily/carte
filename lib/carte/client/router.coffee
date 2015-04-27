@@ -1,13 +1,16 @@
+querystring = require('querystring')
 Backbone = require('backbone')
 
 module.exports = class Router extends Backbone.Router
   routes:
-    ':title'     : 'show'
-    ''          : 'list'
+    ':title' : 'show'
+    ''       : 'list'
 
-  list: ()->
+  list: (string)->
     console.log 'list'
     @current = 'list'
+    @query = querystring.parse(string)
+    console.log @query
 
   new: ()->
     console.log 'new'

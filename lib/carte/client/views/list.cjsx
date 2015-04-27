@@ -54,7 +54,7 @@ module.exports = React.createClass
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href="#/" style={{padding: '6px 12px', fontWeight: if @state.query.sort_key == 'title' then 'bold' else 'normal'}} onClick={@onClickAtoz}>A to Z</a></li>
+              <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_key == 'title' then 'bold' else 'normal'}} onClick={@onClickAtoz}>A to Z</a></li>
               <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_key == 'updated_at' then 'bold' else 'normal'}} onClick={@onClickLatest}>Latest</a></li>
               <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_order == 'random' then 'bold' else 'normal'}} onClick={@onClickRandom}>Random</a></li>
             </ul>

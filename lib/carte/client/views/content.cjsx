@@ -22,7 +22,7 @@ module.exports = React.createClass
       when "list"
         console.log 'list'
         cards = new CardCollection()
-        cards.query = {sort_key: 'title', sort_order: 'asc'}
+        cards.query = @props.router.query
         cards.fetch()
         <List key='list' cards={cards} showNav=true />
       when "show"
