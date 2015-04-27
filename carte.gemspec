@@ -20,4 +20,14 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "shotgun"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "httparty"
+  
+  spec.add_dependency "sinatra"
+  spec.add_dependency "sinatra-contrib"
+  spec.add_dependency "mongoid"
+  spec.add_dependency "mongoid_auto_increment_id", "0.6.5"
+  spec.add_dependency "will_paginate_mongoid"
+  spec.add_dependency "activesupport"
 end
