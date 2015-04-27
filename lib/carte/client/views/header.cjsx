@@ -9,10 +9,10 @@ module.exports = React.createClass
       <div className="container-fluid">
         <div className="navbar-header">
           <a className="navbar-brand" href="#/">
-            <img alt="Brand" src="/images/icon.png" />
+            <img alt="Brand" src="/images/icon.png" width="20" height="20" />
           </a>
           <a className="navbar-brand" href="#/">
-            francais-japonais dictionary
+            carte
           </a>
         </div>
         <div className="collapse navbar-collapse">
