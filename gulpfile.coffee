@@ -1,6 +1,6 @@
 gulp = require 'gulp'
 Carte = require './lib/carte'
-path = 'public/app.js'
+path = 'public/javascripts/app.js'
 
 carte = new Carte()
 
