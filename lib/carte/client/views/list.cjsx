@@ -1,4 +1,5 @@
 # @cjsx React.DOM 
+$ = require('jquery')
 React = require('react')
 Cards = require('./cards.cjsx')
 CardCollection = require('../models/cards')
@@ -7,39 +8,33 @@ module.exports = React.createClass
   displayName: 'List'
 
   getInitialState: ()->
-    searchText: 'test'
-    query: {sort_key: 'title', sort_order: 'asc'}
+    searchText: ''
 
   onChangeSearchText: ()->
     @setState searchText: event.target.value
 
   onKeyPressSearchText: ()->
     if event.keyCode == 13 # ENTER
-      console.log '13 enter'
+      console.log '13 enter', @props.cards.query
       event.preventDefault()
-      @props.cards.query = {title: @state.searchText, sort_key: 'title', sort_order: 'asc'}
-      @props.cards.fetch()
+      query = $.extend {}, @props.cards.query
+      query = $.extend query, {title: @state.searchText}
+      location.hash = '/?' + $.param(query)
 
-  onClickAtoz: ()->
-      console.log 'atoz'
-      query = {sort_key: 'title', sort_order: 'asc'}
-      @setState query: query
-      @props.cards.query = query
-      @props.cards.fetch()
+  atozParam: ()->
+    query = $.extend {}, @props.cards.query
+    query = $.extend query, {sort_key: 'title', sort_order: 'desc'}
+    $.param(query)
 
-  onClickLatest: ()->
-      console.log 'late'
-      query = {sort_key: 'updated_at', sort_order: 'desc'}
-      @setState query: query
-      @props.cards.query = query
-      @props.cards.fetch()
+  latestParam: ()->
+    query = $.extend {}, @props.cards.query
+    query = $.extend query, {sort_key: 'updated_at', sort_order: 'desc'}
+    $.param(query)
 
-  onClickRandom: ()->
-      console.log 'rand'
-      query = {sort_order: 'random'}
-      @setState query: query
-      @props.cards.query = query
-      @props.cards.fetch()
+  randomParam: ()->
+    query = $.extend {}, @props.cards.query
+    query = $.extend query, {sort_order: 'random'}
+    $.param(query)
 
   render: ->
     <div className="container" style={{paddingLeft:"5px",paddingRight:"5px",paddingBottom:"20px"}}>
@@ -48,15 +43,15 @@ module.exports = React.createClass
           <div className="col-sm-12" style={{padding:"5px"}}>
             <form>
               <div className="form-group">
-                <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} />
+                <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} placeholder='Type search text and press enter ...' />
               </div>
             </form>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_key == 'title' then 'bold' else 'normal'}} onClick={@onClickAtoz}>A to Z</a></li>
-              <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_key == 'updated_at' then 'bold' else 'normal'}} onClick={@onClickLatest}>Latest</a></li>
-              <li><a href="#/" style={{padding:'6px 12px',fontWeight: if @state.query.sort_order == 'random' then 'bold' else 'normal'}} onClick={@onClickRandom}>Random</a></li>
+              <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'title' then 'bold' else 'normal'}}>A to Z</a></li>
+              <li><a href={"/#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'updated_at' then 'bold' else 'normal'}}>Latest</a></li>
+              <li><a href={"/#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_order == 'random' then 'bold' else 'normal'}}>Random</a></li>
             </ul>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>

@@ -20,7 +20,7 @@ module.exports = React.createClass
     console.log 'render component'
     switch @props.router.current
       when "list"
-        console.log 'list'
+        console.log 'list', @props.router.query
         cards = new CardCollection()
         cards.query = @props.router.query
         cards.fetch()
