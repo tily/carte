@@ -9,7 +9,6 @@ module.exports = class Carte
   build: (options)->
     dir = path.dirname options.path
     file = path.basename options.path
-    console.log dir, file
     browserify = browserify
       cache: {}
       packageCache: {}
