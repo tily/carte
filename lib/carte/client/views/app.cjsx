@@ -16,6 +16,5 @@ module.exports = React.createClass
     <div>
       <Header key='header' />
       <Content key='content' router={@props.router} />
-      <Footer key='footer' />
     </div>
 

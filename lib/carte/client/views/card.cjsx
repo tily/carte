@@ -20,7 +20,7 @@ module.exports = React.createClass
     @setState showTools: false
 
   render: ->
-    console.log 'render card: ', Edit
+    console.log 'Card: render'
     <div className='col-sm-4' style={padding:'5px'} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
       <div className='list-group'style={margin:'0px',padding:'0px'}>
         <div className='list-group-item' style={height:'220px'}>

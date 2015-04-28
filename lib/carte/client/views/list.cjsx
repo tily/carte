@@ -7,17 +7,9 @@ CardCollection = require('../models/cards')
 module.exports = React.createClass
   displayName: 'List'
 
-  componentDidMount: ()->
-    console.log 'component did mount'
-    @props.cards.on 'add remove change', @forceUpdate.bind(@, null)
-    @props.cards.on 'add', (model)->
-      console.log 'add', model 
-
   componentWillReceiveProps: (nextProps)->
-    console.log 'component will receive props'
+    console.log 'List: component will receive props'
     nextProps.cards.on 'add remove change', @forceUpdate.bind(@, null)
-    nextProps.cards.on 'add', (model)->
-      console.log 'add', model 
 
   getInitialState: ()->
     searchText: ''

@@ -19,15 +19,15 @@ module.exports = React.createClass
     @setState content: event.target.value
 
   onClickOk: ()->
-    @setState updating: true
     event.preventDefault()
+    @setState updating: true
     attributes = {new_title: @state.title, content: @state.content}
-    console.log attributes
     @props.card.save attributes,
       success: ()=>
         @setState editing: false
         @props.card.set 'title', attributes.new_title
         @setState updating: false
+        @props.onRequestHide()
       error: (model, response, options)=>
         message = ''
         for key, errors of response.responseJSON.card.errors
@@ -38,16 +38,17 @@ module.exports = React.createClass
         @setState updating: false
 
   render: ->
-    <Modal bsStyle='default' title='New card' animation={false}>
+    <Modal bsStyle='default' title="nil" animation={false}>
       <div className='modal-body'>
         <form>
           <div className="form-group">
             <input type="text" className="form-control" value={@state.title} onChange={@onChangeName} disabled={@state.updating} />
           </div>
           <div className="form-group">
-            <textarea rows="5" className="form-control" value={@state.content} onChange={@onChangeDescription} disabled={@state.updating} />
+            <textarea rows="10" className="form-control" value={@state.content} onChange={@onChangeDescription} disabled={@state.updating} />
           </div>
-          <button className="btn btn-default pull-right" onClick={@props.onRequestHide}>OK</button>
+          <button className="btn btn-default pull-right" onClick={@props.onRequestHide}>Cancel</button>
+          <button className="btn btn-default pull-right" onClick={@onClickOk}>OK</button>
         </form>
       </div>
       <div className='modal-footer'>
