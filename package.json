@@ -1,6 +1,6 @@
 {
   "name": "carte-client",
-  "description": "TODO: Write a gem description",
+  "description": "something like dictionary, wiki, or information card",
   "version": "0.0.0",
   "main": "lib/carte.coffee",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git://github.com/tily/carte.git"
   },
-  "author": "",
+  "author": "tily",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/tily/carte/issues"
