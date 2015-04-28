@@ -38,14 +38,10 @@ module Carte
     end
 
     get '/cards.xml' do
-      p 'xml'
       @cards = search(params)
-      p @cards
       builder :cards
     end
     
-    
-    # TODO: limit, page, search, sort
     get '/cards.json' do
       cards = search(params)
       if cards.respond_to?(:current_page) && cards.respond_to?(:total_pages)
