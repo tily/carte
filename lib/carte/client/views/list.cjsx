@@ -9,7 +9,7 @@ module.exports = React.createClass
 
   componentWillReceiveProps: (nextProps)->
     console.log 'List: component will receive props'
-    nextProps.cards.on 'add remove change', @forceUpdate.bind(@, null)
+    nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
 
   getInitialState: ()->
     searchText: ''
