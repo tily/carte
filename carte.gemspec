@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'carte/version'
+require 'carte/server/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "carte-server"
-  spec.version       = Carte::VERSION
+  spec.version       = Carte::Server::VERSION
   spec.authors       = ["tily"]
   spec.email         = ["tidnlyam@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{something like dictionary, wiki, or information card}
+  spec.description   = %q{something like dictionary, wiki, or information card}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mongoid_auto_increment_id", "0.6.5"
   spec.add_dependency "will_paginate_mongoid"
   spec.add_dependency "activesupport"
+  spec.add_dependency "haml"
 end
