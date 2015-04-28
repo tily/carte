@@ -9,6 +9,8 @@ module Carte
         field :title, type: String
         field :new_title, type: String
         field :content, type: String
+
+        index({title: 1}, {unique: true, name: "title_index"})
       
         validates :title,
           presence: {message: 'が入力されていません'},
