@@ -10,31 +10,48 @@ module Carte
     register Sinatra::Namespace
     include Carte::Server::Models
 
+    configure do
+      set :views, File.join(File.dirname(__FILE__), 'server/views')
+    end
+
     helpers do
       def json_data
         request.body.rewind
         JSON.parse(request.body.read)
       end
+
+      def search(params)
+        sort_order = (params[:sort_order] && %w(asc desc random).include?(params[:sort_order])) ? params[:sort_order] : 'desc'
+        sort_key = (params[:sort_key] && %w(title created_at updated_at).include?(params[:sort_key])) ? params[:sort_key] : 'updated_at'
+        if sort_order == 'random'
+          return Card.sample(9)
+        end
+        cards = Card.send(sort_order, sort_key)
+        if title = params[:title]
+          cards = cards.any_of({title: /#{title}/})
+        end
+        if content = params[:content]
+          cards = cards.any_of({content: /#{content}/})
+        end
+        cards = cards.paginate(per_page: 9, page: params[:page])
+      end
     end
+
+    get '/cards.xml' do
+      p 'xml'
+      @cards = search(params)
+      p @cards
+      builder :cards
+    end
+    
     
     # TODO: limit, page, search, sort
     get '/cards.json' do
-      sort_order = (params[:sort_order] && %w(asc desc random).include?(params[:sort_order])) ? params[:sort_order] : 'desc'
-      sort_key = (params[:sort_key] && %w(title created_at updated_at).include?(params[:sort_key])) ? params[:sort_key] : 'updated_at'
-      if sort_order == 'random'
-        cards = Card.sample(9)
-        return {cards: cards}.to_json
-      end
-      cards = Card.send(sort_order, sort_key)
-      if title = params[:title]
-        cards = cards.any_of({title: /#{title}/})
-      end
-      if content = params[:content]
-        cards = cards.any_of({content: /#{content}/})
-      end
-      cards = cards.paginate(per_page: 9)
+      cards = search(params)
+      current_page = cards.current_page.to_i
+      total_pages = cards.total_pages
       cards = cards.map {|card| {id: card.id, title: card.title, content: card.content, version: card.version}}
-      {cards: cards}.to_json
+      {cards: cards, page: {current: current_page, total: total_pages}}.to_json
     end
     
     get '/cards/:title.json' do
