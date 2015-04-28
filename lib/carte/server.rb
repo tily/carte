@@ -48,8 +48,10 @@ module Carte
     # TODO: limit, page, search, sort
     get '/cards.json' do
       cards = search(params)
-      current_page = cards.current_page.to_i
-      total_pages = cards.total_pages
+      if cards.respond_to?(:current_page) && cards.respond_to?(:total_pages)
+        current_page = cards.current_page.to_i
+        total_pages = cards.total_pages
+      end
       cards = cards.map {|card| {id: card.id, title: card.title, content: card.content, version: card.version}}
       {cards: cards, page: {current: current_page, total: total_pages}}.to_json
     end
