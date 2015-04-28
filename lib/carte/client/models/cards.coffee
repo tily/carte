@@ -9,4 +9,6 @@ module.exports = class Cards extends Backbone.Collection
       '/api/cards.json?' + $.param(@query)
   parse: (response)->
     console.log response
+    @page = response.page
+    console.log @page
     response.cards

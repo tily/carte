@@ -1,6 +1,6 @@
 # @cjsx React.DOM 
 React = require('react')
-List = require('./list.cjsx')
+List = require('./list')
 CardCollection = require('../models/cards')
 CardModel = require('../models/card')
 

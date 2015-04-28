@@ -1,6 +1,6 @@
 # @cjsx React.DOM 
 React = require('react')
-Card = require('./card.cjsx')
+Card = require('./card')
 
 module.exports = React.createClass
   displayName: 'Cards'

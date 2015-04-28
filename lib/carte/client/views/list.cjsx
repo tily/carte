@@ -1,11 +1,23 @@
 # @cjsx React.DOM 
 $ = require('jquery')
 React = require('react')
-Cards = require('./cards.cjsx')
+Cards = require('./cards')
 CardCollection = require('../models/cards')
 
 module.exports = React.createClass
   displayName: 'List'
+
+  componentDidMount: ()->
+    console.log 'component did mount'
+    @props.cards.on 'add remove change', @forceUpdate.bind(@, null)
+    @props.cards.on 'add', (model)->
+      console.log 'add', model 
+
+  componentWillReceiveProps: (nextProps)->
+    console.log 'component will receive props'
+    nextProps.cards.on 'add remove change', @forceUpdate.bind(@, null)
+    nextProps.cards.on 'add', (model)->
+      console.log 'add', model 
 
   getInitialState: ()->
     searchText: ''
@@ -23,17 +35,22 @@ module.exports = React.createClass
 
   atozParam: ()->
     query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort_key: 'title', sort_order: 'desc'}
+    query = $.extend query, {sort_key: 'title', sort_order: 'asc', page: 1}
     $.param(query)
 
   latestParam: ()->
     query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort_key: 'updated_at', sort_order: 'desc'}
+    query = $.extend query, {sort_key: 'updated_at', sort_order: 'desc', page: 1}
     $.param(query)
 
   randomParam: ()->
     query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort_order: 'random'}
+    query = $.extend query, {sort_order: 'random', page: 1}
+    $.param(query)
+
+  pageParam: (page)->
+    query = $.extend {}, @props.cards.query
+    query = $.extend query, {page: page}
     $.param(query)
 
   render: ->
@@ -49,25 +66,38 @@ module.exports = React.createClass
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'title' then 'bold' else 'normal'}}>A to Z</a></li>
-              <li><a href={"/#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'updated_at' then 'bold' else 'normal'}}>Latest</a></li>
+              <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'title' and @props.cards.query.sort_order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
+              <li><a href={"/#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_key == 'updated_at' and @props.cards.query.sort_order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
               <li><a href={"/#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort_order == 'random' then 'bold' else 'normal'}}>Random</a></li>
             </ul>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
-            <ul className="nav nav-pills pull-right">
-              <li>
-                <a href="#/" aria-label="Previous" style={{padding:'6px 12px'}}>
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li><a href="#/" style={{padding:'6px 12px'}}>1 / 5</a></li>
-              <li>
-                <a href="#/" aria-label="Next" style={{padding:'6px 12px'}}>
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
+            {
+              if @props.cards.page
+                <ul className="nav nav-pills pull-right">
+                  {
+                    if @props.cards.page.current > 1
+                      <li>
+                        <a href={"/#/?" + @pageParam(@props.cards.page.current - 1)} aria-label="Previous" style={{padding:'6px 12px'}}>
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                  }
+                  <li>
+                    <a href={"/#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
+                      {@props.cards.page.current} / {@props.cards.page.total}
+                    </a>
+                  </li>
+                  {
+                    if @props.cards.page.current < @props.cards.page.total
+                      <li>
+                        <a href={"/#/?" + @pageParam(@props.cards.page.current + 1)} aria-label="Next" style={{padding:'6px 12px'}}>
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                  }
+                </ul>
+            }
           </div>
         </div>
       } 
