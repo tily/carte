@@ -1,8 +1,8 @@
 gulp = require 'gulp'
 Carte = require './lib/carte'
-path = 'public/javascripts/app.js'
 
 carte = new Carte()
+path = 'public/javascripts/app.js'
 
 gulp.task 'build', ->
   carte.build watch: false, path: path
