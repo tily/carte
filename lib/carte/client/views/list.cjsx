@@ -45,7 +45,7 @@ module.exports = React.createClass
 
   randomParam: ()->
     query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort_order: 'random', page: 1}
+    query = $.extend query, {sort_order: 'random', page: 1, seed: new Date().getTime()}
     $.param(query)
 
   pageParam: (page)->
