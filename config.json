@@ -1,0 +1,6 @@
+{
+  "title": "carte",
+  "description": "something like dictionary, wiki, or information card",
+  "public_folder": "public",
+  "script_path": "public/app.js"
+}
