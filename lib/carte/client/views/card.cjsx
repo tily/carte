@@ -21,16 +21,24 @@ module.exports = React.createClass
 
   render: ->
     console.log 'Card: render'
+    style = {height:'220px'}
+    if @props.card.get('focused')
+      #style.color = 'red'
+      style.borderColor = '#ccc'
     <div className='col-sm-4' style={padding:'5px'} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
-      <div className='list-group'style={margin:'0px',padding:'0px'}>
-        <div className='list-group-item' style={height:'220px'}>
+      <div className='list-group' style={margin:'0px',padding:'0px'}>
+        <div className='list-group-item' style={style}>
           <p>
+            {
+              if @props.card.get('focused')
+                <i className='glyphicon glyphicon-star' style={marginRight:'5px'} />
+            }
             <strong>
               {@props.card.get('title')}
             </strong>
             <span className='pull-right' style={{visibility: if @state.showTools then 'visible' else 'hidden'}}>
               <ModalTrigger modal={<Edit card={@props.card} />}>
-                <a href="#/">
+                <a href="javascript:void(0)">
                   <i className='glyphicon glyphicon-edit' />
                 </a>
               </ModalTrigger>

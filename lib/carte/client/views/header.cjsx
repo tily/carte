@@ -8,6 +8,8 @@ module.exports = React.createClass
   displayName: 'Header'
 
   render: ->
+    card = new CardModel()
+    card._isNew = true
     <nav className="navbar navbar-default" style={{padding:"0px",backgroundColor:"white"}}>
       <div className="container-fluid">
         <div className="navbar-header">
@@ -20,8 +22,8 @@ module.exports = React.createClass
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <ModalTrigger modal={<Edit card={new CardModel()} />}>
-                <a href="#/">
+              <ModalTrigger modal={<Edit card={card} />}>
+                <a href="javascript:void(0)">
                   <i className="glyphicon glyphicon-plus" />
                 </a>
               </ModalTrigger>

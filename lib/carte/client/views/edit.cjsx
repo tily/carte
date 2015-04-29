@@ -3,6 +3,7 @@ $ = require('jquery')
 React = require('react')
 Modal = require('react-bootstrap/lib/Modal')
 Button = require('react-bootstrap/lib/Button')
+Loader = require('react-loader')
 
 module.exports = React.createClass
   displayName: 'Edit'
@@ -11,6 +12,7 @@ module.exports = React.createClass
     updating: false
     title: @props.card.get('title')
     content: @props.card.get('content')
+    errors: false
 
   onChangeTitle: ->
     @setState title: event.target.value
@@ -21,36 +23,54 @@ module.exports = React.createClass
   onClickOk: ()->
     event.preventDefault()
     @setState updating: true
-    attributes = {new_title: @state.title, content: @state.content}
+    if @props.card.isNew()
+      attributes = {title: @state.title, content: @state.content}
+    else
+      attributes = {new_title: @state.title, content: @state.content}
     @props.card.save attributes,
       success: ()=>
-        @setState editing: false
-        @props.card.set 'title', attributes.new_title
         @setState updating: false
         @props.onRequestHide()
+        if @props.card.isNew()
+          location.hash = '/' + @state.title
       error: (model, response, options)=>
-        message = ''
-        for key, errors of response.responseJSON.card.errors
-          for error in errors
-            message += key + ' ' + error + "\n"
-        console.log 'error', model, response, options
-        alert message
+        console.log response.responseJSON
+        @setState errors: response.responseJSON.card.errors
         @setState updating: false
 
   render: ->
-    <Modal bsStyle='default' title="nil" animation={false}>
+    <Modal {...@props} bsStyle='default' title={if @props.card.isNew() then 'New' else 'Edit'} animation={false}>
       <div className='modal-body'>
-        <form>
-          <div className="form-group">
-            <input type="text" className="form-control" value={@state.title} onChange={@onChangeName} disabled={@state.updating} />
-          </div>
-          <div className="form-group">
-            <textarea rows="10" className="form-control" value={@state.content} onChange={@onChangeDescription} disabled={@state.updating} />
-          </div>
-          <button className="btn btn-default pull-right" onClick={@props.onRequestHide}>Cancel</button>
-          <button className="btn btn-default pull-right" onClick={@onClickOk}>OK</button>
-        </form>
-      </div>
-      <div className='modal-footer'>
+        {
+          if @state.errors
+            <div className="alert alert-danger" role="alert">
+              <ul>
+              {
+                for key, errors of @state.errors
+                  for error in errors
+                    <li>{key + ' ' + error}</li>
+              }
+              </ul>
+            </div>
+        }
+        <div className="form-group">
+          <label class="control-label">Title</label>
+          <input type="text" className="form-control" value={@state.title} onChange={@onChangeTitle} disabled={@state.updating} id="inputError1" />
+        </div>
+        <div className="form-group">
+          <label class="control-label">Content</label>
+          <textarea rows="10" className="form-control" value={@state.content} onChange={@onChangeContent} disabled={@state.updating} />
+        </div>
+        <div className="form-group" style={{paddingBottom:'17px'}}>
+          <button className="btn btn-default pull-right" onClick={@onClickOk} disabled={@state.updating}>
+            &nbsp;
+            OK
+            &nbsp;
+            {
+              if @state.updating
+                <i className='glyphicon glyphicon-refresh glyphicon-refresh-animate' />
+            }
+          </button>
+        </div>
       </div>
     </Modal>

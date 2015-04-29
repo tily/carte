@@ -23,6 +23,8 @@ module.exports = React.createClass
         console.log 'list', @props.router.query
         cards = new CardCollection()
         cards.query = @props.router.query
+        cards.query.sort = 'title' if !cards.query.sort
+        cards.query.order = 'asc' if !cards.query.order
         cards.fetch()
         <List key='list' cards={cards} showNav=true />
       when "show"
@@ -34,11 +36,14 @@ module.exports = React.createClass
             console.log card
             for l in card.get("lefts")
               cardModel = new CardModel(l)
+              cardModel.set 'focused', false
               console.log 'adding l', cardModel
               cards.add cardModel
+            card.set 'focused', true
             cards.add card
             for r in card.get("rights")
               cardModel = new CardModel(r)
+              cardModel.set 'focused', false
               console.log 'adding r', cardModel
               cards.add cardModel
         <List key='show' cards={cards} showNav=false />
