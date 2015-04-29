@@ -23,12 +23,12 @@ module Carte
       end
 
       def search(params)
-        sort_order = (params[:sort_order] && %w(asc desc random).include?(params[:sort_order])) ? params[:sort_order] : 'desc'
-        sort_key = (params[:sort_key] && %w(title created_at updated_at).include?(params[:sort_key])) ? params[:sort_key] : 'updated_at'
-        if sort_order == 'random'
+        order = (params[:order] && %w(asc desc random).include?(params[:order])) ? params[:order] : 'desc'
+        sort = (params[:sort] && %w(title created_at updated_at).include?(params[:sort])) ? params[:sort] : 'updated_at'
+        if order == 'random'
           return Card.sample(9)
         end
-        cards = Card.send(sort_order, sort_key)
+        cards = Card.send(order, sort)
         if title = params[:title]
           cards = cards.any_of({title: /#{title}/})
         end
@@ -68,27 +68,28 @@ module Carte
         halt 404 if card.nil?
         {card: {id: card.id, title: card.title, content: card.content, version: card.version, lefts: card.lefts(4), rights: card.rights(4)}}.to_json
       end
-      
+
+      post '/cards.json' do
+        card = Card.new(json_data)
+        if card.save
+          status 201
+          {card: {id: card.id}}.to_json
+        else
+          status 400
+          {card: {errors: card.errors}}.to_json
+        end
+      end
+ 
       put '/cards/:title.json' do
         card = Card.where(title: params[:title]).first
-        if card
-          card.histories.create!
-          if card.update_attributes(json_data.slice('new_title', 'content').compact)
-            status 201
-            {}.to_json
-          else
-            status 400
-            {card: {errors: card.errors}}.to_json
-          end
+        halt 404 if card.nil?
+        card.histories.create!
+        if card.update_attributes(json_data.slice('new_title', 'content').compact)
+          status 201
+          {}.to_json
         else
-          card = Card.new(json_data)
-          if card.save
-            status 201
-            {card: {id: card.id}}.to_json
-          else
-            status 400
-            {card: {errors: card.errors}}.to_json
-          end
+          status 400
+          {card: {errors: card.errors}}.to_json
         end
       end
       

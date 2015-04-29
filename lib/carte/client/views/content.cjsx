@@ -25,7 +25,8 @@ module.exports = React.createClass
         cards.query = @props.router.query
         cards.query.sort = 'title' if !cards.query.sort
         cards.query.order = 'asc' if !cards.query.order
-        cards.fetch()
+        cards.fetching = true
+        cards.fetch success: ()-> cards.fetching = false
         title = []
         for k, v of cards.query
           if k != 'title'
@@ -38,6 +39,7 @@ module.exports = React.createClass
       when "show"
         console.log 'show'
         cards = new CardCollection()
+        cards.fetching = true
         card = new CardModel(title: @props.router.title)
         card.fetch
           success: (card)->
@@ -54,6 +56,9 @@ module.exports = React.createClass
               cardModel.set 'focused', false
               console.log 'adding right', cardModel
               cards.add cardModel
+            cards.fetching = false
+          error: (card, response)=>
+            console.log response
         document.title = card.get('title') + ' - carte'
         <List key='show' cards={cards} showNav=false />
       else

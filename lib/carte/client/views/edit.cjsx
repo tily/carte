@@ -44,8 +44,8 @@ module.exports = React.createClass
       <div className='modal-body'>
         {
           if @state.errors
-            <div className="alert alert-danger" role="alert">
-              <ul>
+            <div className="alert alert-danger" role="alert" style={padding:'5px'}>
+              <ul style={paddingLeft:"20px"}>
               {
                 for key, errors of @state.errors
                   for error in errors
