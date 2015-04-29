@@ -13,14 +13,14 @@ module Carte
         index({title: 1}, {unique: true, name: "title_index"})
       
         validates :title,
-          presence: {message: 'が入力されていません'},
+          presence: true,
 	  on: :create
         validates :title,
-          uniqueness: {message: 'は既に存在します'},
-          length: {maximum: 70, message: "は 70 文字以内で入力してください"}
+          uniqueness: true,
+          length: {maximum: 70}
         validates :content,
-          presence: {message: 'が入力されていません'},
-          length: {maximum: 560, message: "は 560 文字以内で入力してください"}
+          presence: true,
+          length: {maximum: 560}
       
         has_many :histories
       
