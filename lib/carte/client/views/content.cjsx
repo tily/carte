@@ -9,7 +9,7 @@ module.exports = React.createClass
 
   componentWillMount: ->
     console.log 'componentWillMount'
-    @callback = ()=> console.log @; @forceUpdate()
+    @callback = ()=> @forceUpdate()
     @props.router.on "route", @callback
 
   componentWillUnmount: ->
@@ -26,6 +26,14 @@ module.exports = React.createClass
         cards.query.sort = 'title' if !cards.query.sort
         cards.query.order = 'asc' if !cards.query.order
         cards.fetch()
+        title = []
+        for k, v of cards.query
+          if k != 'title'
+            title.push(k + ': ' + v)
+        title = title.join(', ')
+        title = 'search: ' + cards.query.title + ' (' + title + ')' if cards.query.title
+        title += ' - carte'
+        document.title = title
         <List key='list' cards={cards} showNav=true />
       when "show"
         console.log 'show'
@@ -34,18 +42,19 @@ module.exports = React.createClass
         card.fetch
           success: (card)->
             console.log card
-            for l in card.get("lefts")
-              cardModel = new CardModel(l)
+            for left in card.get("lefts")
+              cardModel = new CardModel(left)
               cardModel.set 'focused', false
-              console.log 'adding l', cardModel
+              console.log 'adding left', cardModel
               cards.add cardModel
             card.set 'focused', true
             cards.add card
-            for r in card.get("rights")
-              cardModel = new CardModel(r)
+            for right in card.get("rights")
+              cardModel = new CardModel(right)
               cardModel.set 'focused', false
-              console.log 'adding r', cardModel
+              console.log 'adding right', cardModel
               cards.add cardModel
+        document.title = card.get('title') + ' - carte'
         <List key='show' cards={cards} showNav=false />
       else
         console.log 'else'

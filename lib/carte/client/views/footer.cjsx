@@ -6,7 +6,4 @@ module.exports = React.createClass
 
   render: ->
     <div style={{paddingTop:'0px',paddingBottom:'100px',paddingRight:"30px",paddingLeft:'30px'}}>
-      <span className="pull-right">
-        powered by <a href="https://github.com/tily/carte">carte</a>
-      </span>
     </div>

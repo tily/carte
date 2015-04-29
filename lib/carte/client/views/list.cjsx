@@ -73,7 +73,7 @@ module.exports = React.createClass
               if @props.cards.query.order == 'random'
                 <ul className="nav nav-pills pull-right">
                   <li>
-                    <a href={"/#/?" + @randomParam()}>
+                    <a href={"/#/?" + @randomParam()} style={{padding:'6px 12px'}}>
                       <i className="glyphicon glyphicon-refresh" />
                     </a>
                   </li>
@@ -82,13 +82,12 @@ module.exports = React.createClass
                 if @props.cards.page
                   <ul className="nav nav-pills pull-right">
                     {
-                      if @props.cards.page.current <= 1
-                        className = 'disabled'
-                      <li className={className}>
-                        <a href={"/#/?" + @pageParam(@props.cards.page.current - 1)} aria-label="Previous" style={{padding:'6px 12px'}}>
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
+                      if @props.cards.page.current > 1
+                        <li>
+                          <a href={"/#/?" + @pageParam(@props.cards.page.current - 1)} aria-label="Previous" style={{padding:'6px 12px'}}>
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
                     }
                     <li>
                       <a href={"/#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
@@ -96,13 +95,12 @@ module.exports = React.createClass
                       </a>
                     </li>
                     {
-                      if @props.cards.page.current > @props.cards.page.total
-                        className = 'disabled'
-                      <li className={className}>
-                        <a href={"/#/?" + @pageParam(@props.cards.page.current + 1)} aria-label="Next" style={{padding:'6px 12px'}}>
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
+                      if @props.cards.page.current < @props.cards.page.total
+                        <li>
+                          <a href={"/#/?" + @pageParam(@props.cards.page.current + 1)} aria-label="Next" style={{padding:'6px 12px'}}>
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
                     }
                   </ul>
             }

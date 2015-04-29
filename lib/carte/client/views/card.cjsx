@@ -6,6 +6,11 @@ ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
 module.exports = React.createClass
   displayName: 'Card'
 
+  componentDidMount: ->
+    @props.card.on 'change', @forceUpdate.bind(@, null)
+    @props.card.on 'change', (model)->
+      console.log 'change', model
+
   getInitialState: ()->
     showTools: false
     editing: false
@@ -49,7 +54,7 @@ module.exports = React.createClass
               </a>
             </span>
           </p>
-          <p>
+          <p style={overflow:'scroll',width:'100%',height:'80%',wordWrap:'break-word'}>
             {@props.card.get('content')}
           </p>
         </div>

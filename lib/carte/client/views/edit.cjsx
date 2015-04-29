@@ -31,6 +31,7 @@ module.exports = React.createClass
       success: ()=>
         @setState updating: false
         @props.onRequestHide()
+        @props.card.set 'title', @state.title
         if @props.card.isNew()
           location.hash = '/' + @state.title
       error: (model, response, options)=>
