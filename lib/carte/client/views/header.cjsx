@@ -3,6 +3,7 @@ React = require('react')
 Edit = require('./edit')
 CardModel = require('../models/card')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
+config = require('../../shared/config.json')
 
 module.exports = React.createClass
   displayName: 'Header'
@@ -25,6 +26,7 @@ module.exports = React.createClass
             <img alt="Brand" src="/images/icon.png" width="30" height="30" />
           </a>
           <a className="navbar-brand" href="#/">
+            {config.title}
           </a>
         </div>
         <div className="collapse navbar-collapse">
