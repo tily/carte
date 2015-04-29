@@ -3,7 +3,6 @@ $ = require('jquery')
 React = require('react')
 Modal = require('react-bootstrap/lib/Modal')
 Button = require('react-bootstrap/lib/Button')
-Loader = require('react-loader')
 
 module.exports = React.createClass
   displayName: 'Edit'
