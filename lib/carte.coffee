@@ -1,3 +1,4 @@
+fs = require 'fs'
 path = require 'path'
 gulp = require 'gulp'
 gulpUtil = require 'gulp-util'
@@ -7,8 +8,10 @@ watchify = require 'watchify'
 
 module.exports = class Carte
   build: (options)->
-    dir = path.dirname options.path
-    file = path.basename options.path
+    config = require(options.config)
+    fs.writeFileSync(__dirname + '/carte/shared/config.json', JSON.stringify(config))
+    dir = path.dirname config.script_path
+    file = path.basename config.script_path
     browserify = browserify
       cache: {}
       packageCache: {}
