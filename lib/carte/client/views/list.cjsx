@@ -7,6 +7,9 @@ CardCollection = require('../models/cards')
 module.exports = React.createClass
   displayName: 'List'
 
+  componentDidMount: ->
+    @props.cards.on 'sync', @forceUpdate.bind(@, null)
+
   componentWillReceiveProps: (nextProps)->
     console.log 'List: component will receive props'
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
