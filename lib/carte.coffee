@@ -2,9 +2,12 @@ fs = require 'fs'
 path = require 'path'
 gulp = require 'gulp'
 gulpUtil = require 'gulp-util'
+gulpIf = require 'gulp-if'
 source = require 'vinyl-source-stream'
 browserify = require 'browserify'
 watchify = require 'watchify'
+uglify = require 'gulp-uglify'
+streamify = require 'gulp-streamify'
 
 module.exports = class Carte
   build: (options)->
@@ -12,6 +15,7 @@ module.exports = class Carte
     fs.writeFileSync(__dirname + '/carte/shared/config.json', JSON.stringify(config))
     dir = path.dirname config.script_path
     file = path.basename config.script_path
+    minify = options.minify
     browserify = browserify
       cache: {}
       packageCache: {}
@@ -23,12 +27,13 @@ module.exports = class Carte
       .transform 'debowerify'
     if options.watch
       watchified = watchify(browserify)
-      watchified.on 'update', ()=> @bundle(browserify, dir, file)
+      watchified.on 'update', ()=> @bundle(browserify, dir, file, minify)
       watchified.on 'log', gulpUtil.log
-    @bundle(browserify, dir, file)
+    @bundle(browserify, dir, file, minify)
   
-  bundle: (browserify, dir, file)->
+  bundle: (browserify, dir, file, minify)->
     browserify
       .bundle()
       .pipe source file
+      .pipe gulpIf(minify, streamify(uglify()))
       .pipe gulp.dest dir
