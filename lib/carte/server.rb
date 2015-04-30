@@ -7,6 +7,7 @@ require 'carte/server/models'
 
 module Carte
   class Server < Sinatra::Base
+    use Rack::Deflater
     register Sinatra::Namespace
     include Carte::Server::Models
 
