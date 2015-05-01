@@ -26,14 +26,12 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Deploy
 
+Deploy your carte to click [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox).
+After deployment, you can customize your carte as below: 
+
 ```
-$ git clone https://github.com/tily/carte-sandbox
-$ vi config.json              # write your configuration
-$ npm install                 # install carte-client and depending npm packages
-$ bundle install              # install carte-server and depending gem packages
-$ gulp build                  # build client-side app.js
-$ bundle exec rackup          # test your carte on local
-$ heroku create your-app-name # create your heroku app
-$ heroku addons:add mongolab  # use mongolab as addon
-$ git heroku push master      # deploy to heroku
+## change title
+$ vi config.json
+## replace icon
+$ cp ~/Desktop/icon.png public/images/icon.png 
 ```
