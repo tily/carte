@@ -3,6 +3,7 @@ React = require('react')
 List = require('./list')
 CardCollection = require('../models/cards')
 CardModel = require('../models/card')
+config = require('../../shared/config.json')
 
 module.exports = React.createClass
   displayName: 'Content'
@@ -33,7 +34,7 @@ module.exports = React.createClass
             title.push(k + ': ' + v)
         title = title.join(', ')
         title = 'search: ' + cards.query.title + ' (' + title + ')' if cards.query.title
-        title += ' - carte'
+        title += ' - ' + config.title
         document.title = title
         <List key='list' cards={cards} showNav=true />
       when "show"
@@ -59,7 +60,7 @@ module.exports = React.createClass
             cards.fetching = false
           error: (card, response)=>
             console.log response
-        document.title = card.get('title') + ' - carte'
+        document.title = card.get('title') + ' - ' + config.title
         <List key='show' cards={cards} showNav=false />
       else
         console.log 'else'
