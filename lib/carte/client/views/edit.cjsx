@@ -39,7 +39,7 @@ module.exports = React.createClass
         @setState updating: false
 
   render: ->
-    <Modal {...@props} bsStyle='default' title={if @props.card.isNew() then 'New' else 'Edit'} animation={false}>
+    <Modal {...@props} bsStyle='default' title={if @props.card.isNew() then <i className="glyphicon glyphicon-plus" /> else <i className="glyphicon glyphicon-edit" />} animation={false}>
       <div className='modal-body'>
         {
           if @state.errors
