@@ -2,6 +2,10 @@
 
 Something like dictionary, wiki, or information card.
 
+## Screenshot
+
+![](screenshot.png)
+
 ## Features
 
 * Manage your data fragments with cards
@@ -10,7 +14,6 @@ Something like dictionary, wiki, or information card.
 * No user concept, super simple system like wiki
 
 You can try carte on [sandbox](http://carte-sandbox.herokuapp.com/#/).
-
 Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Components
