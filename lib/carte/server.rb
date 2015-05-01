@@ -45,7 +45,7 @@ module Carte
     end
 
     get '/app.js' do
-      File.read(settings.script_path)
+      send_file settings.script_path
     end
 
     namespace '/api' do
