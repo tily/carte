@@ -2,6 +2,7 @@
 React = require('react')
 Edit = require('./edit')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
+markdownIt = require('markdown-it')()
 
 module.exports = React.createClass
   displayName: 'Card'
@@ -33,7 +34,7 @@ module.exports = React.createClass
     <div className='col-sm-4' style={padding:'5px'} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
       <div className='list-group' style={margin:'0px',padding:'0px'}>
         <div className='list-group-item' style={style}>
-          <p>
+          <div>
             {
               if @props.card.get('focused')
                 <i className='glyphicon glyphicon-star' style={marginRight:'5px'} />
@@ -53,10 +54,10 @@ module.exports = React.createClass
                 <i className='glyphicon glyphicon-link' />
               </a>
             </span>
-          </p>
-          <p style={overflow:'scroll',width:'100%',height:'80%',wordWrap:'break-word'}>
-            {@props.card.get('content')}
-          </p>
+          </div>
+          <div style={overflow:'scroll',width:'100%',height:'80%',wordWrap:'break-word'}>
+            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
+          </div>
         </div>
       </div>
     </div>
