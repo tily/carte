@@ -55,7 +55,7 @@ module.exports = React.createClass
               </a>
             </span>
           </div>
-          <div style={overflow:'scroll',width:'100%',height:'80%',wordWrap:'break-word'}>
+          <div style={overflow:'hidden',width:'100%',height:'80%',wordWrap:'break-word'}>
             <p>
               <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
             </p>
