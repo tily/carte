@@ -26,9 +26,9 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Deploy
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox).
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox)
 
-Deploy your carte with the button above. After deployment, you can customize your carte:
+Deploy your carte with the button above. After deployment, you may want to customize your carte.
 
 ```
 ## change title and description
