@@ -2,7 +2,7 @@
 React = require('react')
 Edit = require('./edit')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
-markdownIt = require('markdown-it')()
+markdownIt = require('markdown-it')(linkify: true)
 
 module.exports = React.createClass
   displayName: 'Card'
