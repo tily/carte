@@ -76,36 +76,61 @@ module.exports = React.createClass
               if @props.cards.query.order == 'random'
                 <ul className="nav nav-pills pull-right">
                   <li>
-                    <a href={"/#/?" + @randomParam()} style={{padding:'6px 12px'}}>
-                      <i className="glyphicon glyphicon-refresh" />
-                    </a>
+                    {
+                      if @props.cards.page
+                        <a href={"/#/?" + @randomParam()} style={{padding:'6px 12px'}}>
+                          <i className="glyphicon glyphicon-refresh" />
+                        </a>
+                      else
+                        <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
+                          <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                        </a>
+                    }
                   </li>
                 </ul>
               else
-                if @props.cards.page
-                  <ul className="nav nav-pills pull-right">
+                <ul className="nav nav-pills pull-right">
+                  <li>
                     {
-                      if @props.cards.page.current > 1
-                        <li>
-                          <a href={"/#/?" + @pageParam(@props.cards.page.current - 1)} aria-label="Previous" style={{padding:'6px 12px'}}>
-                            <span aria-hidden="true">&laquo;</span>
-                          </a>
-                        </li>
-                    }
-                    <li>
-                      <a href={"/#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
-                        {@props.cards.page.current} / {@props.cards.page.total}
+                      if @props.cards.page
+                        if @props.cards.page.current > 1
+                          href = "/#/?" + @pageParam(@props.cards.page.current - 1)
+                        else
+                          href = "/#/?" + @pageParam(@props.cards.page.total)
+                      else
+                        href = "javascript:void(0)"
+                      <a href={href} aria-label="Previous" style={{padding:'6px 12px'}}>
+                        <span aria-hidden="true">&laquo;</span>
                       </a>
-                    </li>
-                    {
-                      if @props.cards.page.current < @props.cards.page.total
-                        <li>
-                          <a href={"/#/?" + @pageParam(@props.cards.page.current + 1)} aria-label="Next" style={{padding:'6px 12px'}}>
-                            <span aria-hidden="true">&raquo;</span>
-                          </a>
-                        </li>
                     }
-                  </ul>
+                  </li>
+                  <li style={width:'4.0em',textAlign:'center'}>
+                    {
+                      if @props.cards.page
+                        <a href={"/#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
+                          {@props.cards.page.current} / {@props.cards.page.total}
+                        </a>
+                      else
+                        <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
+                          <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                        </a>
+                    }
+                  </li>
+                  <li>
+                    {
+                      if @props.cards.page
+                        if @props.cards.page.current < @props.cards.page.total
+                          href = "/#/?" + @pageParam(@props.cards.page.current + 1)
+                        else
+                          href = "/#/?" + @pageParam(1)
+                      else
+                        href = "javascript:void(0)"
+                      <a href={href} aria-label="Next" style={{padding:'6px 12px'}}>
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    }
+                  </li>
+                </ul>
             }
           </div>
         </div>
