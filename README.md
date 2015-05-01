@@ -26,12 +26,13 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Deploy
 
-Deploy your carte to click [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox).
-After deployment, you can customize your carte as below: 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox).
+
+Deploy your carte with the button above. After deployment, you can customize your carte:
 
 ```
-## change title
+## change title and description
 $ vi config.json
-## replace icon
+## replace brand icon
 $ cp ~/Desktop/icon.png public/images/icon.png 
 ```
