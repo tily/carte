@@ -34,7 +34,7 @@ module Carte
         end
       
         def self.sample(size=1)
-          self.in(id: (1...self.count).to_a.sample(size))
+          self.in(id: (1..self.count).to_a.sample(size))
         end
       
         def lefts(size=1)
