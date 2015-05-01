@@ -1,6 +1,6 @@
 {
   "title": "carte sandbox",
-  "description": "something like dictionary, wiki, or information card",
+  "description": "sandbox for carte",
   "public_folder": "public",
   "script_path": "public/app.js"
 }
