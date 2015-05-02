@@ -7,9 +7,24 @@
     %meta{name:"description",content:settings.carte['description']}
     %script{type:"text/javascript",src:"/app.js"}
     :css
-      a, a:hover, a:visited, a:active {
+      .navbar-default a,
+      .navbar-default a:hover,
+      .navbar-default a:visited,
+      .navbar-default a:active,
+      .nav-pills a,
+      .nav-pills a:hover,
+      .nav-pills a:visited,
+      .nav-pills a:active,
+      .tools a,
+      .tools a:hover,
+      .tools a:visited,
+      .tools a:active
+      {
         color: #333333 !important;
         text-decoration: none !important;
+      }
+      a, a:hover, a:visited, a:active {
+        color: #{settings.carte['link_color']}; 
       }
       .glyphicon-refresh-animate {
         -animation: spin .7s infinite linear;
