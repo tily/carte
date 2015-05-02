@@ -171,4 +171,41 @@ describe 'API' do
       end
     end
   end
+
+  context 'Tags' do
+    it 'can create and get a card with tags' do
+      response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3)}.to_json)
+      expect(response.code).to eq(201)
+      response = client.get("/cards/card1.json")
+      expect(response['card']['tags']).to eq %w(tag1 tag2 tag3)
+    end
+
+    it 'can update card with tags' do
+      response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3)}.to_json)
+      response = client.put("/cards/card1.json", body: {tags: %w(tag4 tag5 tag6)}.to_json)
+      expect(response.code).to eq(201)
+      response = client.get("/cards/card1.json")
+      expect(response['card']['tags']).to eq %w(tag4 tag5 tag6)
+    end
+
+    it 'can list cards with tags' do
+      response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3)}.to_json)
+      response = client.get("/cards.json", query: {name: '^cards1$'})
+      expect(response['cards'].first['tags']).to eq %w(tag1 tag2 tag3)
+    end
+
+    it 'can search cards by tags' do
+      response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3)}.to_json)
+      response = client.get("/cards.json", query: {tags: 'tag1,tag2,tag3'})
+      expect(response['cards'].size).to eq(1)
+      expect(response['cards'].first['tags']).to eq %w(tag1 tag2 tag3)
+    end
+
+    it 'can get tags' do
+      response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3)}.to_json)
+      response = client.post('/cards.json', body: {title: 'card2', content: 'content2', tags: %w(tag4 tag5 tag6)}.to_json)
+      response = client.get("/tags.json")
+      expect(response['tags'].size).to eq(6)
+    end
+  end
 end
