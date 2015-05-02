@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "will_paginate_mongoid"
   spec.add_dependency "activesupport"
   spec.add_dependency "haml"
+  spec.add_dependency "mongoid-simple-tags"
 end
