@@ -38,6 +38,11 @@ module.exports = React.createClass
     query = $.extend query, {page: page}
     $.param(query)
 
+  tagParam: (tag)->
+    query = $.extend {}, @props.cards.query
+    query = $.extend query, {tags: tag}
+    $.param(query)
+
   render: ->
     console.log 'render', @props.cards.query
     <div className="container" style={{paddingLeft:"5px",paddingRight:"5px"}}>
@@ -48,6 +53,11 @@ module.exports = React.createClass
               <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
               <li><a href={"/#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
               <li><a href={"/#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+              {
+                if @props.cards.query.tags
+                  @props.cards.query.tags.split(',').map (tag)->
+                    <li><a href={"/#/?" + @tagParam()} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
+              }
             </ul>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>

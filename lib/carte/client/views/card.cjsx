@@ -51,8 +51,15 @@ module.exports = React.createClass
               </a>
             </span>
           </div>
-          <div style={overflow:'hidden',width:'100%',height:'80%',wordWrap:'break-word'}>
+          <div style={overflow:'hidden',width:'100%',height:'75%',wordWrap:'break-word'}>
             <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
+          </div>
+          <div style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
+          {
+            if @props.card.get("tags")
+              @props.card.get("tags").map (tag)->
+                <span className="pull-right tools">&nbsp;&nbsp;<a href={"/#/?tags=" + tag}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></span>
+          }
           </div>
       </div>
     </div>
