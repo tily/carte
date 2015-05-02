@@ -55,8 +55,8 @@ module.exports = React.createClass
               <li><a href={"/#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               {
                 if @props.cards.query.tags
-                  @props.cards.query.tags.split(',').map (tag)->
-                    <li><a href={"/#/?" + @tagParam()} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
+                  @props.cards.query.tags.split(',').map (tag)=>
+                    <li><a href={"/#/?" + @tagParam(tag)} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
               }
             </ul>
           </div>
