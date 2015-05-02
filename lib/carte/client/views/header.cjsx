@@ -29,7 +29,7 @@ module.exports = React.createClass
             {config.title}
           </a>
         </div>
-        <div className="collapse navbar-collapse">
+        <div>
           <ul className="nav navbar-nav navbar-right">
             <li>
               <ModalTrigger modal={<Edit card={@card} />}>
