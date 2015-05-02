@@ -38,7 +38,7 @@ module.exports = React.createClass
             <strong>
               {@props.card.get('title')}
             </strong>
-            <span className='pull-right' style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
+            <span className='pull-right tools' style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
               <ModalTrigger modal={<Edit card={@props.card} />}>
                 <a href="javascript:void(0)">
                   <i className='glyphicon glyphicon-edit' />
