@@ -3,6 +3,7 @@ require 'sinatra/namespace'
 require 'mongoid'
 require 'mongoid_auto_increment_id'
 require 'will_paginate_mongoid'
+require 'mongoid-simple-tags'
 require 'carte/server/models'
 
 module Carte
@@ -33,6 +34,10 @@ module Carte
         if title = params[:title]
           cards = cards.any_of({title: /#{title}/})
         end
+        if params[:tags]
+          tags = params[:tags].split(',')
+          cards = cards.tagged_with_all(tags)
+        end
         if content = params[:content]
           cards = cards.any_of({content: /#{content}/})
         end
@@ -60,18 +65,18 @@ module Carte
           current_page = cards.current_page.to_i
           total_pages = cards.total_pages
         end
-        cards = cards.map {|card| {id: card.id, title: card.title, content: card.content, version: card.version}}
+        cards = cards.map {|card| {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags}}
         {cards: cards, page: {current: current_page, total: total_pages}}.to_json
       end
       
       get '/cards/:title.json' do
         card = Card.where(title: params[:title]).first
         halt 404 if card.nil?
-        {card: {id: card.id, title: card.title, content: card.content, version: card.version, lefts: card.lefts(4), rights: card.rights(4)}}.to_json
+        {card: {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags, lefts: card.lefts(4), rights: card.rights(4)}}.to_json
       end
 
       post '/cards.json' do
-        card = Card.new(json_data)
+        card = Card.new(json_data.slice('title', 'content', 'tags'))
         if card.save
           status 201
           {card: {id: card.id}}.to_json
@@ -85,7 +90,8 @@ module Carte
         card = Card.where(title: params[:title]).first
         halt 404 if card.nil?
         card.histories.create!
-        if card.update_attributes(json_data.slice('new_title', 'content').compact)
+        p json_data.slice('new_title', 'content', 'tags').compact
+        if card.update_attributes(json_data.slice('new_title', 'content', 'tags').compact)
           status 201
           {}.to_json
         else
@@ -104,6 +110,10 @@ module Carte
         card = Card.where(title: params[:title]).first
         halt 404 if card.nil?
         {history: card.histories}.to_json
+      end
+
+      get '/tags.json' do
+        {tags: Card.all_tags}.to_json
       end
 
       error(404) do

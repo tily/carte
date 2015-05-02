@@ -5,6 +5,7 @@ module Carte
         include Mongoid::Document
         include Mongoid::Timestamps
         include Mongoid::Attributes::Dynamic
+        include Mongoid::Document::Taggable
       
         field :title, type: String
         field :new_title, type: String
