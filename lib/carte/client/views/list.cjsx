@@ -14,20 +14,6 @@ module.exports = React.createClass
     console.log 'List: component will receive props'
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
 
-  getInitialState: ()->
-    searchText: ''
-
-  onChangeSearchText: ()->
-    @setState searchText: event.target.value
-
-  onKeyPressSearchText: ()->
-    if event.keyCode == 13 # ENTER
-      console.log '13 enter', @props.cards.query
-      event.preventDefault()
-      query = $.extend {}, @props.cards.query
-      query = $.extend query, {title: @state.searchText}
-      location.hash = '/?' + $.param(query)
-
   atozParam: ()->
     query = $.extend {}, @props.cards.query
     query = $.extend query, {sort: 'title', order: 'asc', page: 1}
@@ -54,16 +40,9 @@ module.exports = React.createClass
 
   render: ->
     console.log 'render', @props.cards.query
-    <div className="container" style={{paddingLeft:"5px",paddingRight:"5px",paddingBottom:"20px"}}>
-      {if @props.showNav
+    <div className="container" style={{paddingLeft:"5px",paddingRight:"5px"}}>
+      {if !@props.card
         <div className="row">
-          <div className="col-sm-12" style={{padding:"5px"}}>
-            <form>
-              <div className="form-group">
-                <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} placeholder='Type search text and press enter ...' />
-              </div>
-            </form>
-          </div>
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
               <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
@@ -132,6 +111,14 @@ module.exports = React.createClass
                   </li>
                 </ul>
             }
+          </div>
+        </div>
+      else
+        <div className="row">
+          <div className="col-sm-12" style={{padding:"0px"}}>
+            <ul className="nav nav-pills">
+              <li><a href={"/#/" + @props.card.get('title')} style={fontWeight:'bold'}>{@props.card.get('title')}</a></li>
+            </ul>
           </div>
         </div>
       } 

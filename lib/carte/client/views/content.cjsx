@@ -61,7 +61,7 @@ module.exports = React.createClass
           error: (card, response)=>
             console.log response
         document.title = card.get('title') + ' - ' + config.title
-        <List key='show' cards={cards} showNav=false />
+        <List key='show' cards={cards} card={card} />
       else
         console.log 'else'
         <div>Loading ...</div>

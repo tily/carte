@@ -6,6 +6,7 @@ markdownIt = require('markdown-it')(linkify: true)
 
 module.exports = React.createClass
   displayName: 'Card'
+  isSafariOrUiWebView: /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent)
 
   componentDidMount: ->
     @props.card.on 'change', @forceUpdate.bind(@, null)
@@ -27,13 +28,8 @@ module.exports = React.createClass
 
   render: ->
     console.log 'Card: render'
-    style = {height:'220px'}
-    if @props.card.get('focused')
-      #style.color = 'red'
-      style.borderColor = '#ccc'
-    <div className='col-sm-4' style={padding:'5px'} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
-      <div className='list-group' style={margin:'0px',padding:'0px'}>
-        <div className='list-group-item' style={style}>
+    <div className='col-sm-4 col-xs-12 list-group' style={marginBottom:'0px',padding:"5px"} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
+        <div className='list-group-item' style={height:'220px'}>
           <div>
             {
               if @props.card.get('focused')
@@ -42,7 +38,7 @@ module.exports = React.createClass
             <strong>
               {@props.card.get('title')}
             </strong>
-            <span className='pull-right' style={{visibility: if @state.showTools then 'visible' else 'hidden'}}>
+            <span className='pull-right' style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
               <ModalTrigger modal={<Edit card={@props.card} />}>
                 <a href="javascript:void(0)">
                   <i className='glyphicon glyphicon-edit' />
@@ -56,8 +52,7 @@ module.exports = React.createClass
             </span>
           </div>
           <div style={overflow:'hidden',width:'100%',height:'80%',wordWrap:'break-word'}>
-            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
+            <p dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
           </div>
-        </div>
       </div>
     </div>
