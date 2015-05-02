@@ -29,8 +29,10 @@ module Carte
         end
       
         before_validation(on: :update) do
-          self.title = self.new_title
-          self.new_title = nil
+          if self.new_title
+            self.title = self.new_title
+            self.new_title = nil
+          end
         end
       
         def self.sample(size=1)
