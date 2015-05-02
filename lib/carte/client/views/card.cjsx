@@ -30,7 +30,7 @@ module.exports = React.createClass
     console.log 'Card: render'
     <div className='col-sm-4 col-xs-12 list-group' style={marginBottom:'0px',padding:"5px"} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
         <div className='list-group-item' style={height:'220px'}>
-          <div>
+          <div style={marginBottom:'10px'}>
             {
               if @props.card.get('focused')
                 <i className='glyphicon glyphicon-star' style={marginRight:'5px'} />
@@ -52,7 +52,7 @@ module.exports = React.createClass
             </span>
           </div>
           <div style={overflow:'hidden',width:'100%',height:'80%',wordWrap:'break-word'}>
-            <p dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
+            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
           </div>
       </div>
     </div>
