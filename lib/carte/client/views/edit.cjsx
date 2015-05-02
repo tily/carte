@@ -1,16 +1,20 @@
 # @cjsx React.DOM 
 $ = require('jquery')
-React = require('react')
+React = require('react/addons')
 Modal = require('react-bootstrap/lib/Modal')
 Button = require('react-bootstrap/lib/Button')
+TagsInput = require('react-tagsinput')
 
 module.exports = React.createClass
+  mixins: [React.addons.LinkedStateMixin]
+
   displayName: 'Edit'
 
   getInitialState: ()->
     updating: false
     title: @props.card.get('title')
     content: @props.card.get('content')
+    tags: @props.card.get('tags') || []
     errors: false
 
   onChangeTitle: ->
@@ -23,9 +27,9 @@ module.exports = React.createClass
     event.preventDefault()
     @setState updating: true
     if @props.card.isNew()
-      attributes = {title: @state.title, content: @state.content}
+      attributes = {title: @state.title, content: @state.content, tags: @state.tags}
     else
-      attributes = {new_title: @state.title, content: @state.content}
+      attributes = {new_title: @state.title, content: @state.content, tags: @state.tags}
     @props.card.save attributes,
       success: ()=>
         @setState updating: false
@@ -60,6 +64,10 @@ module.exports = React.createClass
         <div className="form-group">
           <label class="control-label">Content</label>
           <textarea rows="10" className="form-control" value={@state.content} onChange={@onChangeContent} disabled={@state.updating} />
+        </div>
+        <div className="form-group">
+          <label class="control-label">Tags</label>
+          <TagsInput ref='tags' valueLink={this.linkState('tags')} />
         </div>
         <div className="form-group" style={{paddingBottom:'17px'}}>
           <button className="btn btn-default pull-right" onClick={@onClickOk} disabled={@state.updating}>
