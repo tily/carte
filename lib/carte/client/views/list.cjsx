@@ -3,6 +3,8 @@ $ = require('jquery')
 React = require('react')
 Cards = require('./cards')
 CardCollection = require('../models/cards')
+Pagination = require('./pagination')
+helpers = require('../helpers')
 
 module.exports = React.createClass
   displayName: 'List'
@@ -78,48 +80,7 @@ module.exports = React.createClass
                   </li>
                 </ul>
               else
-                <ul className="nav nav-pills pull-right">
-                  <li>
-                    {
-                      if @props.cards.page
-                        if @props.cards.page.current > 1
-                          href = "/#/?" + @pageParam(@props.cards.page.current - 1)
-                        else
-                          href = "/#/?" + @pageParam(@props.cards.page.total)
-                      else
-                        href = "javascript:void(0)"
-                      <a href={href} aria-label="Previous" style={{padding:'6px 12px'}}>
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    }
-                  </li>
-                  <li style={width:'4.0em',textAlign:'center'}>
-                    {
-                      if @props.cards.page
-                        <a href={"/#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
-                          {@props.cards.page.current} / {@props.cards.page.total}
-                        </a>
-                      else
-                        <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
-                          <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
-                        </a>
-                    }
-                  </li>
-                  <li>
-                    {
-                      if @props.cards.page
-                        if @props.cards.page.current < @props.cards.page.total
-                          href = "/#/?" + @pageParam(@props.cards.page.current + 1)
-                        else
-                          href = "/#/?" + @pageParam(1)
-                      else
-                        href = "javascript:void(0)"
-                      <a href={href} aria-label="Next" style={{padding:'6px 12px'}}>
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    }
-                  </li>
-                </ul>
+                <Pagination cards={@props.cards} />
             }
           </div>
         </div>
@@ -133,4 +94,12 @@ module.exports = React.createClass
         </div>
       } 
       <Cards cards={@props.cards} />
+      {
+        if !@props.card && helpers.isMobile()
+          <div className="row">
+            <div className="col-sm-12" style={{padding:"0px"}}>
+              <Pagination cards={@props.cards} />
+            </div>
+          </div>
+      }
     </div>
