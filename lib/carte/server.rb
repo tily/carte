@@ -4,6 +4,7 @@ require 'mongoid'
 require 'mongoid_auto_increment_id'
 require 'will_paginate_mongoid'
 require 'mongoid-simple-tags'
+require 'mongoid/geospatial'
 require 'carte/server/validators'
 require 'carte/server/models'
 

@@ -44,4 +44,17 @@ namespace :carte do
   task :reset do
     Card.delete_all
   end
+
+  desc 'create indexes'
+  task :create_indexes do
+    Card.create_indexes
+  end
+
+  desc 'update random point'
+  task :update_random do
+    Card.all.each do |card|
+      card.random_point = [Random.rand, 0]
+      card.save!
+    end
+  end
 end

@@ -6,10 +6,12 @@ module Carte
         include Mongoid::Timestamps
         include Mongoid::Attributes::Dynamic
         include Mongoid::Document::Taggable
+        include Mongoid::Geospatial
       
         field :title, type: String
         field :new_title, type: String
         field :content, type: String
+        field :random_point, type: Point, spatial: true
 
         index({title: 1}, {unique: true, name: "title_index"})
       
@@ -38,9 +40,13 @@ module Carte
             self.new_title = nil
           end
         end
+
+        before_create do
+          self.random_point = [Random.rand, 0]
+        end
       
         def self.sample(size=1)
-          self.in(id: (1..self.count).to_a.sample(size))
+          self.near(random_point: [Random.rand, 0]).limit(size)
         end
       
         def lefts(size=1)
