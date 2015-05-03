@@ -37,7 +37,7 @@ module.exports = React.createClass
         title = 'search: ' + cards.query.title + ' (' + title + ')' if cards.query.title
         title += ' - ' + config.title
         document.title = title
-        <List key='list' cards={cards} showNav=true />
+        <List key='list' router={@props.router} cards={cards} showNav=true />
       when "show"
         console.log 'show'
         cards = new CardCollection()

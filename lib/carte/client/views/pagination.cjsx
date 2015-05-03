@@ -1,6 +1,8 @@
 # @cjsx React.DOM 
+Backbone = require('backbone')
 $ = require('jquery')
 React = require('react')
+helpers = require('../helpers')
 
 module.exports = React.createClass
   displayName: 'Pagination'
@@ -29,7 +31,7 @@ module.exports = React.createClass
       <li style={width:'4.0em',textAlign:'center'}>
         {
           if @props.cards.page
-            <a href={"#/?" + @pageParam(@props.cards.page.current)} style={{padding:'6px 12px'}}>
+            <a href={"#/?" + @pageParam(@props.cards.page.current)} onClick={helpers.reload} style={{padding:'6px 12px'}}>
               {@props.cards.page.current} / {@props.cards.page.total}
             </a>
           else

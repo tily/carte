@@ -1,5 +1,6 @@
 # @cjsx React.DOM 
 $ = require('jquery')
+Backbone = require('backbone')
 React = require('react')
 Cards = require('./cards')
 CardCollection = require('../models/cards')
@@ -17,13 +18,13 @@ module.exports = React.createClass
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
 
   atozParam: ()->
-    @queryParam {sort: 'title', order: 'asc', page: 1}, ['seed']
+    @queryParam {sort: 'title', order: 'asc', page: 1}, []
 
   latestParam: ()->
-    @queryParam {sort: 'updated_at', order: 'desc', page: 1}, ['seed']
+    @queryParam {sort: 'updated_at', order: 'desc', page: 1}, []
 
   randomParam: ()->
-    @queryParam {order: 'random', page: 1, seed: new Date().getTime()}, ['sort', 'page']
+    @queryParam {order: 'random'}, ['sort', 'page']
 
   tagParam: (tag)->
     @queryParam {tag: tag}, ['seed']
@@ -42,9 +43,9 @@ module.exports = React.createClass
         <div className="row">
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
-              <li><a href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
-              <li><a href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+              <li><a onClick={helpers.reload} href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
+              <li><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
+              <li><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               {
                 if @props.cards.query.tags
                   @props.cards.query.tags.split(',').map (tag)=>
@@ -59,7 +60,7 @@ module.exports = React.createClass
                   <li>
                     {
                       if @props.cards.page
-                        <a href={"#/?" + @randomParam()} style={{padding:'6px 12px'}}>
+                        <a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px'}}>
                           <i className="glyphicon glyphicon-refresh" />
                         </a>
                       else
