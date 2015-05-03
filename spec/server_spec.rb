@@ -73,6 +73,12 @@ describe 'API' do
         expect(response.code).to eq(400)
         expect(response['card']['errors']).to eq({'tags' => ['are too many (maximum is 3 tags)']})
       end
+
+      it 'returns error when one of the tags is too long' do
+        response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: ['a' * 11]}.to_json)
+        expect(response.code).to eq(400)
+        expect(response['card']['errors']).to eq({'tags' => ['is too long (maximum is 10 characters)']})
+      end
     end
   end
 
@@ -154,6 +160,13 @@ describe 'API' do
         response = client.put("/cards/card1.json", body: {tags: %w(tag1 tag2 tag3 tag4)}.to_json)
 	expect(response.code).to eq(400)
         expect(response['card']['errors']).to eq({'tags' => ['are too many (maximum is 3 tags)']})
+      end
+
+      it 'returns error when one of the tags is too long' do
+        response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json)
+        response = client.put("/cards/card1.json", body: {tags: ['a' * 11]}.to_json)
+	expect(response.code).to eq(400)
+        expect(response['card']['errors']).to eq({'tags' => ['is too long (maximum is 10 characters)']})
       end
     end
   end
