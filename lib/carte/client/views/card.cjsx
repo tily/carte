@@ -58,7 +58,7 @@ module.exports = React.createClass
           {
             if @props.card.get("tags")
               @props.card.get("tags").map (tag)->
-                <span className="pull-right tools">&nbsp;&nbsp;<a href={"/#/?tags=" + tag}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></span>
+                <span className="pull-right tools">&nbsp;&nbsp;<a href={"#/?tags=" + tag}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></span>
           }
           </div>
       </div>

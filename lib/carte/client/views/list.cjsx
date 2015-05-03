@@ -47,13 +47,13 @@ module.exports = React.createClass
         <div className="row">
           <div className="col-sm-6" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href={"/#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
-              <li><a href={"/#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
-              <li><a href={"/#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+              <li><a href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
+              <li><a href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
+              <li><a href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               {
                 if @props.cards.query.tags
                   @props.cards.query.tags.split(',').map (tag)=>
-                    <li><a href={"/#/?" + @tagParam(tag)} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
+                    <li><a href={"#/?" + @tagParam(tag)} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
               }
             </ul>
           </div>
@@ -64,7 +64,7 @@ module.exports = React.createClass
                   <li>
                     {
                       if @props.cards.page
-                        <a href={"/#/?" + @randomParam()} style={{padding:'6px 12px'}}>
+                        <a href={"#/?" + @randomParam()} style={{padding:'6px 12px'}}>
                           <i className="glyphicon glyphicon-refresh" />
                         </a>
                       else
@@ -83,7 +83,7 @@ module.exports = React.createClass
         <div className="row">
           <div className="col-sm-12" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href={"/#/" + @props.card.get('title')} style={fontWeight:'bold'}>{@props.card.get('title')}</a></li>
+              <li><a href={"#/" + @props.card.get('title')} style={fontWeight:'bold'}>{@props.card.get('title')}</a></li>
             </ul>
           </div>
         </div>
