@@ -3,10 +3,10 @@ React = require('react')
 Edit = require('./edit')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
 markdownIt = require('markdown-it')(linkify: true)
+helpers = require('../helpers')
 
 module.exports = React.createClass
   displayName: 'Card'
-  isSafariOrUiWebView: /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent)
 
   componentDidMount: ->
     @props.card.on 'change', @forceUpdate.bind(@, null)
@@ -38,7 +38,7 @@ module.exports = React.createClass
             <strong>
               {@props.card.get('title')}
             </strong>
-            <span className='pull-right tools' style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
+            <span className='pull-right tools' style={{visibility: if helpers.isMobile() || @state.showTools then 'visible' else 'hidden'}}>
               <ModalTrigger modal={<Edit card={@props.card} />}>
                 <a href="javascript:void(0)">
                   <i className='glyphicon glyphicon-edit' />
@@ -54,7 +54,7 @@ module.exports = React.createClass
           <div style={overflow:'hidden',width:'100%',height:'75%',wordWrap:'break-word'}>
             <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
           </div>
-          <div style={{visibility: if @isSafariOrUiWebView || @state.showTools then 'visible' else 'hidden'}}>
+          <div style={{visibility: if helpers.isMobile() || @state.showTools then 'visible' else 'hidden'}}>
           {
             if @props.card.get("tags")
               @props.card.get("tags").map (tag)->
