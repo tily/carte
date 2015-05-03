@@ -23,7 +23,8 @@ module Carte
           presence: true,
           length: {maximum: 560}
         validates :tags,
-          length: {maximum: 3, message: 'are too many (maximum is 3 tags)'}
+          length: {maximum: 3, message: 'are too many (maximum is 3 tags)'},
+          array: {length: {maximum: 10}}
       
         has_many :histories
       
