@@ -36,14 +36,14 @@ module Carte
           cards = Card.send(order, sort)
         end
         if title = params[:title]
-          cards = cards.any_of({title: /#{title}/})
+          cards = cards.any_of({title: /#{title}/i})
         end
         if params[:tags]
           tags = params[:tags].split(',')
           cards = cards.tagged_with_all(tags)
         end
         if content = params[:content]
-          cards = cards.any_of({content: /#{content}/})
+          cards = cards.any_of({content: /#{content}/i})
         end
         cards = cards.paginate(per_page: 9, page: params[:page])
       end
