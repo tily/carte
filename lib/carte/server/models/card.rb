@@ -22,6 +22,8 @@ module Carte
         validates :content,
           presence: true,
           length: {maximum: 560}
+        validates :tags,
+          length: {maximum: 3, message: 'are too many (maximum is 3 tags)'}
       
         has_many :histories
       
