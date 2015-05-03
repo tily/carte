@@ -3,6 +3,7 @@ React = require('react')
 List = require('./list')
 CardCollection = require('../models/cards')
 CardModel = require('../models/card')
+String = require('string')
 config = require('../../shared/config.json')
 
 module.exports = React.createClass
@@ -31,7 +32,7 @@ module.exports = React.createClass
         title = []
         for k, v of cards.query
           if k != 'title'
-            title.push(k + ': ' + v)
+            title.push(String(k).capitalize() + ': ' + v)
         title = title.join(', ')
         title = 'search: ' + cards.query.title + ' (' + title + ')' if cards.query.title
         title += ' - ' + config.title
