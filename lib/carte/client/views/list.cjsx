@@ -17,27 +17,22 @@ module.exports = React.createClass
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
 
   atozParam: ()->
-    query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort: 'title', order: 'asc', page: 1}
-    delete query.seed
-    $.param(query)
+    @queryParam {sort: 'title', order: 'asc', page: 1}, ['seed']
 
   latestParam: ()->
-    query = $.extend {}, @props.cards.query
-    query = $.extend query, {sort: 'updated_at', order: 'desc', page: 1}
-    delete query.seed
-    $.param(query)
+    @queryParam {sort: 'updated_at', order: 'desc', page: 1}, ['seed']
 
   randomParam: ()->
-    query = $.extend {}, @props.cards.query
-    query = $.extend query, {order: 'random', page: 1, seed: new Date().getTime()}
-    delete query.sort
-    delete query.page
-    $.param(query)
+    @queryParam {order: 'random', page: 1, seed: new Date().getTime()}, ['sort', 'page']
 
   tagParam: (tag)->
+    @queryParam {tag: tag}, ['seed']
+
+  queryParam: (param, deleteKeys)->
     query = $.extend {}, @props.cards.query
-    query = $.extend query, {tags: tag}
+    query = $.extend query, param
+    for key in deleteKeys
+      delete query[key]
     $.param(query)
 
   render: ->
