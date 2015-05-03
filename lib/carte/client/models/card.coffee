@@ -1,4 +1,5 @@
 Backbone = require('backbone')
+config = require('../../shared/config.json')
 
 module.exports = class Card extends Backbone.Model
   idAttribute: 'title'
@@ -10,10 +11,13 @@ module.exports = class Card extends Backbone.Model
     if @isNew()
       console.log @
       console.log 'url is new'
-      '/api/cards.json'
+      url = '/api/cards.json'
     else
       console.log 'url is not new'
-      '/api/cards/' + @get('title') + '.json'
+      url = '/api/cards/' + @get('title') + '.json'
+    if config.api_path
+      url = config.api_path + url
+    url
 
   parse: (response)->
     if response.card then response.card else response
