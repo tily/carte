@@ -1,6 +1,6 @@
 {
-  "title": "carte sandbox",
-  "description": "sandbox for carte",
+  "title": "Carte Sandbox",
+  "description": "Sandbox for Carte",
   "public_folder": "public",
   "script_path": "public/app.js",
   "link_color": "yellow"
