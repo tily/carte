@@ -67,6 +67,12 @@ describe 'API' do
         expect(response.code).to eq(400)
         expect(response['card']['errors']).to eq({'content' => ['は 560 文字以内で入力してください']})
       end
+
+      it 'returns error when the tags is too many' do
+        response = client.post('/cards.json', body: {title: 'card1', content: 'content1', tags: %w(tag1 tag2 tag3 tag4)}.to_json)
+        expect(response.code).to eq(400)
+        expect(response['card']['errors']).to eq({'tags' => ['are too many (maximum is 3 tags)']})
+      end
     end
   end
 
@@ -141,6 +147,13 @@ describe 'API' do
         response = client.put("/cards/card1.json", body: {content: 'd' * 561}.to_json) 
 	expect(response.code).to eq(400)
         expect(response['card']['errors']).to eq({'content' => ['は 560 文字以内で入力してください']})
+      end
+
+      it 'returns error when the tags is too many' do
+        response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json)
+        response = client.put("/cards/card1.json", body: {tags: %w(tag1 tag2 tag3 tag4)}.to_json)
+	expect(response.code).to eq(400)
+        expect(response['card']['errors']).to eq({'tags' => ['are too many (maximum is 3 tags)']})
       end
     end
   end
