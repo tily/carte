@@ -45,8 +45,8 @@ module Carte
           self.random_point = [Random.rand, 0]
         end
       
-        def self.sample(size=1)
-          self.near(random_point: [Random.rand, 0]).limit(size)
+        def self.random
+          self.near(random_point: [Random.rand, 0])
         end
       
         def lefts(size=1)

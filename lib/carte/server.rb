@@ -30,9 +30,10 @@ module Carte
         order = (params[:order] && %w(asc desc random).include?(params[:order])) ? params[:order] : 'desc'
         sort = (params[:sort] && %w(title created_at updated_at).include?(params[:sort])) ? params[:sort] : 'updated_at'
         if order == 'random'
-          return Card.sample(9)
+          cards = Card.random
+        else
+          cards = Card.send(order, sort)
         end
-        cards = Card.send(order, sort)
         if title = params[:title]
           cards = cards.any_of({title: /#{title}/})
         end
