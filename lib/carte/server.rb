@@ -15,6 +15,7 @@ module Carte
     include Carte::Server::Models
 
     configure do
+      set :protection, :except => :path_traversal
       set :views, File.join(File.dirname(__FILE__), 'server/views')
       set :public_folder, 'public'
       set :script_path, '/app.js'

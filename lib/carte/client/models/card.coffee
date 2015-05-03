@@ -1,5 +1,6 @@
 Backbone = require('backbone')
 config = require('../../shared/config.json')
+querystring = require('querystring')
 
 module.exports = class Card extends Backbone.Model
   idAttribute: 'title'
@@ -14,7 +15,7 @@ module.exports = class Card extends Backbone.Model
       url = '/api/cards.json'
     else
       console.log 'url is not new'
-      url = '/api/cards/' + @get('title') + '.json'
+      url = '/api/cards/' + encodeURIComponent(@get('title')) + '.json'
     if config.api_path
       url = config.api_path + url
     url
