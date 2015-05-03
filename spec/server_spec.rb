@@ -10,7 +10,7 @@ end
 
 class DictionaryClient
   include HTTParty
-  base_uri 'http://localhost/api/'
+  base_uri 'http://localhost:9393/api/'
   format :json
 end
 
@@ -40,32 +40,32 @@ describe 'API' do
       it 'returns error when the title is not specified' do
         response = client.post('/cards.json', body: {content: 'content1'}.to_json) 
         expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'title' => ['が入力されていません']})
+        expect(response['card']['errors']).to eq({'title' => ["can't be blank"]})
       end
 
       it 'returns error when the content is not specified' do
         response = client.post('/cards.json', body: {title: 'card1'}.to_json) 
         expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'content' => ['が入力されていません']})
+        expect(response['card']['errors']).to eq({'content' => ["can't be blank"]})
       end
 
       it 'returns error when the title is not unique' do
         response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json) 
         response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json) 
         expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'title' => ['は既に存在します']})
+        expect(response['card']['errors']).to eq({'title' => ['is already taken']})
       end
 
       it 'returns error when the title is too long' do
         response = client.post('/cards.json', body: {title: 'w' * 71, content: 'content1'}.to_json) 
         expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'title' => ['は 70 文字以内で入力してください']})
+        expect(response['card']['errors']).to eq({'title' => ['is too long (maximum is 70 characters)']})
       end
 
       it 'returns error when the content is too long' do
         response = client.post('/cards.json', body: {title: 'card1', content: 'd' * 561}.to_json) 
         expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'content' => ['は 560 文字以内で入力してください']})
+        expect(response['card']['errors']).to eq({'content' => ['is too long (maximum is 560 characters)']})
       end
 
       it 'returns error when the tags is too many' do
@@ -132,21 +132,21 @@ describe 'API' do
         response = client.post('/cards.json', body: {title: 'card2', content: 'content2'}.to_json) 
         response = client.put("/cards/card2.json", body: {new_title: 'card1', content: 'content1'}.to_json)
 	expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'title' => ['は既に存在します']})
+        expect(response['card']['errors']).to eq({'title' => ['is already taken']})
       end
 
       it 'returns error when the title is too long' do
         response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json) 
         response = client.put("/cards/card1.json", body: {new_title: 'w' * 71}.to_json) 
 	expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'title' => ['は 70 文字以内で入力してください']})
+        expect(response['card']['errors']).to eq({'title' => ['is too long (maximum is 70 characters)']})
       end
 
       it 'returns error when the content is too long' do
         response = client.post('/cards.json', body: {title: 'card1', content: 'content1'}.to_json) 
         response = client.put("/cards/card1.json", body: {content: 'd' * 561}.to_json) 
 	expect(response.code).to eq(400)
-        expect(response['card']['errors']).to eq({'content' => ['は 560 文字以内で入力してください']})
+        expect(response['card']['errors']).to eq({'content' => ['is too long (maximum is 560 characters)']})
       end
 
       it 'returns error when the tags is too many' do
