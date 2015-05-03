@@ -35,11 +35,6 @@ module.exports = React.createClass
     delete query.page
     $.param(query)
 
-  pageParam: (page)->
-    query = $.extend {}, @props.cards.query
-    query = $.extend query, {page: page}
-    $.param(query)
-
   tagParam: (tag)->
     query = $.extend {}, @props.cards.query
     query = $.extend query, {tags: tag}
