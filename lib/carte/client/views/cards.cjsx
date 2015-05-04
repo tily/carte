@@ -11,10 +11,10 @@ module.exports = React.createClass
   componentDidMount: ()->
     console.log 'component did mount'
     @props.cards.on 'sync', @forceUpdate.bind(@, null)
-    @props.card.on 'sync', @forceUpdate.bind(@, null)
-    @props.card.on 'error', (model, response)=>
-      @setState error: response
-      @forceUpdate.bind(@, null)
+    if @props.card
+      @props.card.on 'error', (model, response)=>
+        @setState error: response
+        @forceUpdate.bind(@, null)
 
   render: ->
     console.log 'render cards', @props.cards, @state
