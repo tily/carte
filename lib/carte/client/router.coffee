@@ -13,15 +13,6 @@ module.exports = class Router extends Backbone.Router
     @query = querystring.parse(string)
     console.log @query
 
-  new: ()->
-    console.log 'new'
-    @current = 'new'
-
-  edit: (title)->
-    console.log 'edit', title
-    @current = 'edit'
-    @title = title
-
   show: (title)->
     console.log 'show', title
     @current = 'show'
