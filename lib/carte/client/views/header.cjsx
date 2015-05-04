@@ -15,15 +15,14 @@ module.exports = React.createClass
 
   componentWillMount: ()->
     console.log 'header mounted'
-    @card = new CardModel()
-    @card._isNew = true
-    @card.on 'sync', (model)=>
-      console.log 'sync!!!'
+    @onSync = ()=>
+      console.log 'model new calback'
       @card = new CardModel()
       @card._isNew = true
+      @card.on 'sync', @onSync
       @forceUpdate()
+    @onSync()
 
-    console.log 'componentWillMount'
     @callback = ()=>
       if @props.router.query
         searchText = []
