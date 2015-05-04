@@ -3,5 +3,6 @@
   "description": "Sandbox for Carte",
   "public_folder": "public",
   "script_path": "public/app.js",
-  "link_color": "yellow"
+  "link_color": "yellow",
+  "api_path": ""
 }
