@@ -81,7 +81,7 @@ module.exports = React.createClass
           </div>
         </div>
       } 
-      <Cards cards={@props.cards} />
+      <Cards cards={@props.cards} card={@props.card} />
       {
         if !@props.card && helpers.isMobile()
           <div className="row">

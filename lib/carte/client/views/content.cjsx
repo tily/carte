@@ -60,7 +60,8 @@ module.exports = React.createClass
               cards.add cardModel
             cards.fetching = false
           error: (card, response)=>
-            console.log response
+            console.log 'error!!!!!!!!!!!!!!!!!!!!!!!!', response
+            cards.fetching = false
         document.title = card.get('title') + ' - ' + config.title
         <List key='show' cards={cards} card={card} />
       else
