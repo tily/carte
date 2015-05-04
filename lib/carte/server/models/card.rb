@@ -2,10 +2,6 @@ module Carte
   class Server < Sinatra::Base
     module Models
       class Card
-        class << self
-          attr_accessor :config
-        end
-
         include Mongoid::Document
         include Mongoid::Timestamps
         include Mongoid::Attributes::Dynamic

@@ -25,7 +25,7 @@ module Carte
 
     helpers do
       def config
-        @config ||= Card.config = settings.default.update(settings.carte)
+        @config ||= settings.default.update(settings.carte)
       end
 
       def json_data
