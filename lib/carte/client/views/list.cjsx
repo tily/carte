@@ -31,8 +31,7 @@ module.exports = React.createClass
     @queryParam {tag: tag}, ['seed']
 
   queryParam: (param, deleteKeys)->
-    query = $.extend {}, @props.cards.query
-    query = $.extend query, param
+    query = $.extend {}, @props.cards.query, param
     for key in deleteKeys
       delete query[key]
     $.param(query)
