@@ -46,7 +46,7 @@ module.exports = React.createClass
               </ModalTrigger>
               &nbsp;
               &nbsp;
-              <a href={'#/' + @props.card.get('title')}>
+              <a href={'#/' + encodeURIComponent(@props.card.get('title'))}>
                 <i className='glyphicon glyphicon-link' />
               </a>
             </span>
