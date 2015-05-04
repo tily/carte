@@ -1,0 +1,32 @@
+{
+  "title": "Carte Sandbox",
+  "description": "Sandbox for Carte",
+  "views": {
+    "menu": [],
+    "query": {}
+  },
+  "models": {
+    "card": {
+      "validations": {
+        "title": {
+          "presence": true,
+          "length": 70
+        },
+        "description": {
+          "presence": true,
+          "length": {
+            "maximum": 70
+          }
+        },
+        "tags": {
+          "length": 3,
+          "array": {
+            "length": {
+              "maximum": 10
+            }
+          } 
+        }
+      }
+    }
+  }
+}

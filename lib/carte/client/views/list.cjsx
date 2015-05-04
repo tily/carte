@@ -48,11 +48,6 @@ module.exports = React.createClass
               <li><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
               <li><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               <li><a href={config.api_path + "/api/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
-              {
-                if @props.cards.query.tags
-                  @props.cards.query.tags.split(',').map (tag)=>
-                    <li><a href={"#/?" + @tagParam(tag)} style={padding:'6px 12px'}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></li>
-              }
             </ul>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>

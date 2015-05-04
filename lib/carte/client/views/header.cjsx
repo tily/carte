@@ -25,7 +25,13 @@ module.exports = React.createClass
 
     console.log 'componentWillMount'
     @callback = ()=>
-      @setState searchText: @props.router.query.title
+      searchText = []
+      if @props.router.query.tags
+        for tag in @props.router.query.tags.split(',')
+          searchText.push '#' + tag
+      if @props.router.query.title
+        searchText.push @props.router.query.title
+      @setState searchText: searchText.join(' ')
       @forceUpdate()
     @props.router.on "route", @callback
 
@@ -40,7 +46,16 @@ module.exports = React.createClass
     if event.keyCode == 13 # ENTER
       console.log '13 enter'
       event.preventDefault()
-      query = {title: @state.searchText}
+      tags = []
+      titles = []
+      for searchText in @state.searchText.split(' ')
+        if match = searchText.match(/^#(.+)/)
+          tags.push(match[1])
+        else
+          titles.push(searchText)
+      query = {}
+      query.title = titles.join(' ') if titles.length > 0
+      query.tags = tags.join(',') if tags.length > 0
       location.hash = '/?' + $.param(query)
 
   render: ->
