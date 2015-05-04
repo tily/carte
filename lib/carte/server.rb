@@ -54,6 +54,7 @@ module Carte
     end
 
     get '/app.js' do
+      cache_control :public
       send_file settings.carte['script_path']
     end
 
