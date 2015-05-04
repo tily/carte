@@ -10,6 +10,18 @@ uglify = require 'gulp-uglify'
 streamify = require 'gulp-streamify'
 
 module.exports = class Carte
+  install: (gulp, config)->
+    gulp.task 'build', =>
+      @build
+        watch: false
+        minify: true
+        config: config
+    gulp.task 'watch', =>
+      @build
+        watch: true
+        minifty: false
+        config: config
+
   build: (options)->
     config = require(options.config)
     fs.writeFileSync(__dirname + '/carte/shared/config.json', JSON.stringify(config))
