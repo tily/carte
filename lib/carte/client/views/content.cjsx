@@ -1,4 +1,5 @@
 # @cjsx React.DOM 
+$ = require('jquery')
 React = require('react')
 List = require('./list')
 CardCollection = require('../models/cards')
@@ -24,9 +25,7 @@ module.exports = React.createClass
       when "list"
         console.log 'list', @props.router.query
         cards = new CardCollection()
-        cards.query = @props.router.query
-        cards.query.sort = 'title' if !cards.query.sort
-        cards.query.order = 'asc' if !cards.query.order
+        cards.query = $.extend config.default_query, @props.router.query
         cards.fetching = true
         cards.fetch success: ()-> cards.fetching = false
         title = []
