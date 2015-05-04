@@ -25,14 +25,15 @@ module.exports = React.createClass
 
     console.log 'componentWillMount'
     @callback = ()=>
-      searchText = []
-      if @props.router.query.tags
-        for tag in @props.router.query.tags.split(',')
-          searchText.push '#' + tag
-      if @props.router.query.title
-        searchText.push @props.router.query.title
-      @setState searchText: searchText.join(' ')
-      @forceUpdate()
+      if @props.router.query
+        searchText = []
+        if @props.router.query.tags
+          for tag in @props.router.query.tags.split(',')
+            searchText.push '#' + tag
+        if @props.router.query.title
+          searchText.push @props.router.query.title
+        @setState searchText: searchText.join(' ')
+        @forceUpdate()
     @props.router.on "route", @callback
 
   componentWillUnmount: ->
