@@ -76,7 +76,7 @@ module.exports = React.createClass
         <div className="row">
           <div className="col-sm-12" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
-              <li><a href={"#/" + @props.card.get('title')} style={fontWeight:'bold'}>{@props.card.get('title')}</a></li>
+              <li><a href={"#/" + @props.card.get('title')} style={padding:'6px 12px',fontWeight:'bold'}>{@props.card.get('title')}</a></li>
             </ul>
           </div>
         </div>
