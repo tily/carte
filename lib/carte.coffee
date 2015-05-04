@@ -24,7 +24,7 @@ module.exports = class Carte
 
   build: (options)->
     config = require(options.config)
-    fs.writeFileSync(__dirname + '/carte/shared/config.json', JSON.stringify(config))
+    fs.writeFileSync(__dirname + '/carte/shared/custom.json', JSON.stringify(config))
     dir = path.dirname config.script_path
     file = path.basename config.script_path
     minify = options.minify

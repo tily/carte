@@ -1,32 +1,14 @@
 {
   "title": "Carte Sandbox",
   "description": "Sandbox for Carte",
-  "views": {
-    "menu": [],
-    "query": {}
-  },
-  "models": {
-    "card": {
-      "validations": {
-        "title": {
-          "presence": true,
-          "length": 70
-        },
-        "description": {
-          "presence": true,
-          "length": {
-            "maximum": 70
-          }
-        },
-        "tags": {
-          "length": 3,
-          "array": {
-            "length": {
-              "maximum": 10
-            }
-          } 
-        }
-      }
-    }
-  }
+  "public_folder": "public",
+  "script_path": "public/app.js",
+  "link_color": "yellow",
+  "api_path": "",
+  "menu_items": ["atoz", "latest", "random"],
+  "default_query": [],
+  "title_max_length": 70,
+  "description_max_length": 560,
+  "tags_max_size": 3,
+  "tag_max_length": 10
 }

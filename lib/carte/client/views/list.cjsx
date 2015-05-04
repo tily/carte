@@ -6,7 +6,7 @@ Cards = require('./cards')
 CardCollection = require('../models/cards')
 Pagination = require('./pagination')
 helpers = require('../helpers')
-config = require('../../shared/config')
+config = require('../config')
 
 module.exports = React.createClass
   displayName: 'List'

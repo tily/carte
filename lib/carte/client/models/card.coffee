@@ -1,5 +1,5 @@
 Backbone = require('backbone')
-config = require('../../shared/config.json')
+config = require('../config')
 querystring = require('querystring')
 
 module.exports = class Card extends Backbone.Model

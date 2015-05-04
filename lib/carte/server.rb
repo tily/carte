@@ -18,10 +18,16 @@ module Carte
       set :protection, :except => :path_traversal
       set :views, File.join(File.dirname(__FILE__), 'server/views')
       set :public_folder, 'public'
+      set :default, JSON.parse(File.read(File.join(File.dirname(__FILE__), 'shared/default.json')))
+      set :carte, {}
       set :script_path, '/app.js'
     end
 
     helpers do
+      def config
+        @config ||= Card.config = settings.default.update(settings.carte)
+      end
+
       def json_data
         request.body.rewind
         JSON.parse(request.body.read)

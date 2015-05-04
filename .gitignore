@@ -14,4 +14,4 @@
 mkmf.log
 /node_modules/
 /public/app.js
-/lib/carte/shared/config.json
+/lib/carte/shared/custom.json

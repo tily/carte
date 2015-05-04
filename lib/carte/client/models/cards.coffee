@@ -1,7 +1,7 @@
 Backbone = require('backbone')
 CardModel = require('./card')
 $ = require('jquery')
-config = require('../../shared/config.json')
+config = require('../config')
 
 module.exports = class Cards extends Backbone.Collection
   model: CardModel

@@ -2,9 +2,9 @@
 %html
   %head
     %meta{charset:"utf-8"}
-    %title= settings.carte['title']
+    %title= config['title']
     %meta{name:"viewport",content:"width=device-width,initial-scale=1.0"}
-    %meta{name:"description",content:settings.carte['description']}
+    %meta{name:"description",content:config['description']}
     %script{type:"text/javascript",src:"/app.js"}
     :css
       .navbar-default a,
@@ -24,7 +24,7 @@
         text-decoration: none !important;
       }
       a, a:hover, a:visited, a:active {
-        color: #{settings.carte['link_color']}; 
+        color: #{config['link_color']}; 
       }
       .glyphicon-refresh-animate {
         -animation: spin .7s infinite linear;

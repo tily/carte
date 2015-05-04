@@ -5,7 +5,7 @@ Edit = require('./edit')
 CardModel = require('../models/card')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
 helpers = require('../helpers')
-config = require('../../shared/config.json')
+config = require('../config')
 
 module.exports = React.createClass
   displayName: 'Header'

@@ -4,7 +4,7 @@ List = require('./list')
 CardCollection = require('../models/cards')
 CardModel = require('../models/card')
 String = require('string')
-config = require('../../shared/config.json')
+config = require('../config')
 
 module.exports = React.createClass
   displayName: 'Content'

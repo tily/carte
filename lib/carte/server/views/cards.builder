@@ -2,8 +2,8 @@ xml.instruct! :xml, version: '1.0'
 xml.rss version: "2.0", :"xmlns:atom" => "http://www.w3.org/2005/Atom" do
   xml.channel do
     xml.tag! "atom:link", href: "http://#{request.host}/api/cards.xml?#{request.env['QUERY_STRING']}", rel: "self", type: "application/rss+xml"
-    xml.title settings.carte['title']
-    xml.description settings.carte['description']
+    xml.title config['title']
+    xml.description config['description']
     xml.link "http://#{request.host}/"
     @cards.each do |card|
       xml.item do
