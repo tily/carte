@@ -23,6 +23,16 @@ module.exports = React.createClass
       @card._isNew = true
       @forceUpdate()
 
+    console.log 'componentWillMount'
+    @callback = ()=>
+      @setState searchText: @props.router.query.title
+      @forceUpdate()
+    @props.router.on "route", @callback
+
+  componentWillUnmount: ->
+    console.log 'componentWillMount un'
+    @props.router.off "route", @callback
+
   onChangeSearchText: ()->
     @setState searchText: event.target.value
 
