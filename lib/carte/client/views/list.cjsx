@@ -6,6 +6,7 @@ Cards = require('./cards')
 CardCollection = require('../models/cards')
 Pagination = require('./pagination')
 helpers = require('../helpers')
+config = require('../../shared/config')
 
 module.exports = React.createClass
   displayName: 'List'
@@ -46,6 +47,7 @@ module.exports = React.createClass
               <li><a onClick={helpers.reload} href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
               <li><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
               <li><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+              <li><a href={config.api_path + "/api/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
               {
                 if @props.cards.query.tags
                   @props.cards.query.tags.split(',').map (tag)=>

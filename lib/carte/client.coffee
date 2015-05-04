@@ -7,6 +7,7 @@ Router = require('./client/router')
 
 Backbone.$ = $
 cssify.byUrl('//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
+cssify.byUrl('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
 
 $(document).ready ()->
   AppView = React.createFactory(AppViewComponent)
