@@ -4,15 +4,5 @@
   "public_folder": "public",
   "script_path": "public/app.js",
   "link_color": "yellow",
-  "api_path": "",
-  "models": {
-    "card": {
-      "title": {
-        "length": {"maximum": "170"}
-      },
-      "description": {
-        "length": {"maximum": "170"}
-      }
-    }
-  }
+  "api_path": ""
 }
