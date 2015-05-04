@@ -6,7 +6,7 @@
   "link_color": "yellow",
   "api_path": "",
   "menu_items": ["atoz", "latest", "random"],
-  "default_query": [],
+  "default_query": {"sort": "title", "order": "asc"},
   "title_max_length": 70,
   "description_max_length": 560,
   "tags_max_size": 3,
