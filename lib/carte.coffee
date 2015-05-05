@@ -1,4 +1,4 @@
-fs = require 'fs'
+fs = require 'fs-extra'
 path = require 'path'
 gulp = require 'gulp'
 gulpUtil = require 'gulp-util'
@@ -8,6 +8,7 @@ browserify = require 'browserify'
 watchify = require 'watchify'
 uglify = require 'gulp-uglify'
 streamify = require 'gulp-streamify'
+_ = require 'lodash'
 
 module.exports = class Carte
   install: (gulp, config)->
@@ -33,10 +34,26 @@ module.exports = class Carte
       packageCache: {}
       fullPaths: true
       entries: [__dirname + '/carte/client.coffee']
-      extensions: ['.coffee', '.js', '.cjsx']
+      extensions: ['.coffee', '.js', '.cjsx', '.css']
     browserify
       .transform 'coffee-reactify'
       .transform 'debowerify'
+      .transform 'browserify-css',
+        rootDir: 'public'
+        processRelativeUrl: (relativeUrl)->
+          stripQueryStringAndHashFromPath = (url)-> url.split('?')[0].split('#')[0]
+          rootDir = path.resolve(process.cwd(), 'public')
+          relativePath = stripQueryStringAndHashFromPath(relativeUrl)
+          queryStringAndHash = relativeUrl.substring(relativePath.length)
+          prefix = '../node_modules/'
+          if (_.startsWith(relativePath, prefix))
+            vendorPath = 'vendor/' + relativePath.substring(prefix.length)
+            source = path.join(rootDir, relativePath)
+            target = path.join(rootDir, vendorPath)
+            gulpUtil.log('Copying file from ' + JSON.stringify(source) + ' to ' + JSON.stringify(target))
+            fs.copySync(source, target)
+            return vendorPath + queryStringAndHash
+          relativeUrl
     if options.watch
       watchified = watchify(browserify)
       watchified.on 'update', ()=> @bundle(browserify, dir, file, minify)
