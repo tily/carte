@@ -15,3 +15,4 @@ mkmf.log
 /node_modules/
 /public/app.js
 /lib/carte/shared/custom.json
+.env
