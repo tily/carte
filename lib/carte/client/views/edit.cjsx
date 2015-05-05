@@ -16,6 +16,7 @@ module.exports = React.createClass
     content: @props.card.get('content')
     tags: @props.card.get('tags') || []
     errors: false
+    shaking: false
 
   onChangeTitle: ->
     @setState title: event.target.value
@@ -41,9 +42,11 @@ module.exports = React.createClass
         console.log response.responseJSON
         @setState errors: response.responseJSON.card.errors
         @setState updating: false
+        @setState shaking: true
+        setTimeout (=> @setState shaking: false), 300
 
   render: ->
-    <Modal {...@props} bsStyle='default' title={if @props.card.isNew() then <i className="glyphicon glyphicon-plus" /> else <i className="glyphicon glyphicon-edit" />} animation={false}>
+    <Modal className={"animated infinite shake" if @state.shaking} {...@props} bsStyle='default' title={if @props.card.isNew() then <i className="glyphicon glyphicon-plus" /> else <i className="glyphicon glyphicon-edit" />} animation={false}>
       <div className='modal-body'>
         {
           if @state.errors
