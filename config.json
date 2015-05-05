@@ -1,9 +1,9 @@
 {
   "title": "Carte Sandbox (custom)",
   "description": "Sandbox for Carte",
+  "icon_link": "http://www.google.com",
   "public_folder": "public",
   "script_path": "public/app.js",
-  "link_color": "yellow",
   "menu_items": ["latest", "random", "atoz"],
   "default_query": {"sort": "updated_at", "order": "desc"},
   "api_path": ""
