@@ -2,3 +2,90 @@
 @import "../../node_modules/font-awesome/css/font-awesome.css";
 @import "../../node_modules/animate.css/animate.css";
 
+.navbar-default a,
+.navbar-default a:hover,
+.navbar-default a:visited,
+.navbar-default a:active,
+.nav-pills a,
+.nav-pills a:hover,
+.nav-pills a:visited,
+.nav-pills a:active,
+.tools a,
+.tools a:hover,
+.tools a:visited,
+.tools a:active
+{
+  color: #333333 !important;
+  text-decoration: none !important;
+}
+
+.glyphicon-refresh-animate {
+  -animation: spin .7s infinite linear;
+  -webkit-animation: spin2 .7s infinite linear;
+}
+@-webkit-keyframes spin2 {
+  from { -webkit-transform: rotate(0deg);}
+  to { -webkit-transform: rotate(360deg);}
+}
+@keyframes spin {
+  from { transform: scale(1) rotate(0deg);}
+  to { transform: scale(1) rotate(360deg);}
+}
+
+/* https://github.com/olahol/react-tagsinput/blob/master/react-tagsinput.css */
+.react-tagsinput {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 3px;
+}
+
+.react-tagsinput-tag {
+  display: block;
+  /*border: 1px solid #a5d24a;*/
+  /*background: #cde69c;*/
+  /*color: #638421;*/
+  /*font-size: 12px;*/
+  /*font-family: 'Helvetica Neue', 'Arial', sans-serif;*/
+  float: left;
+  /*padding: 5px;*/
+  margin-right: 5px;
+  /*margin-bottom: 5px;*/
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.react-tagsinput-invalid {
+  background: #FBD8DB !important;
+  color: #90111A !important;
+}
+
+.react-tagsinput-validating {
+  /* background: #FFFACD !important; */
+}
+
+.react-tagsinput-remove {
+  font-weight: bold;
+  /* color: #638421; */
+  text-decoration: none;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.react-tagsinput-remove:before {
+  /* content: " x"; */
+}
+
+.react-tagsinput-input {
+  background: transparent;
+  /* color: #777; */
+  border: 0;
+  /* font-size: 13px; */
+  /* font-family: 'Helvetica Neue', 'Arial', sans-serif; */
+  /*padding: 5px;*/
+  margin: 0;
+  width: 80px;
+  outline: none;
+}
+
