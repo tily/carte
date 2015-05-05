@@ -1,7 +1,8 @@
 require 'sinatra/base'
+require 'json'
 
 module Carte
   class Server < Sinatra::Base
-    VERSION = "0.0.14"
+    VERSION = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../../../package.json")))['version']
   end
 end
