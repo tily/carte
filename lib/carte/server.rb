@@ -107,7 +107,6 @@ module Carte
         card = Card.where(title: params[:title]).first
         halt 404 if card.nil?
         card.histories.create!
-        p json_data.slice('new_title', 'content', 'tags').compact
         if card.update_attributes(json_data.slice('new_title', 'content', 'tags').compact)
           status 201
           {}.to_json
