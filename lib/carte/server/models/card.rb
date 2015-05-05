@@ -25,7 +25,7 @@ module Carte
           presence: true,
           length: {maximum: (ENV['CARTE_DESCRIPTION_MAX_LENGTH'] || 560).to_i}
         validates :tags,
-          length: {maximum: (ENV['CARTE_TAG_MAX_SIZE'] || 3).to_i, message: 'are too many (maximum is 3 tags)'},
+          length: {maximum: (ENV['CARTE_TAGS_MAX_SIZE'] || 3).to_i, message: 'are too many (maximum is 3 tags)'},
           array: {length: {maximum: (ENV['CARTE_TAG_MAX_LENGTH'] || 10).to_i}}
       
         has_many :histories
