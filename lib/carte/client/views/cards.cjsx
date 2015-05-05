@@ -17,6 +17,14 @@ module.exports = React.createClass
         @setState error: response
         @forceUpdate.bind(@, null)
 
+  componentWillReceiveProps: (nextProps)->
+    console.log 'component did mount'
+    nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
+    if nextProps.card
+      nextProps.card.on 'error', (model, response)=>
+        @setState error: response
+        @forceUpdate.bind(@, null)
+
   render: ->
     console.log 'render cards', @props.cards, @state
     if @props.cards.fetching
