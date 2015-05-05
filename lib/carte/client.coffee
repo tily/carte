@@ -4,6 +4,7 @@ $ = require('jquery')
 cssify = require('cssify')
 AppViewComponent = require('./client/views/app')
 Router = require('./client/router')
+require('./client.css')
 
 Backbone.$ = $
 
