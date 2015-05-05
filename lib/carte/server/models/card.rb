@@ -20,13 +20,13 @@ module Carte
 	  on: :create
         validates :title,
           uniqueness: true,
-          length: {maximum: 70}
+          length: {maximum: (ENV['CARTE_TITLE_MAX_LENGTH'] || 70).to_i}
         validates :content,
           presence: true,
-          length: {maximum: 560}
+          length: {maximum: (ENV['CARTE_DESCRIPTION_MAX_LENGTH'] || 560).to_i}
         validates :tags,
-          length: {maximum: 3, message: 'are too many (maximum is 3 tags)'},
-          array: {length: {maximum: 10}}
+          length: {maximum: (ENV['CARTE_TAG_MAX_SIZE'] || 3).to_i, message: 'are too many (maximum is 3 tags)'},
+          array: {length: {maximum: (ENV['CARTE_TAG_MAX_LENGTH'] || 10).to_i}}
       
         has_many :histories
       
