@@ -25,7 +25,7 @@ module.exports = React.createClass
       when "list"
         console.log 'list', @props.router.query
         cards = new CardCollection()
-        cards.query = $.extend config.default_query, @props.router.query
+        cards.query = $.extend {}, config.default_query, @props.router.query
         cards.fetching = true
         cards.fetch success: ()-> cards.fetching = false
         title = []
