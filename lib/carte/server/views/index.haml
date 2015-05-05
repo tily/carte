@@ -23,8 +23,14 @@
         color: #333333 !important;
         text-decoration: none !important;
       }
-      a, a:hover, a:visited, a:active {
-        color: #{config['link_color']}; 
+      a {
+        color: #{config['link_color']};
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        color: #{config['link_active_color']};
+        text-decoration: underline;
       }
       .glyphicon-refresh-animate {
         -animation: spin .7s infinite linear;
