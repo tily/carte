@@ -21,9 +21,11 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Components
 
-* [carte-server](https://rubygems.org/gems/carte-server)
-* [carte-client](https://www.npmjs.com/package/carte-client)
-
+| Package Name | Description |
+|--------------|-------------|
+| [carte-server](https://rubygems.org/gems/carte-server)     | provides JSON API (document is [here](https://github.com/tily/carte/wiki/API))  |
+* [carte-client](https://www.npmjs.com/package/carte-client) | builds client side javascript         |
+ 
 ## Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox)
