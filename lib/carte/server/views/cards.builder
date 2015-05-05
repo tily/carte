@@ -8,7 +8,7 @@ xml.rss version: "2.0", :"xmlns:atom" => "http://www.w3.org/2005/Atom" do
     @cards.each do |card|
       xml.item do
         xml.title(card.title)
-        xml.description card.content
+        xml.description markdown2html(card.content)
         xml.link("http://#{request.host}/#/#{URI.escape(card.title)}")
         xml.pubDate card.updated_at.rfc822
         xml.guid({isPermaLink: false}, "http://#{request.host}/#/#{URI.escape(card.title)}##{card.updated_at.to_i}")

@@ -5,6 +5,7 @@ require 'mongoid_auto_increment_id'
 require 'will_paginate_mongoid'
 require 'mongoid-simple-tags'
 require 'mongoid/geospatial'
+require 'redcarpet'
 require 'carte/server/validators'
 require 'carte/server/models'
 
@@ -52,6 +53,11 @@ module Carte
           cards = cards.any_of({content: /#{content}/i})
         end
         cards = cards.paginate(per_page: 9, page: params[:page])
+      end
+
+      def markdown2html(markdown)
+        renderer = Redcarpet::Render::HTML.new(filter_html:true)
+        Redcarpet::Markdown.new(renderer, autolink: true).render(markdown)
       end
     end
 

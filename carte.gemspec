@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "haml"
   spec.add_dependency "mongoid-simple-tags"
   spec.add_dependency "mongoid-geospatial"
+  spec.add_dependency "redcarpet"
 end
