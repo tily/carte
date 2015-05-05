@@ -24,7 +24,7 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 | Package Name | Description |
 |--------------|-------------|
 | [carte-server](https://rubygems.org/gems/carte-server)     | provides JSON API (document is [here](https://github.com/tily/carte/wiki/API))  |
-* [carte-client](https://www.npmjs.com/package/carte-client) | builds client side javascript         |
+| [carte-client](https://www.npmjs.com/package/carte-client) | builds client side javascript         |
  
 ## Deploy
 
