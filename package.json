@@ -23,7 +23,6 @@
     "coffee-reactify": "^3.0.0",
     "coffee-script": "^1.9.2",
     "coffeeify": "^1.0.0",
-    "cssify": "^0.7.0",
     "debowerify": "^1.2.1",
     "gulp": "^3.8.11",
     "gulp-if": "^1.2.5",
