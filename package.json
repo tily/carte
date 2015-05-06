@@ -27,6 +27,7 @@
     "coffeeify": "^1.0.0",
     "debowerify": "^1.2.1",
     "extend": "^2.0.1",
+    "font-awesome": "^4.3.0",
     "fs-extra": "^0.18.2",
     "gulp": "^3.8.11",
     "gulp-if": "^1.2.5",
