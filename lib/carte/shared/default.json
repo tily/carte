@@ -12,6 +12,7 @@
 
   "root_dir": "public",
   "root_path": "/",
+  "api_path": "api",
   "icon_path": "images/icon.png",
   "script_path": "app.js",
   "html_path": "app.html",
