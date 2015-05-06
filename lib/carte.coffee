@@ -25,7 +25,7 @@ module.exports = class Carte
 
     gulp.task 'build:html', =>
       _config = require('./carte/client/config')
-      gulp.src('lib/carte/client.jade')
+      gulp.src(__dirname + '/carte/client.jade')
         .pipe jade(locals: {config: _config}, pretty: true)
         .pipe rename(_config.html_path)
         .pipe gulp.dest(_config.root_dir)
