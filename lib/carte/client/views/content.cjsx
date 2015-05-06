@@ -30,11 +30,9 @@ module.exports = React.createClass
         cards.fetch success: ()-> cards.fetching = false
         title = []
         for k, v of cards.query
-          if k != 'title'
-            title.push(String(k).capitalize() + ': ' + v)
+          title.push(String(k).capitalize() + ': ' + v)
         title = title.join(', ')
-        title = 'search: ' + cards.query.title + ' (' + title + ')' if cards.query.title
-        title += ' - ' + config.title
+        title = config.title + ' (' + title + ')'
         document.title = title
         <List key='list' router={@props.router} cards={cards} />
       when "show"
@@ -61,7 +59,7 @@ module.exports = React.createClass
           error: (card, response)=>
             console.log 'error!!!!!!!!!!!!!!!!!!!!!!!!', response
             cards.fetching = false
-        document.title = card.get('title') + ' - ' + config.title
+        document.title = config.title + ' (' + card.get('title') + ')'
         <List key='show' cards={cards} card={card} />
       else
         console.log 'else'
