@@ -9,26 +9,35 @@ watchify = require 'watchify'
 uglify = require 'gulp-uglify'
 streamify = require 'gulp-streamify'
 _ = require 'lodash'
+jade = require 'gulp-jade'
+rename = require 'gulp-rename'
 
 module.exports = class Carte
-  install: (gulp, config)->
-    gulp.task 'build', =>
-      @build
-        watch: false
-        minify: true
-        config: config
-    gulp.task 'watch', =>
-      @build
-        watch: true
-        minifty: false
-        config: config
+  watching: false
 
-  build: (options)->
+  install: (gulp, config)->
+    custom = require(config)
+    fs.writeFileSync(__dirname + '/carte/shared/custom.json', JSON.stringify(custom))
+
+    gulp.task 'watching', => @watching = true
+    gulp.task 'build', ['build:html', 'build:script']
+    gulp.task 'watch', ['watching', 'build:html', 'build:script']
+
+    gulp.task 'build:html', =>
+      _config = require('./carte/client/config')
+      gulp.src('lib/carte/client.jade')
+        .pipe jade(locals: {config: _config}, pretty: true)
+        .pipe rename(_config.html_path)
+        .pipe gulp.dest(_config.root_dir)
+
+    gulp.task 'build:script', =>
+      @buildScript config: config
+
+  buildScript: (options)->
     config = require(options.config)
     fs.writeFileSync(__dirname + '/carte/shared/custom.json', JSON.stringify(config))
-    dir = path.dirname config.script_path
+    dir = config.root_dir
     file = path.basename config.script_path
-    minify = options.minify
     browserify = browserify
       cache: {}
       packageCache: {}
@@ -54,15 +63,15 @@ module.exports = class Carte
             fs.copySync(source, target)
             return vendorPath + queryStringAndHash
           relativeUrl
-    if options.watch
+    if @watching
       watchified = watchify(browserify)
-      watchified.on 'update', ()=> @bundle(browserify, dir, file, minify)
+      watchified.on 'update', ()=> @bundle(browserify, dir, file)
       watchified.on 'log', gulpUtil.log
-    @bundle(browserify, dir, file, minify)
+    @bundle(browserify, dir, file)
   
-  bundle: (browserify, dir, file, minify)->
+  bundle: (browserify, dir, file)->
     browserify
       .bundle()
       .pipe sourceStream file
-      .pipe gulpIf(minify, streamify(uglify()))
+      .pipe gulpIf(!@watching, streamify(uglify()))
       .pipe gulp.dest dir
