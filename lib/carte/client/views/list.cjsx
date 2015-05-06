@@ -53,7 +53,7 @@ module.exports = React.createClass
                     when 'random'
                       <li><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               }
-              <li><a href={config.api_path + "/api/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
+              <li><a href={config.root_path + config.api_path + "/api/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
             </ul>
           </div>
           <div className="col-sm-6" style={{padding:"0px"}}>

@@ -12,13 +12,11 @@ module.exports = class Card extends Backbone.Model
     if @isNew()
       console.log @
       console.log 'url is new'
-      url = '/api/cards.json'
+      url = '/cards.json'
     else
       console.log 'url is not new'
-      url = '/api/cards/' + encodeURIComponent(@get('title')) + '.json'
-    if config.api_path
-      url = config.api_path + url
-    url
+      url = '/cards/' + encodeURIComponent(@get('title')) + '.json'
+    config.root_path + config.api_path + url
 
   parse: (response)->
     if response.card then response.card else response
