@@ -28,12 +28,13 @@ module.exports = React.createClass
         cards.query = $.extend {}, config.default_query, @props.router.query
         cards.fetching = true
         cards.fetch success: ()-> cards.fetching = false
-        title = []
-        for k, v of cards.query
-          title.push(String(k).capitalize() + ': ' + v)
-        title = title.join(', ')
-        title = config.title + ' (' + title + ')'
-        document.title = title
+        #title = []
+        #for k, v of cards.query
+        #  title.push(String(k).capitalize() + ': ' + v)
+        #title = title.join(', ')
+        #title = config.title + ' (' + title + ')'
+        #document.title = title
+        document.title = config.title
         <List key='list' router={@props.router} cards={cards} />
       when "show"
         console.log 'show'
@@ -59,7 +60,7 @@ module.exports = React.createClass
           error: (card, response)=>
             console.log 'error!!!!!!!!!!!!!!!!!!!!!!!!', response
             cards.fetching = false
-        document.title = config.title + ' (' + card.get('title') + ')'
+        document.title = config.title + '、' + card.get('title')
         <List key='show' cards={cards} card={card} />
       else
         console.log 'else'
