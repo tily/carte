@@ -63,7 +63,7 @@ module.exports = React.createClass
       <div className="container-fluid">
         <div className="navbar-header">
           <a className="navbar-brand" onClick={helpers.reload if !config.icon_link} href={if config.icon_link then config.icon_link else "#/"} style={{paddingTop:"10px"}}>
-            <img alt="Brand" src="/images/icon.png" width="30" height="30" />
+            <img alt="Brand" src={config.root_path + config.icon_path} width="30" height="30" />
           </a>
           <a className="navbar-brand" onClick={helpers.reload} href="#/">
             {config.title}
