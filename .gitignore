@@ -14,5 +14,6 @@
 mkmf.log
 /node_modules/
 /public/app.js
+/public/app.html
 /lib/carte/shared/custom.json
 .env
