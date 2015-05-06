@@ -2,9 +2,21 @@
   "title": "Carte Sandbox (custom)",
   "description": "Sandbox for Carte",
   "icon_link": "http://www.google.com",
-  "public_folder": "public",
-  "script_path": "public/app.js",
   "menu_items": ["latest", "random", "atoz"],
   "default_query": {"sort": "updated_at", "order": "desc"},
-  "api_path": ""
+
+  "root_dir": "public",
+  "root_path": "/",
+  "icon_path": "images/icon.png",
+  "script_path": "app.js",
+  "html_path": "app.html",
+  "enable_apple_touch_icon": true,
+  "apple_touch_icon_path": "images/apple-touch-icon.png",
+  "apple_touch_icon_57_path": "images/apple-touch-icon-57x57.png",
+  "apple_touch_icon_72_path": "images/apple-touch-icon-72x72.png",
+  "apple_touch_icon_76_path": "images/apple-touch-icon-76x76.png",
+  "apple_touch_icon_114_path": "images/apple-touch-icon-114x114.png",
+  "apple_touch_icon_120_path": "images/apple-touch-icon-120x120.png",
+  "apple_touch_icon_144_path": "images/apple-touch-icon-144x144.png",
+  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png"
 }

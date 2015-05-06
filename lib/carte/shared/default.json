@@ -1,15 +1,27 @@
 {
   "title": "Carte Sandbox",
   "description": "Sandbox for Carte",
-  "public_folder": "public",
-  "script_path": "public/app.js",
   "link_color": "#337ab7",
   "link_active_color": "#23527c",
-  "api_path": "",
   "menu_items": ["atoz", "latest", "random"],
   "default_query": {"sort": "title", "order": "asc"},
   "title_max_length": 70,
   "description_max_length": 560,
   "tags_max_size": 3,
-  "tag_max_length": 10
+  "tag_max_length": 10,
+
+  "root_dir": "public",
+  "root_path": "/",
+  "icon_path": "images/icon.png",
+  "script_path": "app.js",
+  "html_path": "app.html",
+  "enable_apple_touch_icon": true,
+  "apple_touch_icon_path": "images/apple-touch-icon.png",
+  "apple_touch_icon_57_path": "images/apple-touch-icon-57x57.png",
+  "apple_touch_icon_72_path": "images/apple-touch-icon-72x72.png",
+  "apple_touch_icon_76_path": "images/apple-touch-icon-76x76.png",
+  "apple_touch_icon_114_path": "images/apple-touch-icon-114x114.png",
+  "apple_touch_icon_120_path": "images/apple-touch-icon-120x120.png",
+  "apple_touch_icon_144_path": "images/apple-touch-icon-144x144.png",
+  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png"
 }
