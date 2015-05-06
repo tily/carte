@@ -11,7 +11,7 @@ module.exports = React.createClass
         for i in [1..9]
           <div className='col-sm-4' style={padding:'5px'} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
             <div className='list-group'style={margin:'0px',padding:'0px'}>
-              <div className='list-group-item' style={height:'220px'}>
+              <div className='list-group-item' style={height:'200px'}>
                 {@props.children}
               </div>
             </div>

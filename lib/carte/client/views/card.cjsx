@@ -29,7 +29,7 @@ module.exports = React.createClass
   render: ->
     console.log 'Card: render'
     <div className='col-sm-4 col-xs-12 list-group' style={marginBottom:'0px',padding:"5px"} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
-        <div className='list-group-item' style={height:'220px'}>
+        <div className='list-group-item' style={height:'200px'}>
           <div style={marginBottom:'10px'}>
             {
               if @props.card.get('focused')
