@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport",content="width=device-width,initial-scale=1.0")
+    meta(name="description",content=config.description)
+    title= config.title
+    script(type="text/javascript",src=config.script_path)
+    if config.enable_apple_touch_icon
+      link(href='/apple-touch-icon.png',rel='apple-touch-icon')
+      for size in ['', '57', '72', '76', '114', '120', '144', '152']
+        link(href=config['apple_touch_icon_' + size + '_path'],rel='apple-touch-icon',sizes=size + 'x' + size)
+    style.
+      a {
+        color: #{config.link_color};
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        color: #{config.link_active_color};
+        text-decoration: underline;
+      }
+  body
+    #app
