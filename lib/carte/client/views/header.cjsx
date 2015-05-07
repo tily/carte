@@ -72,7 +72,7 @@ module.exports = React.createClass
         <div>
           <form className="navbar-form navbar-left" role="search">
             <div className="form-group">
-              <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} placeholder='Search ...' style={width:"344px"} />
+              <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} placeholder='Search ...' />
             </div>
           </form>
           <ul className="nav navbar-nav navbar-right">
