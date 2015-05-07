@@ -51,7 +51,7 @@ module.exports = React.createClass
               </a>
             </span>
           </div>
-          <div className="card" style={overflow:'hidden',width:'100%',height:'75%',wordWrap:'break-word'}>
+          <div className="card" style={overflow:'hidden',width:'100%',height:'73%',wordWrap:'break-word'}>
             <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
           </div>
           <div style={{visibility: if helpers.isMobile() || @state.showTools then 'visible' else 'hidden'}}>
