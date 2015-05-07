@@ -28,7 +28,7 @@ module.exports = React.createClass
           </a>
         }
       </li>
-      <li style={width:'4.0em',textAlign:'center'}>
+      <li style={width:'7.5em',textAlign:'center'}>
         {
           if @props.cards.page
             <a href={"#/?" + @pageParam(@props.cards.page.current)} onClick={helpers.reload} style={{padding:'6px 12px'}}>
