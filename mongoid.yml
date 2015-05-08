@@ -8,3 +8,7 @@ production:
   sessions:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
+docker:
+  sessions:
+    default:
+      uri: mongodb://mongo/carte
