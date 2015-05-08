@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'carte/server/version'
+require 'json'
 
 Gem::Specification.new do |spec|
   spec.name          = "carte-server"
-  spec.version       = Carte::Server::VERSION
+  spec.version       = JSON.parse(File.read("./package.json"))['version']
   spec.authors       = ["tily"]
   spec.email         = ["tidnlyam@gmail.com"]
   spec.summary       = %q{something like dictionary, wiki, or information card}
