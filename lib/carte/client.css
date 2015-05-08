@@ -19,6 +19,10 @@
   text-decoration: none !important;
 }
 
+.card ul,ol {
+  padding-left: 20px;
+}
+
 .glyphicon-refresh-animate {
   -animation: spin .7s infinite linear;
   -webkit-animation: spin2 .7s infinite linear;
