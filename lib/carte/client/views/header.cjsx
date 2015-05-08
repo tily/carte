@@ -39,10 +39,10 @@ module.exports = React.createClass
     console.log 'componentWillMount un'
     @props.router.off "route", @callback
 
-  onChangeSearchText: ()->
+  onChangeSearchText: (event)->
     @setState searchText: event.target.value
 
-  onKeyPressSearchText: ()->
+  onKeyPressSearchText: (event)->
     if event.keyCode == 13 # ENTER
       console.log '13 enter'
       event.preventDefault()

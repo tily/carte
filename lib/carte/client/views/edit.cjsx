@@ -18,13 +18,13 @@ module.exports = React.createClass
     errors: false
     shaking: false
 
-  onChangeTitle: ->
+  onChangeTitle: (event)->
     @setState title: event.target.value
 
-  onChangeContent: ->
+  onChangeContent: (event)->
     @setState content: event.target.value
 
-  onClickOk: ()->
+  onClickOk: (event)->
     event.preventDefault()
     @setState updating: true
     if @props.card.isNew()
