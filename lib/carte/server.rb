@@ -76,6 +76,7 @@ module Carte
     end
     
     get '/cards/:title.json' do
+      context = (params[:context] && %w(title created_at updated_at).include?(params[:context])) ? params[:context] : 'created_at'
       card = Card.where(title: params[:title]).first
       halt 404 if card.nil?
       {card: {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags, lefts: card.lefts(4), rights: card.rights(4)}}.to_json
