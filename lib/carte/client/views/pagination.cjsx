@@ -16,11 +16,11 @@ module.exports = React.createClass
     <ul className="nav nav-pills pull-right">
       <li>
         {
-          if @props.cards.page
-            if @props.cards.page.current > 1
-              href = "#/?" + @pageParam(@props.cards.page.current - 1)
+          if @props.cards.pagination
+            if @props.cards.pagination.current_page > 1
+              href = "#/?" + @pageParam(@props.cards.pagination.current_page - 1)
             else
-              href = "#/?" + @pageParam(@props.cards.page.total)
+              href = "#/?" + @pageParam(@props.cards.pagination.total_pages)
           else
             href = "javascript:void(0)"
           <a href={href} aria-label="Previous" style={{padding:'6px 12px'}}>
@@ -30,9 +30,9 @@ module.exports = React.createClass
       </li>
       <li style={width:'7.5em',textAlign:'center'}>
         {
-          if @props.cards.page
-            <a href={"#/?" + @pageParam(@props.cards.page.current)} onClick={helpers.reload} style={{padding:'6px 12px'}}>
-              {@props.cards.page.current} / {@props.cards.page.total}
+          if @props.cards.pagination
+            <a href={"#/?" + @pageParam(@props.cards.pagination.current_page)} onClick={helpers.reload} style={{padding:'6px 12px'}}>
+              {@props.cards.pagination.current_page} / {@props.cards.pagination.total_pages}
             </a>
           else
             <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
@@ -42,9 +42,9 @@ module.exports = React.createClass
       </li>
       <li>
         {
-          if @props.cards.page
-            if @props.cards.page.current < @props.cards.page.total
-              href = "#/?" + @pageParam(@props.cards.page.current + 1)
+          if @props.cards.pagination
+            if @props.cards.pagination.current_page < @props.cards.pagination.total_pages
+              href = "#/?" + @pageParam(@props.cards.pagination.current_page + 1)
             else
               href = "#/?" + @pageParam(1)
           else

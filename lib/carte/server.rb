@@ -67,12 +67,12 @@ module Carte
     
     get '/cards.json' do
       cards = search(params)
-      if cards.respond_to?(:current_page) && cards.respond_to?(:total_pages)
-        current_page = cards.current_page.to_i
-        total_pages = cards.total_pages
-      end
-      cards = cards.map {|card| {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags}}
-      {cards: cards, page: {current: current_page, total: total_pages}}.to_json
+      {
+        cards: cards.map {|card|
+          {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags}
+        },
+        pagination: {current_page: cards.current_page, total_pages: cards.total_pages, total_entries: cards.total_entries}
+      }.to_json
     end
     
     get '/cards/:title.json' do

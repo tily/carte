@@ -62,7 +62,7 @@ module.exports = React.createClass
                 <ul className="nav nav-pills pull-right">
                   <li>
                     {
-                      if @props.cards.page
+                      if @props.cards.pagination
                         <a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px'}}>
                           <i className="glyphicon glyphicon-refresh" />
                         </a>

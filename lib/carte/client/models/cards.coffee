@@ -11,6 +11,6 @@ module.exports = class Cards extends Backbone.Collection
     config.root_path + config.api_path + url
   parse: (response)->
     console.log response
-    @page = response.page
+    @pagination = response.pagination
     console.log @page
     response.cards
