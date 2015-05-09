@@ -234,4 +234,70 @@ describe 'API' do
       expect(response['tags'].size).to eq(6)
     end
   end
+
+  context 'For document' do
+    it 'POST /cards.json' do
+     cards = [
+       ['The Fool', 'The Fool or The Jester is one of the 78 cards in a Tarot deck; one of the 22 Trump cards that make up the Major Arcana. The Fool is unnumbered; sometimes represented as 0 (the first) or XXI (the second to last) or XXII (the last) Major Arcana in decks. It is used in divination as well as in game playing.'],
+       ['The Magician', 'The Magician, The Magus, or The Juggler (I) is the first trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination. In divination it is considered by some to succeed The Fool card, often numbered 0.'],
+       ['The High Priestess', 'The High Priestess (II) is the second trump or Major Arcana card in most traditional Tarot decks. This card is used in game playing as well as in divination. In the first Tarot pack with inscriptions, the 18th-century woodcut Marseilles Tarot, this figure is crowned with the Papal tiara and labelled La Papesse, the Popess, a possible reference to the legend of Pope Joan.'],
+       ['The Empress', 'The Empress (III) is the third trump or Major Arcana card in traditional Tarot decks. It is used in Tarot card games as well as divination.'],
+       ['The Emperor', 'The Emperor (IV) is the fourth trump or Major Arcana card in traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Hierophant', 'The Hierophant (V), in some decks named The Pope, is the fifth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Lovers', 'The Lovers (VI) is the sixth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Chariot', 'The Chariot (VII) is the seventh trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['Justice', 'Justice is a Major Arcana Tarot card, numbered either VIII or XI, depending on the deck. This card is used in game playing as well as in divination.'],
+       ['The Hermit', 'The Hermit (IX) is the ninth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['Wheel of Fortune', 'Wheel of Fortune (X) is the tenth trump or Major Arcana card in most Tarot decks. It is used in game playing as well as in divination.'],
+       ['Strength', 'Strength is a Major Arcana Tarot card, and is numbered either XI or VIII, depending on the deck. Historically it was called Fortitude, and in the Thoth Tarot deck it is called Lust. This card is used in game playing as well as in divination.'],
+       ['The Hanged Man', 'The Hanged Man (XII) is the twelfth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination. It depicts a pittura infamante, a shameful image of a traitor being punished in a manner common at the time for traitors in Italy.'],
+       ['Death', 'Death (XIII) is the thirteenth trump or Major Arcana card in most traditional Tarot decks. It is used in Tarot, tarock and tarocchi games as well as in divination.'],
+       ['Temperance', 'Temperance (XIV) is the fourteenth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Devil', 'The Devil (XV) is the fifteenth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Tower', 'The Tower (XVI) (most common modern name) is the 16th trump or Major Arcana card in most Italian-suited Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Star', 'The Star (XVII) is the seventeenth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Moon', 'The Moon (XVIII) is the eighteenth trump or Major Arcana card in most traditional Tarot decks. It is used in game playing as well as in divination.'],
+       ['The Sun', 'The Sun (XIX) is a trump card in the tarot deck. Tarot trumps are often called Major Arcana by tarot card readers.'],
+       ['Judgement', 'Judgement (XX), or in some decks spelled Judgment, is a Tarot card, part of the Major Arcana suit usually comprising 22 cards.'],
+       ['The World', 'The World (XXI) is a trump or Major Arcana card in the tarot deck. It is usually the final card of the Major Arcana or tarot trump sequence. In the tarot family of card games, this card is usually worth five points.'],
+     ]
+     cards.each do |card|
+       body = JSON.pretty_generate(title: card.first, content: card.last, tags: ['tarot', 'arcana'])
+       puts body
+       response = client.post('/cards.json', body: body)
+       puts JSON.pretty_generate response
+     end 
+
+     people = [
+       ['The Fool', nil],
+       ['The Magician', 'I'],
+       ['The High Priestess', 'II'],
+       ['The Empress', 'III'],
+       ['The Emperor', 'IV'],
+       ['The Hierophant', 'V'],
+       ['The Lovers', 'VI'],
+       ['The Chariot', 'VII'],
+       ['The Hermit', 'IX'],
+       ['The Hanged Man', 'XII']
+     ]
+     people.each do |person|
+       body = JSON.pretty_generate(new_title: "#{person.first} (#{person.last})", tags: %w(tarot arcana people))
+       puts body
+       response = client.put("/cards/#{URI.escape person.first}.json", body: body)
+       puts JSON.pretty_generate response
+     end
+
+     response = client.get('/cards.json', query: {sort:'title', order: 'asc', tags: 'people', title: '^The (C|E)'})
+     puts JSON.pretty_generate response
+
+     response = client.get("/cards/#{URI.escape 'The Hierophant (V)'}.json", query: {context: 'title'})
+     puts JSON.pretty_generate response
+
+     response = client.get("/cards/#{URI.escape 'The Hierophant (V)'}/history.json")
+     puts JSON.pretty_generate response
+
+     response = client.get("/tags.json")
+     puts JSON.pretty_generate response
+    end 
+  end
 end
