@@ -48,23 +48,25 @@ module Carte
         def self.random
           self.near(random_point: [Random.rand, 0])
         end
-      
-        def lefts(size=1)
-          ids = []
-          count = self.class.all.count
-          1.upto(size) do |i|
-            ids << (self.id - i > 0 ? self.id - i : count + (self.id - i))
+
+        def lefts(size, context=:created_at)
+          result = Card.lt(context => self.send(context)).limit(size).to_a
+          shortage = size - result.size
+          if shortage > 0
+            addition = self.class.lte(context => Card.max(context)).gt(context => self.send(context)).limit(shortage).to_a
+            result = addition + result
           end
-          self.class.in(id: ids)
+          result
         end
-      
-        def rights(size=1)
-          ids = []
-          count = self.class.all.count
-          1.upto(size) do |i|
-            ids << (self.id + i <= count ? self.id + i : self.id + i - count)
+
+        def rights(size, context=:created_at)
+          result = self.class.gt(context => self.send(context)).limit(size).to_a
+          shortage = size - result.size
+          if shortage > 0
+            addition = self.class.gt(context => 0).lt(context => self.send(context)).limit(shortage).to_a
+            result = result + addition
           end
-          self.class.in(id: ids)
+          result
         end
       end
     end
