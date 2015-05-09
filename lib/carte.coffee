@@ -8,6 +8,8 @@ browserify = require 'browserify'
 watchify = require 'watchify'
 uglify = require 'gulp-uglify'
 streamify = require 'gulp-streamify'
+coffeeReactify = require 'coffee-reactify'
+browserifyCss = require 'browserify-css'
 _ = require 'lodash'
 jade = require 'gulp-jade'
 rename = require 'gulp-rename'
@@ -45,8 +47,8 @@ module.exports = class Carte
       entries: [__dirname + '/carte/client.coffee']
       extensions: ['.coffee', '.js', '.cjsx', '.css']
     browserify
-      .transform 'coffee-reactify'
-      .transform 'browserify-css',
+      .transform coffeeReactify
+      .transform browserifyCss,
         rootDir: 'public'
         processRelativeUrl: (relativeUrl)->
           stripQueryStringAndHashFromPath = (url)-> url.split('?')[0].split('#')[0]
