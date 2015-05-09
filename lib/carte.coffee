@@ -46,7 +46,6 @@ module.exports = class Carte
       extensions: ['.coffee', '.js', '.cjsx', '.css']
     browserify
       .transform 'coffee-reactify'
-      .transform 'debowerify'
       .transform 'browserify-css',
         rootDir: 'public'
         processRelativeUrl: (relativeUrl)->

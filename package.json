@@ -25,7 +25,6 @@
     "coffee-reactify": "^3.0.0",
     "coffee-script": "^1.9.2",
     "coffeeify": "^1.0.0",
-    "debowerify": "^1.2.1",
     "extend": "^2.0.1",
     "font-awesome": "^4.3.0",
     "fs-extra": "^0.18.2",
