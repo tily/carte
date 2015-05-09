@@ -1,4 +1,5 @@
 require 'carte/server'
+require 'pry'
 include Carte::Server::Models
 
 namespace :carte do
@@ -56,5 +57,10 @@ namespace :carte do
       card.random_point = [Random.rand, 0]
       card.save!
     end
+  end
+
+  desc 'start console'
+  task :console do
+    binding.pry
   end
 end
