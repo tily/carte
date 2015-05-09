@@ -41,7 +41,7 @@ module.exports = React.createClass
     <div className="container" style={{paddingLeft:"5px",paddingRight:"5px"}}>
       {if !@props.card
         <div className="row">
-          <div className="col-sm-6" style={{padding:"0px"}}>
+          <div className="col-sm-4" style={{padding:"0px"}}>
             <ul className="nav nav-pills">
               {
                 for menuItem in config.menu_items
@@ -56,7 +56,15 @@ module.exports = React.createClass
               <li><a href={config.root_path + config.api_path + "/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
             </ul>
           </div>
-          <div className="col-sm-6" style={{padding:"0px"}}>
+          <div className="col-sm-4" style={{padding:"0px"}}>
+            {
+              if @props.cards.pagination
+                <a href="javascript:void(0)" className="center-block text-center" style={padding:'6px 12px'}>
+                  <span className="badge text-center" style={backgroundColor:'#333'}>{@props.cards.pagination.total_entries}</span>
+                </a>
+            }
+          </div>
+          <div className="col-sm-4" style={{padding:"0px"}}>
             {
               if @props.cards.query.order == 'random'
                 <ul className="nav nav-pills pull-right">
