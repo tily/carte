@@ -33,8 +33,6 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox)
 
-Deploy your carte with the button above. After deployment, you may want to customize your carte.
-
 ```
 ## change title and description
 $ vi config.json
@@ -49,3 +47,5 @@ $ docker build -t carte .
 $ docker run --name mongo -d mongo
 $ docker run --name carte --link mongo:mongo -p 80:80 -d carte
 ```
+
+After deployment, you may want to [customize your carte](https://github.com/tily/carte/wiki/Configuration).
