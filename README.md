@@ -9,6 +9,8 @@ Something like dictionary, wiki, or information card.
 
 ![](screenshot.png)
 
+Demo site [here](https://carte-sandbox.herokuapp.com/#/). French-Japanese dictionary [here](https://carte-francais.herokuapp.com/#/).
+
 ## Features
 
 * Manage your data fragments with cards
