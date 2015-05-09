@@ -9,7 +9,7 @@ Something like dictionary, wiki, or information card.
 
 ![](screenshot.png)
 
-Demo site [here](https://carte-sandbox.herokuapp.com/#/). French-Japanese dictionary [here](https://carte-francais.herokuapp.com/#/).
+You can try carte on [sandbox](http://carte-sandbox.herokuapp.com/#/). There is also [a French-Japanese dictionary version](https://carte-francais.herokuapp.com/#/).
 
 ## Features
 
@@ -18,7 +18,6 @@ Demo site [here](https://carte-sandbox.herokuapp.com/#/). French-Japanese dictio
 * View your card with the cards around it (like paper dictionary)
 * No user concept, super simple system like wiki
 
-You can try carte on [sandbox](http://carte-sandbox.herokuapp.com/#/).
 Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 ## Components
