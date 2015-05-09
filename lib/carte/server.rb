@@ -68,9 +68,7 @@ module Carte
     get '/cards.json' do
       cards = search(params)
       {
-        cards: cards.map {|card|
-          {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags}
-        },
+        cards: cards.as_json(only: %w(title content version tags)),
         pagination: {current_page: cards.current_page, total_pages: cards.total_pages, total_entries: cards.total_entries}
       }.to_json
     end
@@ -79,14 +77,20 @@ module Carte
       context = (params[:context] && %w(title created_at updated_at).include?(params[:context])) ? params[:context] : 'created_at'
       card = Card.where(title: params[:title]).first
       halt 404 if card.nil?
-      {card: {id: card.id, title: card.title, content: card.content, version: card.version, tags: card.tags, lefts: card.lefts(4), rights: card.rights(4)}}.to_json
+      {
+        card: card.as_json(only: %w(title content version tags)).update(
+          version: card.version,
+          lefts: card.lefts(4).as_json(only: %w(title content version tags)),
+          rights: card.rights(4).as_json(only: %w(title content version tags))
+        )
+      }.to_json
     end
 
     post '/cards.json' do
       card = Card.new(json_data.slice('title', 'content', 'tags'))
       if card.save
         status 201
-        {card: {id: card.id}}.to_json
+        {}.to_json
       else
         status 400
         {card: {errors: card.errors}}.to_json
@@ -115,7 +119,7 @@ module Carte
     get '/cards/:title/history.json' do
       card = Card.where(title: params[:title]).first
       halt 404 if card.nil?
-      {history: card.histories}.to_json
+      {history: card.histories.as_json(only: %w(title content version tags))}.to_json
     end
 
     get '/tags.json' do
