@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    carte-server (0.0.23)
+    carte-server (0.0.26)
       activesupport
       haml
       mongoid
