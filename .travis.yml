@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+- 2.0.0
+- 1.9.3
+- jruby-19mode
+- rbx-2
+deploy:
+  provider: heroku
+  api_key:
+    secure: kLO43BYTj0Uo1fGJPYvO0CHZMWBRF2s0nN4SdxkKpHVNlYVPMnuU13s38TVzrFxvoGlUVqJ0UWJ0SFgEpLbLGZ/31rXkS+y+89Ul4qgL8AaC5gEKZE6vQ/b9V7i4Vd3BkUaEEhh2gvv6zwmH/o82/tKS6H8hoktHDNbfuSSCKuY=
+  app: carte-test
+  on:
+    repo: tily/carte
