@@ -10,7 +10,7 @@ module.exports = React.createClass
     error: false
 
   componentDidMount: ()->
-    console.log 'component did mount'
+    console.log '[views/cards] component did mount'
     @props.cards.on 'sync', @forceUpdate.bind(@, null)
     if @props.card
       @props.card.on 'error', (model, response)=>
@@ -18,7 +18,7 @@ module.exports = React.createClass
         @forceUpdate.bind(@, null)
 
   componentWillReceiveProps: (nextProps)->
-    console.log 'component did mount'
+    console.log '[views/cards] component will receive props'
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
     if nextProps.card
       nextProps.card.on 'error', (model, response)=>
@@ -26,9 +26,7 @@ module.exports = React.createClass
         @forceUpdate.bind(@, null)
 
   render: ->
-    console.log 'render cards', @props.cards, @state
     if @props.cards.fetching
-      console.log 'cards loading'
       <Message>
         <i className='glyphicon glyphicon-refresh glyphicon-refresh-animate' /> Loading ...
       </Message>
@@ -37,6 +35,5 @@ module.exports = React.createClass
         <i className='glyphicon glyphicon-alert' /> {@state.error.status} {@state.error.statusText}
       </Message>
     else
-      console.log 'cards loaded'
       cards = @props.cards.map (card)-> <Card key={card.get("title")} card={card} />
       <div className='row'>{cards}</div>

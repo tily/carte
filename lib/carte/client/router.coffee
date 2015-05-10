@@ -7,13 +7,12 @@ module.exports = class Router extends Backbone.Router
     ''       : 'list'
 
   list: (string)->
+    console.log '[router] list', string
     location.hash = '/' if location.hash == ''
-    console.log 'list'
     @current = 'list'
     @query = querystring.parse(string)
-    console.log @query
 
   show: (title)->
-    console.log 'show', title
+    console.log '[router] show', title
     @current = 'show'
     @title = title

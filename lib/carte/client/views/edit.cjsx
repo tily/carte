@@ -54,7 +54,6 @@ module.exports = React.createClass
             @props.card.set 'title', @state.title
             location.hash = '/' + @state.title
       error: (model, response, options)=>
-        console.log response.responseJSON
         @setState errors: response.responseJSON.card.errors
         @setState updating: false
         @setState shaking: true

@@ -12,10 +12,11 @@ module.exports = React.createClass
   displayName: 'List'
 
   componentDidMount: ->
+    console.log '[views/list] component did mount'
     @props.cards.on 'sync', @forceUpdate.bind(@, null)
 
   componentWillReceiveProps: (nextProps)->
-    console.log 'List: component will receive props'
+    console.log '[views/list] component will receive props'
     nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
 
   atozParam: ()->
@@ -37,7 +38,6 @@ module.exports = React.createClass
     $.param(query)
 
   render: ->
-    console.log 'render', @props.cards.query
     <div className="container" style={{paddingLeft:"5px",paddingRight:"5px"}}>
       {if !@props.card
         <div className="row">

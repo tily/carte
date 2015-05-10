@@ -15,9 +15,9 @@ module.exports = React.createClass
     isCheckedIncludeContent: false
 
   componentWillMount: ()->
-    console.log 'header mounted'
+    console.log '[views/header] component will mount'
     @onSync = ()=>
-      console.log 'model new calback'
+      console.log '[views/header] onSync callback'
       @card = new CardModel()
       @card._isNew = true
       @card.on 'sync', @onSync
@@ -39,7 +39,7 @@ module.exports = React.createClass
     @props.router.on "route", @callback
 
   componentWillUnmount: ->
-    console.log 'componentWillMount un'
+    console.log '[views/header] component will unmount'
     @props.router.off "route", @callback
 
   onChangeIncludeContent: (event)->
@@ -50,14 +50,12 @@ module.exports = React.createClass
     @setState searchText: event.target.value
 
   onKeyDownSearchText: (event)->
-    console.log 'press', event
+    console.log '[views/header] onKeyDownSearchText', event
     if event.keyCode == 13 # ENTER
-      console.log '13 enter'
       event.preventDefault()
       @search()
 
   search: ->
-    console.log @state
     tags = []
     titles = []
     for searchText in @state.searchText.split(' ')
