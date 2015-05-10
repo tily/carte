@@ -58,7 +58,7 @@ module.exports = React.createClass
           </div>
           <div className="col-sm-4" style={{padding:"0px"}}>
             <a href="javascript:void(0)" className="center-block text-center" style={padding:'6px 12px'}>
-              <span className="badge text-center" style={backgroundColor:'#333'}>
+              <span className="badge text-center" style={color:'#333',backgroundColor:'#eee'}>
                 {
                   if @props.cards.pagination
                     @props.cards.pagination.total_entries
