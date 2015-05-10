@@ -12,6 +12,7 @@ module.exports = React.createClass
 
   getInitialState: ()->
     searchText: ''
+    isCheckedIncludeContent: false
 
   componentWillMount: ()->
     console.log 'header mounted'
@@ -32,12 +33,18 @@ module.exports = React.createClass
         if @props.router.query.title
           searchText.push @props.router.query.title
         @setState searchText: searchText.join(' ')
+        if @props.router.query.content
+          @setState isCheckedIncludeContent: true
         @forceUpdate()
     @props.router.on "route", @callback
 
   componentWillUnmount: ->
     console.log 'componentWillMount un'
     @props.router.off "route", @callback
+
+  onChangeIncludeContent: (event)->
+    @setState isCheckedIncludeContent: !@state.isCheckedIncludeContent, ()=>
+      @search() if @state.searchText != ''
 
   onChangeSearchText: (event)->
     @setState searchText: event.target.value
@@ -47,17 +54,22 @@ module.exports = React.createClass
     if event.keyCode == 13 # ENTER
       console.log '13 enter'
       event.preventDefault()
-      tags = []
-      titles = []
-      for searchText in @state.searchText.split(' ')
-        if match = searchText.match(/^#(.+)/)
-          tags.push(match[1])
-        else
-          titles.push(searchText)
-      query = {}
-      query.title = titles.join(' ') if titles.length > 0
-      query.tags = tags.join(',') if tags.length > 0
-      location.hash = '/?' + $.param(query)
+      @search()
+
+  search: ->
+    console.log @state
+    tags = []
+    titles = []
+    for searchText in @state.searchText.split(' ')
+      if match = searchText.match(/^#(.+)/)
+        tags.push(match[1])
+      else
+        titles.push(searchText)
+    query = {}
+    query.title = titles.join(' ') if titles.length > 0
+    query.content = titles.join(' ') if titles.length > 0 && @state.isCheckedIncludeContent
+    query.tags = tags.join(',') if tags.length > 0
+    location.hash = '/?' + $.param(query)
 
   render: ->
     <nav className="navbar navbar-default" style={{padding:"0px",backgroundColor:"white",marginBottom:"5px"}}>
@@ -74,6 +86,12 @@ module.exports = React.createClass
           <form className="navbar-form navbar-left" role="search">
             <div className="form-group">
               <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyDown={@onKeyDownSearchText} placeholder='Search ...' />
+            </div>
+            &nbsp;
+            <div className="checkbox">
+              <label>
+                <input type="checkbox" checked={@state.isCheckedIncludeContent} onChange={@onChangeIncludeContent} /> Include content
+              </label>
             </div>
           </form>
           <ul className="nav navbar-nav navbar-right">
