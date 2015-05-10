@@ -33,13 +33,6 @@ Japanese introduction is [here](http://tily.tumblr.com/post/117678137942/carte).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/tily/carte-sandbox)
 
-```
-## change title and description
-$ vi config.json
-## replace brand icon
-$ cp ~/Desktop/icon.png public/images/icon.png 
-```
-
 **Docker**
 
 ```bash
