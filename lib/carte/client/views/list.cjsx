@@ -57,12 +57,16 @@ module.exports = React.createClass
             </ul>
           </div>
           <div className="col-sm-4" style={{padding:"0px"}}>
-            {
-              if @props.cards.pagination
-                <a href="javascript:void(0)" className="center-block text-center" style={padding:'6px 12px'}>
-                  <span className="badge text-center" style={backgroundColor:'#333'}>{@props.cards.pagination.total_entries}</span>
-                </a>
-            }
+            <a href="javascript:void(0)" className="center-block text-center" style={padding:'6px 12px'}>
+              <span className="badge text-center" style={backgroundColor:'#333'}>
+                {
+                  if @props.cards.pagination
+                    @props.cards.pagination.total_entries
+                  else
+                    <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                }
+              </span>
+            </a>
           </div>
           <div className="col-sm-4" style={{padding:"0px"}}>
             {
