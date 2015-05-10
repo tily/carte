@@ -8,14 +8,14 @@ class Carte::Server
   end
 end
 
-class DictionaryClient
+class CarteClient
   include HTTParty
   base_uri 'http://localhost:9393/api/'
   format :json
 end
 
 def client
-  @client ||= DictionaryClient
+  @client ||= CarteClient
 end
 
 describe 'API' do
