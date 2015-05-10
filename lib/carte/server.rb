@@ -72,7 +72,7 @@ module Carte
     get '/cards.json' do
       cards = search(params)
       {
-        cards: cards.as_json(only: %w(title content version tags)),
+        cards: cards.map {|card| card.as_json(only: %w(title content tags)).update(version: card.version) },
         pagination: {current_page: cards.current_page, total_pages: cards.total_pages, total_entries: cards.total_entries}
       }.to_json
     end
