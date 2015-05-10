@@ -41,15 +41,19 @@ module Carte
         else
           cards = Card.send(order, sort)
         end
+        conditions = []
         if title = params[:title]
-          cards = cards.any_of({title: /#{title}/i})
+          conditions << {title: /#{title}/i}
+        end
+        if content = params[:content]
+          conditions << {content: /#{content}/i}
+        end
+        if conditions.size > 0
+          cards = cards.any_of(conditions)
         end
         if params[:tags]
           tags = params[:tags].split(',')
           cards = cards.tagged_with_all(tags)
-        end
-        if content = params[:content]
-          cards = cards.any_of({content: /#{content}/i})
         end
         cards = cards.paginate(per_page: 9, page: params[:page])
       end
