@@ -74,5 +74,5 @@ module.exports = class Carte
     browserify
       .bundle()
       .pipe sourceStream file
-      .pipe gulpIf(!@watching, streamify(uglify()))
+      .pipe gulpIf(!@watching, streamify(uglify(compress: {drop_console: !@watching})))
       .pipe gulp.dest dir
