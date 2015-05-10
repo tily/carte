@@ -42,7 +42,8 @@ module.exports = React.createClass
   onChangeSearchText: (event)->
     @setState searchText: event.target.value
 
-  onKeyPressSearchText: (event)->
+  onKeyDownSearchText: (event)->
+    console.log 'press', event
     if event.keyCode == 13 # ENTER
       console.log '13 enter'
       event.preventDefault()
@@ -72,7 +73,7 @@ module.exports = React.createClass
         <div>
           <form className="navbar-form navbar-left" role="search">
             <div className="form-group">
-              <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyPress={@onKeyPressSearchText} placeholder='Search ...' />
+              <input type="text" className="form-control" value={@state.searchText} onChange={@onChangeSearchText} onKeyDown={@onKeyDownSearchText} placeholder='Search ...' />
             </div>
           </form>
           <ul className="nav navbar-nav navbar-right">
