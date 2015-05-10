@@ -10,6 +10,7 @@ PATH
       mongoid_auto_increment_id (= 0.6.5)
       pry
       redcarpet
+      rspec
       sinatra
       sinatra-contrib
       will_paginate_mongoid
@@ -116,5 +117,4 @@ DEPENDENCIES
   carte-server!
   httparty
   rake (~> 10.0)
-  rspec
   shotgun
