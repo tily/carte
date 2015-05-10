@@ -11,3 +11,4 @@ deploy:
   app: carte-test
   on:
     repo: tily/carte
+  run: bundle exec rspec spec/
