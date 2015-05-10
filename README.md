@@ -1,7 +1,8 @@
 # Carte
 
 [![npm version](https://badge.fury.io/js/carte-client.svg)](http://badge.fury.io/js/carte-client)
-[![gem Version](https://badge.fury.io/rb/carte-server.svg)](http://badge.fury.io/rb/carte-server)
+[![npm dependencies](https://david-dm.org/tily/carte.svg)](https://david-dm.org/tily/carte)
+[![gem version](https://badge.fury.io/rb/carte-server.svg)](http://badge.fury.io/rb/carte-server)
 
 Something like dictionary, wiki, or information card.
 
