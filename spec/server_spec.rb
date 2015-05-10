@@ -10,7 +10,7 @@ end
 
 class CarteClient
   include HTTParty
-  base_uri 'http://localhost:9393/api/'
+  base_uri ENV['CARTE_API_ENDPOINT'] || 'http://localhost:9393/api/'
   format :json
 end
 
