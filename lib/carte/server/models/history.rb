@@ -13,7 +13,7 @@ module Carte
         before_create do
           self.title = self.card.title
           self.content = self.card.content
-          self.version = self.card.version
+          self.version = self.card.version - 1
           self.tags = self.card.tags
         end
       end
