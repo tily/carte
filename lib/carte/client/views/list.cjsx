@@ -47,11 +47,11 @@ module.exports = React.createClass
                 for menuItem in config.menu_items
                   switch menuItem
                     when 'atoz'
-                      <li><a onClick={helpers.reload} href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
+                      <li key='atoz'><a onClick={helpers.reload} href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
                     when 'latest'
-                      <li><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
+                      <li key='latest'><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
                     when 'random'
-                      <li><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+                      <li key='random'><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
               }
               <li><a href={config.root_path + config.api_path + "/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
             </ul>
