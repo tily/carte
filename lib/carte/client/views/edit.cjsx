@@ -44,6 +44,7 @@ module.exports = React.createClass
           if @state.dontCloseDialog
             @setState
               createSuccess: true
+              errors: null
               title: ''
               content: ''
               tags: []
@@ -53,6 +54,10 @@ module.exports = React.createClass
             @props.onRequestHide()
             @props.card.set 'title', @state.title
             location.hash = '/' + @state.title
+        else
+          @props.onRequestHide()
+          @props.card = new CardModel()
+          @props.card._isNew = true
       error: (model, response, options)=>
         @setState errors: response.responseJSON.card.errors
         @setState updating: false
