@@ -13,8 +13,8 @@ module.exports = React.createClass
     $.param(query)
 
   render: ->
-    <ul className="nav nav-pills pull-right">
-      <li>
+    <ul className="nav nav-pills pull-right carte-pagination">
+      <li className="carte-pagination-prev">
         {
           if @props.cards.pagination
             if @props.cards.pagination.current_page > 1
@@ -23,24 +23,24 @@ module.exports = React.createClass
               href = "#/?" + @pageParam(@props.cards.pagination.total_pages)
           else
             href = "javascript:void(0)"
-          <a href={href} aria-label="Previous" style={{padding:'6px 12px'}}>
+          <a href={href} aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         }
       </li>
-      <li style={width:'7.5em',textAlign:'center'}>
+      <li className="carte-pagination-curr">
         {
           if @props.cards.pagination
-            <a href={"#/?" + @pageParam(@props.cards.pagination.current_page)} onClick={helpers.reload} style={{padding:'6px 12px'}}>
+            <a href={"#/?" + @pageParam(@props.cards.pagination.current_page)} onClick={helpers.reload}>
               {@props.cards.pagination.current_page} / {@props.cards.pagination.total_pages}
             </a>
           else
-            <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
+            <a href="javascript:void(0)">
               <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
             </a>
         }
       </li>
-      <li>
+      <li className="carte-pagination-next">
         {
           if @props.cards.pagination
             if @props.cards.pagination.current_page < @props.cards.pagination.total_pages
@@ -49,7 +49,7 @@ module.exports = React.createClass
               href = "#/?" + @pageParam(1)
           else
             href = "javascript:void(0)"
-          <a href={href} aria-label="Next" style={{padding:'6px 12px'}}>
+          <a href={href} aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         }

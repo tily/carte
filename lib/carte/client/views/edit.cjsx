@@ -64,17 +64,17 @@ module.exports = React.createClass
       <div className='modal-body'>
         {
           if @state.errors
-            <div className="alert alert-danger" role="alert" style={padding:'5px'}>
-              <ul style={paddingLeft:"20px"}>
-              {
-                for key, errors of @state.errors
-                  for error in errors
-                    <li>{key + ' ' + error}</li>
-              }
+            <div className="alert alert-danger" role="alert">
+              <ul>
+                {
+                  for key, errors of @state.errors
+                    for error in errors
+                      <li>{key + ' ' + error}</li>
+                }
               </ul>
             </div>
           else if @state.createSuccess
-            <div className="alert alert-success" role="alert" style={padding:'5px'}>
+            <div className="alert alert-success" role="alert">
               <i className="glyphicon glyphicon-info-sign" />&nbsp;
               You created a card successfully. Let's create next one.
             </div>
@@ -99,7 +99,7 @@ module.exports = React.createClass
               </label>
             </div>
         }
-        <div className="form-group" style={{paddingBottom:'17px'}}>
+        <div className="form-group">
           <button className="btn btn-default pull-right" onClick={@onClickOk} disabled={@state.updating}>
             &nbsp;
             OK

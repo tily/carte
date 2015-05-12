@@ -70,10 +70,10 @@ module.exports = React.createClass
     location.hash = '/?' + $.param(query)
 
   render: ->
-    <nav className="navbar navbar-default" style={{padding:"0px",backgroundColor:"white",marginBottom:"5px"}}>
+    <nav className="navbar navbar-default">
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" onClick={helpers.reload if !config.icon_link} href={if config.icon_link then config.icon_link else "#/"} style={{paddingTop:"10px"}}>
+          <a className="navbar-brand" onClick={helpers.reload if !config.icon_link} href={if config.icon_link then config.icon_link else "#/"}>
             <img alt="Brand" src={config.root_path + config.icon_path} width="30" height="30" />
           </a>
           <a className="navbar-brand" onClick={helpers.reload} href="#/">

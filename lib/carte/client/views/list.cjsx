@@ -38,48 +38,79 @@ module.exports = React.createClass
     $.param(query)
 
   render: ->
-    <div className="container" style={{paddingLeft:"5px",paddingRight:"5px"}}>
+    <div className="container carte-list">
       {if !@props.card
         <div className="row">
-          <div className="col-sm-4" style={{padding:"0px"}}>
+          <div className="col-sm-4">
             <ul className="nav nav-pills">
               {
                 for menuItem in config.menu_items
                   switch menuItem
                     when 'atoz'
-                      <li key='atoz'><a onClick={helpers.reload} href={"#/?" + @atozParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>A to Z</a></li>
+                      <li key='atoz'>
+                        <a onClick={helpers.reload} href={"#/?" + @atozParam()}>
+                          {
+                            if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random'
+                              <strong>A to Z</strong>
+                            else
+                              <span>A to Z</span>
+                          }
+                        </a>
+                      </li>
                     when 'latest'
-                      <li key='latest'><a onClick={helpers.reload} href={"#/?" + @latestParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random' then 'bold' else 'normal'}}>Latest</a></li>
+                      <li key='latest'>
+                        <a onClick={helpers.reload} href={"#/?" + @latestParam()}>
+                          {
+                            if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random'
+                              <strong>Latest</strong>
+                            else
+                              <span>Latest</span>
+                          }
+                        </a>
+                      </li>
                     when 'random'
-                      <li key='random'><a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px',fontWeight: if @props.cards.query.order == 'random' then 'bold' else 'normal'}}>Random</a></li>
+                      <li key='random'>
+                        <a onClick={helpers.reload} href={"#/?" + @randomParam()}>
+                          {
+                            if @props.cards.query.order == 'random'
+                              <strong>Random</strong>
+                            else
+                              <span>Random</span>
+                          }
+                        </a>
+                      </li>
               }
-              <li><a href={config.root_path + config.api_path + "/cards.xml?" + @queryParam({}, [])} style={{padding:'6px 12px'}}><i className="fa fa-rss" /></a></li>
+              <li>
+                <a href={config.root_path + config.api_path + "/cards.xml?" + @queryParam({}, [])}>
+                  <i className="fa fa-rss" />
+                </a>
+              </li>
             </ul>
           </div>
-          <div className="col-sm-4" style={{padding:"0px"}}>
-            <a href="javascript:void(0)" className="center-block text-center" style={padding:'6px 12px'}>
-              <span className="badge text-center" style={color:'#333',backgroundColor:'#eee'}>
-                {
-                  if @props.cards.pagination
-                    @props.cards.pagination.total_entries
-                  else
-                    <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
-                }
-              </span>
-            </a>
+          <div className="col-sm-4">
+                <a href="javascript:void(0)" className="center-block text-center">
+                  <span className="badge">
+                    {
+                      if @props.cards.pagination
+                        @props.cards.pagination.total_entries
+                      else
+                        <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                    }
+                  </span>
+                </a>
           </div>
-          <div className="col-sm-4" style={{padding:"0px"}}>
+          <div className="col-sm-4">
             {
               if @props.cards.query.order == 'random'
                 <ul className="nav nav-pills pull-right">
                   <li>
                     {
                       if @props.cards.pagination
-                        <a onClick={helpers.reload} href={"#/?" + @randomParam()} style={{padding:'6px 12px'}}>
+                        <a onClick={helpers.reload} href={"#/?" + @randomParam()}>
                           <i className="glyphicon glyphicon-refresh" />
                         </a>
                       else
-                        <a href="javascript:void(0)" style={{padding:'6px 12px'}}>
+                        <a href="javascript:void(0)">
                           <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
                         </a>
                     }
@@ -92,9 +123,15 @@ module.exports = React.createClass
         </div>
       else
         <div className="row">
-          <div className="col-sm-12" style={{padding:"0px"}}>
+          <div className="col-sm-12">
             <ul className="nav nav-pills">
-              <li><a href={"#/" + @props.card.get('title')} style={padding:'6px 12px',fontWeight:'bold'}>{@props.card.get('title')}</a></li>
+              <li>
+                <a href={"#/" + @props.card.get('title')}>
+                  <strong>
+                    {@props.card.get('title')}
+                  </strong>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -103,7 +140,7 @@ module.exports = React.createClass
       {
         if !@props.card && helpers.isMobile()
           <div className="row">
-            <div className="col-sm-12" style={{padding:"0px"}}>
+            <div className="col-sm-12">
               <Pagination cards={@props.cards} />
             </div>
           </div>

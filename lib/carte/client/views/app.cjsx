@@ -15,8 +15,6 @@ module.exports = React.createClass
     Button = require('react-bootstrap/lib/Button')
     <div>
       <Header key='header' router={@props.router} />
-      <div style={padding:"0px 20px"}>
-        <Content key='content' router={@props.router} />
-      </div>
+      <Content key='content' router={@props.router} />
     </div>
 

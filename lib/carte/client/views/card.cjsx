@@ -4,6 +4,7 @@ Edit = require('./edit')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
 markdownIt = require('markdown-it')(linkify: true)
 helpers = require('../helpers')
+classnames = require('classnames')
 
 module.exports = React.createClass
   displayName: 'Card'
@@ -24,18 +25,21 @@ module.exports = React.createClass
   onMouseLeave: ()->
     @setState showTools: false
 
+  showTools: ()->
+    helpers.isMobile() || @state.showTools
+
   render: ->
-    <div className='col-sm-4 col-xs-12 list-group' style={marginBottom:'0px',padding:"5px"} onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
-        <div className='list-group-item' style={height:'200px'}>
-          <div style={marginBottom:'10px'}>
+    <div className='col-sm-4 col-xs-12 list-group' onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
+        <div className='list-group-item'>
+          <div className="carte-card-header">
             {
               if @props.card.get('focused')
-                <i className='glyphicon glyphicon-star' style={marginRight:'5px'} />
+                <i className='glyphicon glyphicon-star' />
             }
             <strong>
               {@props.card.get('title')}
             </strong>
-            <span className='pull-right tools' style={{visibility: if helpers.isMobile() || @state.showTools then 'visible' else 'hidden'}}>
+            <span className={classnames('pull-right': true, 'tools': true, 'carte-hidden': !@showTools())}>
               <ModalTrigger modal={<Edit card={@props.card} />}>
                 <a href="javascript:void(0)">
                   <i className='glyphicon glyphicon-edit' />
@@ -48,14 +52,20 @@ module.exports = React.createClass
               </a>
             </span>
           </div>
-          <div className="card" style={overflow:'hidden',width:'100%',height:'73%',wordWrap:'break-word'}>
+          <div className="carte-card-content">
             <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
           </div>
-          <div style={{visibility: if helpers.isMobile() || @state.showTools then 'visible' else 'hidden'}}>
+          <div className={classnames('carte-hidden': !@showTools())}>
           {
             if @props.card.get("tags")
               @props.card.get("tags").map (tag)->
-                <span className="pull-right tools">&nbsp;&nbsp;<a href={"#/?tags=" + tag}><i className="glyphicon glyphicon-tag" />&nbsp;{tag}</a></span>
+                <span className="pull-right tools">
+                  &nbsp;&nbsp;
+                  <a href={"#/?tags=" + tag}>
+                    <i className="glyphicon glyphicon-tag" />
+                    &nbsp;{tag}
+                  </a>
+                </span>
           }
           </div>
       </div>
