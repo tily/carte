@@ -29,7 +29,7 @@ module.exports = React.createClass
     @queryParam {order: 'random'}, ['sort', 'page']
 
   tagParam: (tag)->
-    @queryParam {tag: tag}, ['seed']
+    @queryParam {tag: tag}, []
 
   queryParam: (param, deleteKeys)->
     query = $.extend {}, @props.cards.query, param
