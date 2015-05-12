@@ -1,3 +1,3 @@
 gulp = require 'gulp'
-Carte = require './lib/carte'
-new Carte().install(gulp, __dirname + '/config.json')
+Tasks = require('./lib/carte').Tasks
+(new Tasks).install(gulp, __dirname + '/config.json')
