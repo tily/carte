@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.4",
     "browserify": "^9.0.8",
     "browserify-css": "^0.6.1",
+    "classnames": "^2.1.1",
     "coffee-reactify": "^3.0.0",
     "coffee-script": "^1.9.2",
     "coffeeify": "^1.0.0",
