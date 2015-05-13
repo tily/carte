@@ -106,10 +106,12 @@ ul.nav-pills li a {
 }
 
 .carte-slideshow {
-  height: 100%;
-  width: 100%;
   background-color: white;
   position : absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /* http://stackoverflow.com/questions/24511887/css-animation-works-in-chrome-but-not-in-firefox-resolved */

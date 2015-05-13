@@ -10,11 +10,20 @@ Portal = React.createClass
   componentDidMount: ->
     console.log '[views/slideshow] Portal#componentDidMount'
     @setState currCards: @props.cards
+    $(document).on 'keydown', @onKeyDown
     @props.cards.on 'sync', =>
       @setState currCard: @props.cards.at(0)
       @loadNextCards()
       @loadPrevCards()
       @forceUpdate.bind(@, null)
+
+  componentWillUnmount: ->
+    $(document).off 'keydown', @onKeyDown
+
+  onKeyDown: (event)->
+    switch event.keyCode
+      when 37 then @onClickPrev()
+      when 39 then @onClickNext()
 
   getInitialState: ->
     autoplay: false
@@ -77,12 +86,7 @@ Portal = React.createClass
 
   render: ->
     <div className="carte-slideshow">
-      <div>speed: (high mid slow), hide: (title, description, random), (x close)</div>
-      <div>
-        <a href="javascript:void(0)" onClick={@onClickPrev}>prev</a>&nbsp;
-        <a href="javascript:void(0)" onClick={@onClickNext}>next</a>
-      </div>
-      <div style={fontSize:'10vh',padding:'40px'}>
+      <div style={fontSize:'10vh',padding:'1vh 5vh',overflow:'hidden'}>
         <div>
           <strong>
             {
@@ -92,8 +96,11 @@ Portal = React.createClass
                 <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
             }
           </strong>
+          <span className="pull-right">
+            <strong>&times;</strong>
+          </span>
         </div>
-        <div style={paddingTop:'50px'}>
+        <div style={paddingTop:'24px'}>
           {
             if @state.currCard
               @state.currCard.get('content')
