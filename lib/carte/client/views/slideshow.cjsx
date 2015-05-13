@@ -70,6 +70,7 @@ Portal = React.createClass
     _prevPage
 
   loadNextCards: ->
+    console.log '[views/slideshow] loadNextCards'
     nextCards = new CardCollection()
     nextCards.query = $.extend {}, @state.currCards.query, {page: @nextPage()}
     nextCards.fetching = true
@@ -77,6 +78,7 @@ Portal = React.createClass
     @setState nextCards: nextCards
 
   loadPrevCards: ->
+    console.log '[views/slideshow] loadPrevCards'
     prevCards = new CardCollection()
     prevCards.query = $.extend {}, @state.currCards.query, {page: @prevPage()}
     prevCards.fetching = true
@@ -88,7 +90,7 @@ Portal = React.createClass
       @setState currCard: nextCard
     else
       return if @state.nextCards.fetching
-      @setState currCards: @state.nextCards, prevCards: @state.cards, ()=>
+      @setState currCards: @state.nextCards, prevCards: @state.currCards, ()=>
         @setState currCard: @state.currCards.at(0), ()=>
           @loadNextCards()
 
@@ -97,7 +99,7 @@ Portal = React.createClass
       @setState currCard: prevCard
     else
       return if @state.prevCards.fetching
-      @setState currCards: @state.prevCards, nextCards: @state.cards, ()=>
+      @setState currCards: @state.prevCards, nextCards: @state.currCards, ()=>
         @setState currCard: @state.currCards.at(@state.currCards.length - 1), ()=>
           @loadPrevCards()
 
