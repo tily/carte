@@ -36,53 +36,70 @@ Portal = React.createClass
     prevCards: null
 
   prevCard: ->
-    @state.currCards.at(@currCardIndex() - 1)
+    _prevCard = @state.currCards.at(@currCardIndex() - 1)
+    console.log '[views/slideshow] prevCard', _prevCard
+    _prevCard
 
   nextCard: ->
-    @state.currCards.at(@currCardIndex() + 1)
+    _nextCard = @state.currCards.at(@currCardIndex() + 1)
+    console.log '[views/slideshow] nextCard', _nextCard
+    _nextCard
 
   currCardIndex: ->
-    @state.currCards.indexOf(@state.currCard)
+    _currCardIndex = @state.currCards.indexOf(@state.currCard)
+    console.log '[views/slideshow] currCardIndex, @state.currCard', @state.currCard
+    console.log '[views/slideshow] currCardIndex', _currCardIndex
+    _currCardIndex
 
   currPage: ->
-    @state.currCards.pagination.current_page
+    _currPage = @state.currCards.pagination.current_page
+    console.log '[views/slideshow] currPage', _currPage
+    _currPage
 
   totalPages: ->
     @state.currCards.pagination.total_pages
 
   nextPage: ->
-    if @currPage() < @totalPages() then @currPage() + 1 else 1
+    _nextPage = if @currPage() < @totalPages() then @currPage() + 1 else 1
+    console.log '[views/slideshow] nextPage', _nextPage
+    _nextPage
 
   prevPage: ->
-    if @currPage() > 1 then @currPage() - 1 else @totalPages()
+    _prevPage = if @currPage() > 1 then @currPage() - 1 else @totalPages()
+    console.log '[views/slideshow] prevPage', _prevPage
+    _prevPage
 
   loadNextCards: ->
     nextCards = new CardCollection()
     nextCards.query = $.extend {}, @state.currCards.query, {page: @nextPage()}
-    nextCards.fetch()
+    nextCards.fetching = true
+    nextCards.fetch success: ()-> nextCards.fetching = false
     @setState nextCards: nextCards
 
   loadPrevCards: ->
     prevCards = new CardCollection()
     prevCards.query = $.extend {}, @state.currCards.query, {page: @prevPage()}
-    prevCards.fetch()
+    prevCards.fetching = true
+    prevCards.fetch success: ()-> prevCards.fetching = false
     @setState prevCards: prevCards
 
   onClickNext: ->
     if nextCard = @nextCard()
       @setState currCard: nextCard
     else
+      return if @state.nextCards.fetching
       @setState currCards: @state.nextCards, prevCards: @state.cards, ()=>
-        @setState currCard: @state.currCards.at(0)
-        @loadNextCards()
+        @setState currCard: @state.currCards.at(0), ()=>
+          @loadNextCards()
 
   onClickPrev: ->
     if prevCard = @prevCard()
       @setState currCard: prevCard
     else
+      return if @state.prevCards.fetching
       @setState currCards: @state.prevCards, nextCards: @state.cards, ()=>
-        @setState currCard: @state.currCards.at(0)
-        @loadPrevCards()
+        @setState currCard: @state.currCards.at(@state.currCards.length - 1), ()=>
+          @loadPrevCards()
 
   render: ->
     <div className="carte-slideshow">
