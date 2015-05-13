@@ -2,6 +2,7 @@
 $ = require('jquery')
 React = require('react')
 List = require('./list')
+Slideshow = require('./slideshow')
 CardCollection = require('../models/cards')
 CardModel = require('../models/card')
 String = require('string')
@@ -64,9 +65,7 @@ module.exports = React.createClass
             cards.fetching = true
             cards.fetch success: ()-> cards.fetching = false
             document.title = config.title + '、スライドショー'
-            e = React.createElement(Slideshow, cards: cards)
-            React.render(e, document.body)
-            #<Slideshow key='slideshow' router={@props.router} cards={cards} />
+            <Slideshow key='slideshow' router={@props.router} cards={cards} />
           else
             <div>Loading ...</div>
       }

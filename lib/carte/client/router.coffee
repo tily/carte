@@ -3,8 +3,9 @@ Backbone = require('backbone')
 
 module.exports = class Router extends Backbone.Router
   routes:
-    ':title' : 'show'
-    ''       : 'list'
+    '': 'list'
+    'slideshow': 'slideshow'
+    ':title': 'show'
 
   list: (string)->
     console.log '[router] list', string
@@ -16,3 +17,8 @@ module.exports = class Router extends Backbone.Router
     console.log '[router] show', title
     @current = 'show'
     @title = title
+
+  slideshow: (string)->
+    console.log 'slideshow', string
+    @current = 'slideshow'
+    @query = querystring.parse(string)
