@@ -85,6 +85,11 @@ module.exports = React.createClass
                   <i className="fa fa-rss" />
                 </a>
               </li>
+              <li>
+                <a href={"#/?" + @queryParam({'mode': 'flash'}, [])}>
+                  <i className="fa fa-arrows-alt" />
+                </a>
+              </li>
             </ul>
           </div>
           <div className="col-sm-4">

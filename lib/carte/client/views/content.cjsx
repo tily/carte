@@ -35,8 +35,12 @@ module.exports = React.createClass
             #title = title.join(', ')
             #title = config.title + ' (' + title + ')'
             #document.title = title
-            document.title = config.title
-            <List key='list' router={@props.router} cards={cards} />
+            if cards.query.mode == 'flash'
+              document.title = config.title + '、スライドショー'
+              <Slideshow key='slideshow' router={@props.router} cards={cards} />
+            else
+              document.title = config.title
+              <List key='list' router={@props.router} cards={cards} />
           when "show"
             cards = new CardCollection()
             cards.fetching = true
@@ -58,14 +62,6 @@ module.exports = React.createClass
                 cards.fetching = false
             document.title = config.title + '、' + card.get('title')
             <List key='show' cards={cards} card={card} />
-          when "slideshow"
-            console.log 'slideshow', @props.router.query
-            cards = new CardCollection()
-            cards.query = $.extend {}, config.default_query, @props.router.query
-            cards.fetching = true
-            cards.fetch success: ()-> cards.fetching = false
-            document.title = config.title + '、スライドショー'
-            <Slideshow key='slideshow' router={@props.router} cards={cards} />
           else
             <div>Loading ...</div>
       }

@@ -4,9 +4,13 @@ Backbone = require('backbone')
 React = require('react')
 CardCollection = require('../models/cards')
 config = require('../config')
+helpers = require('../helpers')
+classnames = require('classnames')
+markdownIt = require('markdown-it')(linkify: true)
+
+#window.onerror = (error, url, line) -> alert error
 
 Portal = React.createClass
-
   componentDidMount: ->
     console.log '[views/slideshow] Portal#componentDidMount'
     @setState currCards: @props.cards
@@ -26,14 +30,12 @@ Portal = React.createClass
       when 39 then @onClickNext()
 
   getInitialState: ->
-    autoplay: false
-    autoplaySpeed: null 
-    hide: false
-    hideElement: null
     currCard: null
     currCards: null
     nextCards: null
     prevCards: null
+    hideValue: 'none'
+    hiding: true
 
   prevCard: ->
     _prevCard = @state.currCards.at(@currCardIndex() - 1)
@@ -85,44 +87,86 @@ Portal = React.createClass
     prevCards.fetch success: ()-> prevCards.fetching = false
     @setState prevCards: prevCards
 
+  onTouchStart: (event)->
+    @touchStartX = event.changedTouches[0].pageX
+
+  onTouchEnd: (event)->
+    touchEndX = event.changedTouches[0].pageX
+    distance = touchEndX - @touchStartX
+    if Math.abs(distance) > 100
+      if distance > 0
+        @onClickNext()
+      else
+        @onClickPrev()
+
   onClickNext: ->
-    if nextCard = @nextCard()
-      @setState currCard: nextCard
+    if @state.hideValue != 'none' && @state.hiding
+      @setState hiding: false
     else
-      return if @state.nextCards.fetching
-      @setState currCards: @state.nextCards, prevCards: @state.currCards, ()=>
-        @setState currCard: @state.currCards.at(0), ()=>
-          @loadNextCards()
+      @setState hiding: true
+      if nextCard = @nextCard()
+        @setState currCard: nextCard
+      else
+        return if @state.nextCards.fetching
+        @setState currCards: @state.nextCards, prevCards: @state.currCards, ()=>
+          @setState currCard: @state.currCards.at(0), ()=>
+            @loadNextCards()
 
   onClickPrev: ->
-    if prevCard = @prevCard()
-      @setState currCard: prevCard
+    if @state.hideValue != 'none' && @state.hiding
+      @setState hiding: false
     else
-      return if @state.prevCards.fetching
-      @setState currCards: @state.prevCards, nextCards: @state.currCards, ()=>
-        @setState currCard: @state.currCards.at(@state.currCards.length - 1), ()=>
-          @loadPrevCards()
+      @setState hiding: true
+      if prevCard = @prevCard()
+        @setState currCard: prevCard
+      else
+        return if @state.prevCards.fetching
+        @setState currCards: @state.prevCards, nextCards: @state.currCards, ()=>
+          @setState currCard: @state.currCards.at(@state.currCards.length - 1), ()=>
+            @loadPrevCards()
+
+  closeLink: ->
+    params = $.extend {}, @props.cards.query
+    delete params.mode
+    '#/?' + $.param(params)
+
+  onChangeHide: (event)->
+    @setState hideValue: event.target.value
 
   render: ->
-    <div className="carte-slideshow">
+    <div className="carte-slideshow" onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd}>
       <div style={fontSize:'10vh',padding:'1vh 5vh',overflow:'hidden'}>
         <div>
           <strong>
             {
               if @state.currCard
-                @state.currCard.get('title')
+                if @state.hideValue == 'title' && @state.hiding == true
+                  '?????'
+                else
+                  @state.currCard.get('title')
               else
                 <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
             }
           </strong>
-          <span className="pull-right">
-            <strong>&times;</strong>
+          <span className="pull-right tools" style={fontSize:'0.5em'}>
+            hide:
+            <select value={@state.hideValue} onChange={@onChangeHide}>
+              <option value="none">none</option>
+              <option value="title">title</option>
+              <option value="content">content</option>
+            </select>
+            <a href={@closeLink()}>
+              <strong>&times;</strong>
+            </a>
           </span>
         </div>
-        <div style={paddingTop:'24px'}>
+        <div style={paddingTop:'5vh'}>
           {
             if @state.currCard
-              @state.currCard.get('content')
+              if @state.hideValue == 'content' && @state.hiding == true
+                '???????'
+              else
+                <div dangerouslySetInnerHTML={__html: markdownIt.render @state.currCard.get('content')} />
             else
               <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
           }
