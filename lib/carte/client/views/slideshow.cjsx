@@ -113,7 +113,7 @@ Flash = React.createClass
         @onClickPrev()
 
   onClickNext: ->
-    if @state.hideValue != 'none' && @state.hiding
+    if @props.cards.query.hide != 'none' && @state.hiding
       @setState hiding: false
     else
       @setState hiding: true
@@ -126,7 +126,7 @@ Flash = React.createClass
             @loadNextCards()
 
   onClickPrev: ->
-    if @state.hideValue != 'none' && @state.hiding
+    if @props.cards.query.hide != 'none' && @state.hiding
       @setState hiding: false
     else
       @setState hiding: true
@@ -154,12 +154,15 @@ Flash = React.createClass
   onMouseLeaveTools: ()->
     @setState showTools: false
 
+  onClick: ->
+    @setState showTools: !@state.showTools
+
   queryParam: (query)->
     query = $.extend {}, @props.cards.query, query
     $.param(query)
 
   render: ->
-    <div onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd} style={overflow:'hidden'}>
+    <div onClick={@onClick} onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd} style={overflow:'hidden'}>
       <div style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
         <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
           <ButtonGroup>
