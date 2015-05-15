@@ -3,6 +3,7 @@ path = require 'path'
 gulp = require 'gulp'
 gulpUtil = require 'gulp-util'
 gulpIf = require 'gulp-if'
+gulpGzip = require 'gulp-gzip'
 sourceStream = require 'vinyl-source-stream'
 browserify = require 'browserify'
 watchify = require 'watchify'
@@ -75,4 +76,5 @@ module.exports = class Carte
       .bundle()
       .pipe sourceStream file
       .pipe gulpIf(!@watching, streamify(uglify(compress: {drop_console: !@watching})))
+      .pipe gulpGzip()
       .pipe gulp.dest dir
