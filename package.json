@@ -30,6 +30,7 @@
     "font-awesome": "^4.3.0",
     "fs-extra": "^0.18.2",
     "gulp": "^3.8.11",
+    "gulp-gzip": "^1.1.0",
     "gulp-if": "^1.2.5",
     "gulp-jade": "^1.0.0",
     "gulp-rename": "^1.2.2",
