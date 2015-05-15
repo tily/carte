@@ -26,6 +26,7 @@ Portal = React.createClass
 
   onKeyDown: (event)->
     switch event.keyCode
+      when 27 then @props.router.navigate(@closeLink())
       when 37 then @onClickPrev()
       when 39 then @onClickNext()
 
