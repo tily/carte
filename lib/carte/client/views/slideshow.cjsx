@@ -1,6 +1,6 @@
 # @cjsx React.DOM 
 $ = require('jquery')
-window.React = React = require('react')
+React = require('react')
 CardCollection = require('../models/cards')
 config = require('../config')
 helpers = require('../helpers')
@@ -13,16 +13,24 @@ Button = require('react-bootstrap').Button
 
 #window.onerror = (error, url, line) -> alert error
 
-Portal = React.createClass
+Flash = React.createClass
   componentDidMount: ->
-    console.log '[views/slideshow] Portal#componentDidMount'
-    @setState currCards: @props.cards
+    console.log '[views/flash] componentDidMount', @props
     $(document).on 'keydown', @onKeyDown
-    @props.cards.on 'sync', =>
-      @setState currCard: @props.cards.at(0)
-      @loadNextCards()
-      @loadPrevCards()
-      @forceUpdate.bind(@, null)
+
+    @setState currCards: @props.cards
+
+    if @props.cards.at(0)
+      @setState currCard: @props.cards.at(0), =>
+        @loadNextCards()
+        @loadPrevCards()
+        @forceUpdate.bind(@, null)
+    else
+      @props.cards.on 'sync', =>
+        @setState currCard: @props.cards.at(0), =>
+          @loadNextCards()
+          @loadPrevCards()
+          @forceUpdate.bind(@, null)
 
   componentWillUnmount: ->
     $(document).off 'keydown', @onKeyDown
@@ -38,9 +46,9 @@ Portal = React.createClass
     currCards: null
     nextCards: null
     prevCards: null
-    hideValue: 'none'
     hiding: true
     showTools: false
+    menuOpen: false
 
   prevCard: ->
     _prevCard = @state.currCards.at(@currCardIndex() - 1)
@@ -133,34 +141,38 @@ Portal = React.createClass
   closeLink: ->
     params = $.extend {}, @props.cards.query
     delete params.mode
+    delete params.auto
+    delete params.hide
     '#/?' + $.param(params)
 
   onChangeHide: (event)->
     @setState hideValue: event.target.value
 
   onMouseOverTools: ()->
-    console.log '[views/flash] onMouseEnterTools'
     @setState showTools: true
 
   onMouseLeaveTools: ()->
-    console.log '[views/flash] onMouseLeaveTools'
     @setState showTools: false
+
+  queryParam: (query)->
+    query = $.extend {}, @props.cards.query, query
+    $.param(query)
 
   render: ->
     <div onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd} style={overflow:'hidden'}>
-      <div style={position:'absolute',bottom:0,width:'100%',padding:0} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
+      <div style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
         <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
           <ButtonGroup>
-            <DropdownButton bsSize='large' bsStyle='default' title='Auto: Off' dropup pullRight>
-              <MenuItem eventKey='1'>Off</MenuItem>
-              <MenuItem eventKey='2'>High Speed</MenuItem>
-              <MenuItem eventKey='3'>Middle Speed</MenuItem>
-              <MenuItem eventKey='4'>Low Speed</MenuItem>
+            <DropdownButton bsSize='large' bsStyle='default' title={'Auto: ' + @props.cards.query.auto} dropup pullRight className={classnames('open': @state.menuOpen)}>
+              <MenuItem href={'#/?' + @queryParam(auto: "off")} eventKey='1'>off</MenuItem>
+              <MenuItem href={'#/?' + @queryParam(auto: "fast")} eventKey='2'>fast</MenuItem>
+              <MenuItem href={'#/?' + @queryParam(auto: "normal")} eventKey='3'>normal</MenuItem>
+              <MenuItem href={'#/?' + @queryParam(auto: "slow")} eventKey='4'>slow</MenuItem>
             </DropdownButton>
-            <DropdownButton bsSize='large' bsStyle='default' title='Hide: None' dropup pullRight>
-              <MenuItem onClick={@onClickHide} eventKey='1'>None</MenuItem>
-              <MenuItem onClick={@onClickHide} eventKey='2'>Title</MenuItem>
-              <MenuItem onClick={@onClickHide} eventKey='3'>Content</MenuItem>
+            <DropdownButton bsSize='large' bsStyle='default' title={'Hide: ' + @props.cards.query.hide} dropup pullRight className={classnames('open': @state.menuOpen)}>
+              <MenuItem href={'#/?' + @queryParam(hide: "none")} eventKey='1'>none</MenuItem>
+              <MenuItem href={'#/?' + @queryParam(hide: "title")} eventKey='2'>title</MenuItem>
+              <MenuItem href={'#/?' + @queryParam(hide: "content")} eventKey='3'>content</MenuItem>
             </DropdownButton>
             <Button bsSize='large' href={@closeLink()}><strong>&times;</strong></Button>
           </ButtonGroup>
@@ -171,7 +183,7 @@ Portal = React.createClass
           <strong>
             {
               if @state.currCard
-                if @state.hideValue == 'title' && @state.hiding == true
+                if @props.cards.query.hide == 'title' && @state.hiding == true
                   '?????'
                 else
                   @state.currCard.get('title')
@@ -183,7 +195,7 @@ Portal = React.createClass
         <div style={paddingTop:'5vh',overflow:'hidden'}>
           {
             if @state.currCard
-              if @state.hideValue == 'content' && @state.hiding == true
+              if @props.cards.query.hide == 'content' && @state.hiding == true
                 '???????'
               else
                 <div dangerouslySetInnerHTML={__html: markdownIt.render @state.currCard.get('content')} />
@@ -194,14 +206,13 @@ Portal = React.createClass
       </div>
     </div>
 
-MyPortal = React.createFactory Portal
+flash = React.createFactory Flash
 
 module.exports = React.createClass
-  displayName: 'Slideshow'
+  displayName: 'FlashWrapper'
 
   componentDidMount: ->
     console.log '[views/slideshow] componentDidMount'
-    @props.cards.on 'sync', @forceUpdate.bind(@, null)
     @node = document.createElement('div')
     @node.className = 'carte-slideshow'
     document.body.appendChild(@node)
@@ -209,15 +220,18 @@ module.exports = React.createClass
 
   componentWillReceiveProps: (nextProps)->
     console.log '[views/slideshow] componentWillReceiveProps', nextProps
-    nextProps.cards.on 'sync', @forceUpdate.bind(@, null)
+    document.body.removeChild(@node) if @node
+    @node = document.createElement('div')
+    @node.className = 'carte-slideshow'
+    document.body.appendChild(@node)
+    React.render(flash(nextProps), @node)
 
   componentWillUnmount: ->
     console.log '[views/slideshow] componentWillUnmount'
     document.body.removeChild(@node)
 
   renderSlideshow: ->
-    React.render(MyPortal(@props), @node)
+    React.render(flash(@props), @node)
 
   render: ->
-    console.log '[views/slideshow] render', @props
     null

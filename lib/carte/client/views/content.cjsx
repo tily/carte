@@ -21,21 +21,19 @@ module.exports = React.createClass
     @props.router.off "route", @callback
 
   render: ->
+    console.log '[views/content] render'
     <div className="carte-content">
       {
         switch @props.router.current
           when "list"
+            console.log '[views/content] list', @props
             cards = new CardCollection()
             cards.query = $.extend {}, config.default_query, @props.router.query
             cards.fetching = true
             cards.fetch success: ()-> cards.fetching = false
-            #title = []
-            #for k, v of cards.query
-            #  title.push(String(k).capitalize() + ': ' + v)
-            #title = title.join(', ')
-            #title = config.title + ' (' + title + ')'
-            #document.title = title
             if cards.query.mode == 'flash'
+              cards.query.auto = 'off' if !cards.query.auto
+              cards.query.hide = 'none' if !cards.query.hide
               document.title = config.title + '、スライドショー'
               <Slideshow key='slideshow' router={@props.router} cards={cards} />
             else
@@ -63,6 +61,6 @@ module.exports = React.createClass
             document.title = config.title + '、' + card.get('title')
             <List key='show' cards={cards} card={card} />
           else
-            <div>Loading ...</div>
+            null
       }
     </div>
