@@ -1,6 +1,5 @@
 # @cjsx React.DOM 
 $ = require('jquery')
-Backbone = require('backbone')
 React = require('react')
 CardCollection = require('../models/cards')
 config = require('../config')
