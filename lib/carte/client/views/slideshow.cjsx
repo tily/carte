@@ -1,11 +1,15 @@
 # @cjsx React.DOM 
 $ = require('jquery')
-React = require('react')
+window.React = React = require('react')
 CardCollection = require('../models/cards')
 config = require('../config')
 helpers = require('../helpers')
 classnames = require('classnames')
 markdownIt = require('markdown-it')(linkify: true)
+DropdownButton = require('react-bootstrap').DropdownButton
+MenuItem = require('react-bootstrap').MenuItem
+ButtonGroup = require('react-bootstrap').ButtonGroup
+Button = require('react-bootstrap').Button
 
 #window.onerror = (error, url, line) -> alert error
 
@@ -36,6 +40,7 @@ Portal = React.createClass
     prevCards: null
     hideValue: 'none'
     hiding: true
+    showTools: false
 
   prevCard: ->
     _prevCard = @state.currCards.at(@currCardIndex() - 1)
@@ -133,8 +138,34 @@ Portal = React.createClass
   onChangeHide: (event)->
     @setState hideValue: event.target.value
 
+  onMouseOverTools: ()->
+    console.log '[views/flash] onMouseEnterTools'
+    @setState showTools: true
+
+  onMouseLeaveTools: ()->
+    console.log '[views/flash] onMouseLeaveTools'
+    @setState showTools: false
+
   render: ->
-    <div className="carte-slideshow" onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd}>
+    <div onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd} style={overflow:'hidden'}>
+      <div style={position:'absolute',bottom:0,width:'100%',padding:0} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
+        <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
+          <ButtonGroup>
+            <DropdownButton bsSize='large' bsStyle='default' title='Auto: Off' dropup pullRight>
+              <MenuItem eventKey='1'>Off</MenuItem>
+              <MenuItem eventKey='2'>High Speed</MenuItem>
+              <MenuItem eventKey='3'>Middle Speed</MenuItem>
+              <MenuItem eventKey='4'>Low Speed</MenuItem>
+            </DropdownButton>
+            <DropdownButton bsSize='large' bsStyle='default' title='Hide: None' dropup pullRight>
+              <MenuItem onClick={@onClickHide} eventKey='1'>None</MenuItem>
+              <MenuItem onClick={@onClickHide} eventKey='2'>Title</MenuItem>
+              <MenuItem onClick={@onClickHide} eventKey='3'>Content</MenuItem>
+            </DropdownButton>
+            <Button bsSize='large' href={@closeLink()}><strong>&times;</strong></Button>
+          </ButtonGroup>
+        </span>
+      </div>
       <div style={fontSize:'10vh',padding:'1vh 5vh',overflow:'hidden'}>
         <div>
           <strong>
@@ -148,19 +179,8 @@ Portal = React.createClass
                 <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
             }
           </strong>
-          <span className="pull-right tools" style={fontSize:'0.5em'}>
-            hide:
-            <select value={@state.hideValue} onChange={@onChangeHide}>
-              <option value="none">none</option>
-              <option value="title">title</option>
-              <option value="content">content</option>
-            </select>
-            <a href={@closeLink()}>
-              <strong>&times;</strong>
-            </a>
-          </span>
         </div>
-        <div style={paddingTop:'5vh'}>
+        <div style={paddingTop:'5vh',overflow:'hidden'}>
           {
             if @state.currCard
               if @state.hideValue == 'content' && @state.hiding == true
