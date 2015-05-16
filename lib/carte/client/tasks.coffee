@@ -15,6 +15,7 @@ _ = require 'lodash'
 jade = require 'gulp-jade'
 rename = require 'gulp-rename'
 manifest = require 'gulp-manifest'
+runSequence = require 'run-sequence'
 
 module.exports = class Carte
   watching: false
@@ -24,8 +25,8 @@ module.exports = class Carte
     fs.writeFileSync(__dirname + '/../shared/custom.json', JSON.stringify(custom))
 
     gulp.task 'watching', => @watching = true
-    gulp.task 'build', ['build:html', 'build:script', 'build:manifest']
-    gulp.task 'watch', ['watching', 'build:html', 'build:script', 'build:manifest']
+    gulp.task 'build', ()-> runSequence ['build:html', 'build:script'], 'build:manifest'
+    gulp.task 'watch', ()-> runSequence ['watching', 'build:html', 'build:script'], 'build:manifest'
 
     gulp.task 'build:html', =>
       _config = require('./config')
