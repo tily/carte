@@ -12,8 +12,7 @@
 *.a
 mkmf.log
 /node_modules/
-/public/app.js
-/public/app.html
+/public/app.*
 /public/vendor
 /lib/carte/shared/custom.json
 .env
