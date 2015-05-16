@@ -13,7 +13,7 @@ end
 map('/') do
   use Rack::Deflater
   use Rack::Static, urls: [""], root: $config['root_dir'], index: $config['html_path']
-  run Rack::Directory.new $config['root_dir']
+  run lambda {}
 end
 
 map('/api') do
