@@ -14,6 +14,7 @@ browserifyCss = require 'browserify-css'
 _ = require 'lodash'
 jade = require 'gulp-jade'
 rename = require 'gulp-rename'
+manifest = require 'gulp-manifest'
 
 module.exports = class Carte
   watching: false
@@ -23,14 +24,25 @@ module.exports = class Carte
     fs.writeFileSync(__dirname + '/../shared/custom.json', JSON.stringify(custom))
 
     gulp.task 'watching', => @watching = true
-    gulp.task 'build', ['build:html', 'build:script']
-    gulp.task 'watch', ['watching', 'build:html', 'build:script']
+    gulp.task 'build', ['build:html', 'build:script', 'build:manifest']
+    gulp.task 'watch', ['watching', 'build:html', 'build:script', 'build:manifest']
 
     gulp.task 'build:html', =>
       _config = require('./config')
       gulp.src(__dirname + '/../client.jade')
         .pipe jade(locals: {config: _config}, pretty: true)
         .pipe rename(_config.html_path)
+        .pipe gulp.dest(_config.root_dir)
+
+    gulp.task 'build:manifest', =>
+      _config = require('./config')
+      gulp.src([_config.root_dir + '/**'])
+        .pipe manifest
+          hash: true
+          preferOnline: true
+          network: ['http://*', 'https://*', '*']
+          filename: 'app.manifest'
+          exclude: 'app.manifest'
         .pipe gulp.dest(_config.root_dir)
 
     gulp.task 'build:script', =>
