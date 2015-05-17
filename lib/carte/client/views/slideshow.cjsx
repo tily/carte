@@ -11,12 +11,14 @@ MenuItem = require('react-bootstrap').MenuItem
 ButtonGroup = require('react-bootstrap').ButtonGroup
 Button = require('react-bootstrap').Button
 
-#window.onerror = (error, url, line) -> alert error
+window.onerror = (error, url, line) -> alert error
 
 Flash = React.createClass
   componentDidMount: ->
     console.log '[views/flash] componentDidMount', @props
     $(document).on 'keydown', @onKeyDown
+    #for eventName in ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend']
+    #  $(document).on eventName, (event)-> event.preventDefault(); event.stopPropagation()
 
     @setState currCards: @props.cards
 
@@ -33,6 +35,7 @@ Flash = React.createClass
           @forceUpdate.bind(@, null)
 
   componentWillUnmount: ->
+    console.log '[views/flash] FlashMain componentWillUnmount'
     $(document).off 'keydown', @onKeyDown
 
   onKeyDown: (event)->
@@ -101,16 +104,38 @@ Flash = React.createClass
     @setState prevCards: prevCards
 
   onTouchStart: (event)->
-    @touchStartX = event.changedTouches[0].pageX
+    touchStart =
+      x: event.touches[0].pageX
+      y: event.touches[0].pageY
+      time: new Date 
+    if !@tapped
+      @tapped = setTimeout =>
+        @touchStart = touchStart
+        @touchDelta = {}
+        @tapped = null
+      , 300
+    else
+      clearTimeout @tapped
+      @tapped = null
+      @setState showTools: !@state.showTools
+
+  onTouchMove: (event)->
+     return if !@touchStart
+     return if ( event.touches.length > 1 || event.scale && event.scale != 1)
+
+     @touchDelta =
+       x: event.touches[0].pageX - @touchStart.x
+       y: event.touches[0].pageY - @touchStart.y
 
   onTouchEnd: (event)->
-    touchEndX = event.changedTouches[0].pageX
-    distance = touchEndX - @touchStartX
-    if Math.abs(distance) > 100
-      if distance > 0
-        @onClickNext()
-      else
-        @onClickPrev()
+    return if !@touchStart
+    duration = new Date - @touchStart.time
+    isValid = Number(duration) < 250 && Math.abs(@touchDelta.x) > 20
+    if @touchDelta.x < 0
+      @onClickNext()
+    else
+      @onClickPrev()
+    @touchStart = null
 
   onClickNext: ->
     if @props.cards.query.hide != 'none' && @state.hiding
@@ -154,28 +179,37 @@ Flash = React.createClass
   onMouseLeaveTools: ()->
     @setState showTools: false
 
-  onClick: ->
-    @setState showTools: !@state.showTools
-
   queryParam: (query)->
     query = $.extend {}, @props.cards.query, query
     $.param(query)
 
+  onClickMenuItem: (params)->
+    ()=> window.location.hash = '#/?' + @queryParam(params)
+
   render: ->
-    <div onClick={@onClick} onTouchStart={@onTouchStart} onTouchEnd={@onTouchEnd} style={overflow:'hidden'}>
+    clearInterval @interval if @interval
+    if @props.cards.query.auto != 'off'
+      bpm = null
+      switch @props.cards.query.auto
+        when 'fast' then bpm = 90
+        when 'normal' then bpm = 60
+        when 'slow' then bpm = 30 
+      console.log 'bpm!!!!!!!!!!!!!!!!!!!!!!!!!!', bpm
+      @interval = setInterval @onClickNext, 1000 * 60 / bpm
+    <div onTouchStart={@onTouchStart} onTouchMove={@onTouchMove} onTouchEnd={@onTouchEnd} style={overflow:'hidden',width:'100%',height:'100%'}>
       <div style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
         <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
           <ButtonGroup>
             <DropdownButton bsSize='large' bsStyle='default' title={'Auto: ' + @props.cards.query.auto} dropup pullRight className={classnames('open': @state.menuOpen)}>
-              <MenuItem href={'#/?' + @queryParam(auto: "off")} eventKey='1'>off</MenuItem>
-              <MenuItem href={'#/?' + @queryParam(auto: "fast")} eventKey='2'>fast</MenuItem>
-              <MenuItem href={'#/?' + @queryParam(auto: "normal")} eventKey='3'>normal</MenuItem>
-              <MenuItem href={'#/?' + @queryParam(auto: "slow")} eventKey='4'>slow</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(auto: "off")} eventKey='1'>off</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(auto: "fast")} eventKey='2'>fast</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(auto: "normal")} eventKey='3'>normal</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(auto: "slow")} eventKey='4'>slow</MenuItem>
             </DropdownButton>
             <DropdownButton bsSize='large' bsStyle='default' title={'Hide: ' + @props.cards.query.hide} dropup pullRight className={classnames('open': @state.menuOpen)}>
-              <MenuItem href={'#/?' + @queryParam(hide: "none")} eventKey='1'>none</MenuItem>
-              <MenuItem href={'#/?' + @queryParam(hide: "title")} eventKey='2'>title</MenuItem>
-              <MenuItem href={'#/?' + @queryParam(hide: "content")} eventKey='3'>content</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(hide: "none")} eventKey='1'>none</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(hide: "title")} eventKey='2'>title</MenuItem>
+              <MenuItem href={"#/?" + @queryParam(hide: "content")} eventKey='3'>content</MenuItem>
             </DropdownButton>
             <Button bsSize='large' href={@closeLink()}><strong>&times;</strong></Button>
           </ButtonGroup>
