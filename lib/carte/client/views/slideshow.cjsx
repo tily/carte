@@ -14,11 +14,13 @@ Button = require('react-bootstrap').Button
 window.onerror = (error, url, line) -> alert error
 
 Flash = React.createClass
+  scrollEventNames: ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend']
+
   componentDidMount: ->
     console.log '[views/flash] componentDidMount', @props
     $(document).on 'keydown', @onKeyDown
-    #for eventName in ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend']
-    #  $(document).on eventName, (event)-> event.preventDefault(); event.stopPropagation()
+    for eventName in @scrollEventNames
+      $(document).on eventName, @preventScroll
 
     @setState currCards: @props.cards
 
@@ -37,12 +39,19 @@ Flash = React.createClass
   componentWillUnmount: ->
     console.log '[views/flash] FlashMain componentWillUnmount'
     $(document).off 'keydown', @onKeyDown
+    for eventName in @scrollEventNames
+      $(document).off eventName, @preventScroll
 
   onKeyDown: (event)->
     switch event.keyCode
       when 27 then @props.router.navigate(@closeLink())
       when 37 then @onClickPrev()
       when 39 then @onClickNext()
+
+  preventScroll: (event)->
+    tagName = event.target.tagName.toLowerCase()
+    return if tagName == 'button' || tagName == 'a'
+    event.preventDefault()
 
   getInitialState: ->
     currCard: null
@@ -186,6 +195,9 @@ Flash = React.createClass
   onClickMenuItem: (params)->
     ()=> window.location.hash = '#/?' + @queryParam(params)
 
+  onTouchStartTools: (event)->
+    event.stopPropagation()
+
   render: ->
     clearInterval @interval if @interval
     if @props.cards.query.auto != 'off'
@@ -194,10 +206,9 @@ Flash = React.createClass
         when 'fast' then bpm = 90
         when 'normal' then bpm = 60
         when 'slow' then bpm = 30 
-      console.log 'bpm!!!!!!!!!!!!!!!!!!!!!!!!!!', bpm
       @interval = setInterval @onClickNext, 1000 * 60 / bpm
     <div onTouchStart={@onTouchStart} onTouchMove={@onTouchMove} onTouchEnd={@onTouchEnd} style={overflow:'hidden',width:'100%',height:'100%'}>
-      <div style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
+      <div onTouchStart={@onTouchStartTools} style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
         <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
           <ButtonGroup>
             <DropdownButton bsSize='large' bsStyle='default' title={'Auto: ' + @props.cards.query.auto} dropup pullRight className={classnames('open': @state.menuOpen)}>
