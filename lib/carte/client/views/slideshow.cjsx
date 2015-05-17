@@ -265,6 +265,7 @@ module.exports = React.createClass
 
   componentWillUnmount: ->
     console.log '[views/slideshow] componentWillUnmount'
+    React.unmountComponentAtNode(@node)
     document.body.removeChild(@node)
 
   renderSlideshow: ->
