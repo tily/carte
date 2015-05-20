@@ -123,7 +123,12 @@ module Carte
     get '/cards/:title/history.json' do
       card = Card.where(title: params[:title]).first
       halt 404 if card.nil?
-      {history: card.histories.as_json(only: %w(title content version tags))}.to_json
+      {
+        history: [
+          card.as_json(only: %w(title content version tags)).update(version: card.version),
+          card.histories.desc(:version).as_json(only: %w(title content version tags))
+        ].flatten
+      }.to_json
     end
 
     get '/tags.json' do
