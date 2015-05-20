@@ -4,6 +4,7 @@ React = require('react')
 List = require('./list')
 Slideshow = require('./slideshow')
 CardCollection = require('../models/cards')
+CardHistoryCollection = require('../models/card_histories')
 CardModel = require('../models/card')
 String = require('string')
 config = require('../config')
@@ -34,7 +35,7 @@ module.exports = React.createClass
             if cards.query.mode == 'flash'
               cards.query.auto = 'off' if !cards.query.auto
               cards.query.hide = 'none' if !cards.query.hide
-              document.title = config.title + '、スライドショー'
+              document.title = config.title + '、フラッシュ'
               <Slideshow key='slideshow' router={@props.router} cards={cards} />
             else
               document.title = config.title
@@ -61,6 +62,14 @@ module.exports = React.createClass
                 cards.fetching = false
             document.title = config.title + '、' + card.get('title')
             <List key='show' cards={cards} card={card} />
+          when "history"
+            console.log '[views/content] history', @props
+            cards = new CardHistoryCollection()
+            cards.title = @props.router.title
+            cards.fetching = true
+            cards.fetch success: ()-> cards.fetching = false
+            document.title = config.title + '、ヒストリー'
+            <List key='list' router={@props.router} cards={cards} />
           else
             null
       }

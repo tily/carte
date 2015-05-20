@@ -5,6 +5,7 @@ module.exports = class Router extends Backbone.Router
   routes:
     '': 'list'
     ':title': 'show'
+    ':title/history': 'history'
 
   list: (string)->
     console.log '[router] list', string
@@ -14,6 +15,11 @@ module.exports = class Router extends Backbone.Router
 
   show: (title, string)->
     console.log '[router] show', title
-    @current = 'show'
+    @current = 'history'
     @title = title
     @query = querystring.parse(string)
+
+  history: (title)->
+    console.log '[router] history', title
+    @current = 'history'
+    @title = title
