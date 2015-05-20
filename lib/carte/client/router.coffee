@@ -13,10 +13,11 @@ module.exports = class Router extends Backbone.Router
     @current = 'list'
     @query = querystring.parse(string)
 
-  show: (title)->
+  show: (title, string)->
     console.log '[router] show', title
     @current = 'show'
     @title = title
+    @query = querystring.parse(string)
 
   slideshow: (string)->
     console.log 'slideshow', string

@@ -131,11 +131,30 @@ module.exports = React.createClass
           <div className="col-sm-12">
             <ul className="nav nav-pills">
               <li>
-                <a href={"#/" + @props.card.get('title')}>
-                  <strong>
-                    {@props.card.get('title')}
-                  </strong>
+                <a href={"#/" + @props.card.get('title') + '?context=title'}>
+                  {
+                    if @props.card.query.context == 'title'
+                      <strong>A to Z</strong>
+                    else
+                      <span>A to Z</span>
+                  }
                 </a>
+              </li>
+              <li>
+                <a href={"#/" + @props.card.get('title') + '?context=updated_at'}>
+                  {
+                    if @props.card.query.context == 'updated_at'
+                      <strong>Latest</strong>
+                    else
+                      <span>Latest</span>
+                  }
+                </a>
+              </li>
+              <li>
+                <a>Detail</a>
+              </li>
+              <li>
+                <a>History</a>
               </li>
             </ul>
           </div>

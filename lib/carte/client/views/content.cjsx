@@ -43,6 +43,7 @@ module.exports = React.createClass
             cards = new CardCollection()
             cards.fetching = true
             card = new CardModel(title: @props.router.title)
+            card.query = $.extend {}, {context: 'updated_at'}, @props.router.query
             card.fetch
               success: (card)->
                 for left in card.get("lefts")

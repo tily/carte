@@ -84,8 +84,8 @@ module Carte
       {
         card: card.as_json(only: %w(title content version tags)).update(
           version: card.version,
-          lefts: card.lefts(4).as_json(only: %w(title content version tags)),
-          rights: card.rights(4).as_json(only: %w(title content version tags))
+          lefts: card.lefts(4, context).as_json(only: %w(title content version tags)),
+          rights: card.rights(4, context).as_json(only: %w(title content version tags))
         )
       }.to_json
     end
