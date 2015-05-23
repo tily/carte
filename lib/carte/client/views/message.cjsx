@@ -11,7 +11,7 @@ module.exports = React.createClass
         for i in [1..9]
           <div key={i} className='col-sm-4'>
             <div className='list-group'>
-              <div className='list-group-item'>
+              <div className='list-group-item carte-card-height'>
                 {@props.children}
               </div>
             </div>
