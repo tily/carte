@@ -45,7 +45,7 @@ module.exports = React.createClass
         <div className={classnames('list-group-item', 'carte-card-height': context != 'none')}>
           <div className="carte-card-header">
             {
-              if @props.card.get('focused')
+              if @props.card.get('focused') || @props.card.query.context == 'none'
                 <i className='glyphicon glyphicon-star' />
             }
             <strong>
@@ -74,7 +74,12 @@ module.exports = React.createClass
             }
           </div>
           <div className="carte-card-content">
-            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content') || ''} />
+            {
+              if @props.card.fetching
+                <i className='glyphicon glyphicon-refresh glyphicon-refresh-animate' />
+              else
+                <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content') || ''} />
+            }
           </div>
           <div className={classnames('carte-hidden': !@showTools())}>
           {

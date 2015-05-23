@@ -45,8 +45,10 @@ module.exports = React.createClass
             cards.fetching = true
             card = new CardModel(title: @props.router.title)
             card.query = $.extend {}, {context: 'updated_at'}, @props.router.query
+            card.fetching = true 
             card.fetch
               success: (card)->
+                card.fetching = false
                 for left in card.get("lefts")
                   cardModel = new CardModel(left)
                   cardModel.set 'focused', false
