@@ -181,7 +181,6 @@ module.exports = React.createClass
       } 
       {
         if @props.card && @props.card.query.context == 'none'
-          console.log 'HELOLO!!!!!!!!!!!!!!!!!!!!!!'
           <div className='row'>
             <Card key={@props.card.get("title")} card={@props.card} />
           </div>
