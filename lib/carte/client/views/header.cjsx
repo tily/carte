@@ -88,8 +88,7 @@ module.exports = React.createClass
             &nbsp;
             <div className="checkbox">
               <label>
-                <input type="checkbox" checked={@state.isCheckedIncludeContent} onChange={@onChangeIncludeContent} />
-                Include content
+                <input type="checkbox" checked={@state.isCheckedIncludeContent} onChange={@onChangeIncludeContent} /> Include content
               </label>
             </div>
           </form>
