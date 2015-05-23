@@ -76,7 +76,7 @@ module.exports = React.createClass
           <a className="navbar-brand" onClick={helpers.reload if !config.icon_link} href={if config.icon_link then config.icon_link else "#/"}>
             <img alt="Brand" src={config.root_path + config.icon_path} width="30" height="30" />
           </a>
-          <a className="navbar-brand" onClick={helpers.reload} href="#/">
+          <a className="navbar-brand visible-sm" onClick={helpers.reload} href="#/">
             {config.title}
           </a>
         </div>
@@ -88,7 +88,8 @@ module.exports = React.createClass
             &nbsp;
             <div className="checkbox">
               <label>
-                <input type="checkbox" checked={@state.isCheckedIncludeContent} onChange={@onChangeIncludeContent} /> Include content
+                <input type="checkbox" checked={@state.isCheckedIncludeContent} onChange={@onChangeIncludeContent} />
+                <span className="visible-sm">Include content</span>
               </label>
             </div>
           </form>

@@ -3,7 +3,9 @@ CardHistoryModel = require('./card_history')
 $ = require('jquery')
 config = require('../config')
 
-module.exports = class Cards extends Backbone.Collection
+module.exports = class CardHistories extends Backbone.Collection
+  collectionName: 'CardHistories'
+
   model: CardHistoryModel
 
   query: {}

@@ -4,6 +4,8 @@ $ = require('jquery')
 config = require('../config')
 
 module.exports = class Cards extends Backbone.Collection
+  collectionName: 'Cards'
+
   model: CardModel
   query: {}
   url: ()->

@@ -3,6 +3,7 @@ $ = require('jquery')
 Backbone = require('backbone')
 React = require('react')
 Cards = require('./cards')
+Card = require('./card')
 CardCollection = require('../models/cards')
 Pagination = require('./pagination')
 helpers = require('../helpers')
@@ -39,7 +40,7 @@ module.exports = React.createClass
 
   render: ->
     <div className="container carte-list">
-      {if !@props.card
+      {if !@props.card && @props.cards.collectionName == 'Cards'
         <div className="row">
           <div className="col-sm-4">
             <ul className="nav nav-pills">
@@ -127,13 +128,17 @@ module.exports = React.createClass
           </div>
         </div>
       else
+        if @props.card
+          title = @props.card.get('title')
+        else
+          title = @props.router.title
         <div className="row">
           <div className="col-sm-12">
             <ul className="nav nav-pills">
               <li>
-                <a href={"#/" + @props.card.get('title') + '?context=title'}>
+                <a href={"#/" + title + '?context=title'}>
                   {
-                    if @props.card.query.context == 'title'
+                    if @props.card && @props.card.query.context == 'title'
                       <strong>A to Z</strong>
                     else
                       <span>A to Z</span>
@@ -141,9 +146,9 @@ module.exports = React.createClass
                 </a>
               </li>
               <li>
-                <a href={"#/" + @props.card.get('title') + '?context=updated_at'}>
+                <a href={"#/" + title + '?context=updated_at'}>
                   {
-                    if @props.card.query.context == 'updated_at'
+                    if @props.card && @props.card.query.context == 'updated_at'
                       <strong>Latest</strong>
                     else
                       <span>Latest</span>
@@ -151,16 +156,38 @@ module.exports = React.createClass
                 </a>
               </li>
               <li>
-                <a>Detail</a>
+                <a href={"#/" + title + '?context=none'}>
+                  {
+                    if @props.card && @props.card.query.context == 'none'
+                      <strong>Detail</strong>
+                    else
+                      <span>Detail</span>
+                  }
+                </a>
               </li>
               <li>
-                <a>History</a>
+                <a href={"#/" + title + '/history'}>
+                  {
+                    if @props.cards.collectionName == 'CardHistories'
+                      <strong>History</strong>
+                    else
+                      <span>History</span>
+                  }
+                </a>
               </li>
             </ul>
           </div>
         </div>
       } 
-      <Cards cards={@props.cards} card={@props.card} />
+      {
+        if @props.card && @props.card.query.context == 'none'
+          console.log 'HELOLO!!!!!!!!!!!!!!!!!!!!!!'
+          <div className='row'>
+            <Card key={@props.card.get("title")} card={@props.card} />
+          </div>
+        else 
+          <Cards cards={@props.cards} card={@props.card} />
+      }
       {
         if !@props.card && helpers.isMobile()
           <div className="row">

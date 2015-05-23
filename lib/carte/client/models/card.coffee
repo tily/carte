@@ -4,6 +4,8 @@ querystring = require('querystring')
 $ = require('jquery')
 
 module.exports = class Card extends Backbone.Model
+  modelName: 'Card'
+
   idAttribute: 'title'
 
   query: {}

@@ -29,8 +29,20 @@ module.exports = React.createClass
     helpers.isMobile() || @state.showTools
 
   render: ->
-    <div className='col-sm-4 col-xs-12 list-group' onMouseOver={@onMouseOver} onMouseLeave={@onMouseLeave}>
-        <div className='list-group-item'>
+    context = @props.card.query.context
+    <div
+      className={
+        classnames(
+          'list-group',
+          'col-sm-4': context != 'none',
+          'col-xs-12': context != 'none',
+          'col-sm-12': context == 'none'
+        )
+      }
+      onMouseOver={@onMouseOver}
+      onMouseLeave={@onMouseLeave}
+    >
+        <div className={classnames('list-group-item', 'carte-card-height': context != 'none')}>
           <div className="carte-card-header">
             {
               if @props.card.get('focused')
@@ -39,21 +51,30 @@ module.exports = React.createClass
             <strong>
               {@props.card.get('title')}
             </strong>
-            <span className={classnames('pull-right': true, 'tools': true, 'carte-hidden': !@showTools())}>
-              <ModalTrigger modal={<Edit card={@props.card} />}>
-                <a href="javascript:void(0)">
-                  <i className='glyphicon glyphicon-edit' />
-                </a>
-              </ModalTrigger>
-              &nbsp;
-              &nbsp;
-              <a href={'#/' + encodeURIComponent(@props.card.get('title'))}>
-                <i className='glyphicon glyphicon-link' />
-              </a>
-            </span>
+            {
+              if @props.card.modelName == 'Card'
+                <span className={classnames('pull-right': true, 'tools': true, 'carte-hidden': !@showTools())}>
+                  <ModalTrigger modal={<Edit card={@props.card} />}>
+                    <a href="javascript:void(0)">
+                      <i className='glyphicon glyphicon-edit' />
+                    </a>
+                  </ModalTrigger>
+                  &nbsp;
+                  &nbsp;
+                  <a href={'#/' + encodeURIComponent(@props.card.get('title'))}>
+                    <i className='glyphicon glyphicon-link' />
+                  </a>
+                </span>
+              else
+                <span className={classnames('pull-right': true)}>
+                  <i className="fa fa-clock-o" />
+                  &nbsp;
+                  {@props.card.get('version')}
+                </span>
+            }
           </div>
           <div className="carte-card-content">
-            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content')} />
+            <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content') || ''} />
           </div>
           <div className={classnames('carte-hidden': !@showTools())}>
           {

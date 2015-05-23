@@ -35,5 +35,5 @@ module.exports = React.createClass
         <i className='glyphicon glyphicon-alert' /> {@state.error.status} {@state.error.statusText}
       </Message>
     else
-      cards = @props.cards.map (card)-> <Card key={card.get("title")} card={card} />
+      cards = @props.cards.map (card)-> <Card key={card.get("title") + card.get("version")} card={card} />
       <div className='row'>{cards}</div>

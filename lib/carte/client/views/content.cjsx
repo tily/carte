@@ -65,6 +65,7 @@ module.exports = React.createClass
           when "history"
             console.log '[views/content] history', @props
             cards = new CardHistoryCollection()
+            console.log cards
             cards.title = @props.router.title
             cards.fetching = true
             cards.fetch success: ()-> cards.fetching = false

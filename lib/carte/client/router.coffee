@@ -15,7 +15,7 @@ module.exports = class Router extends Backbone.Router
 
   show: (title, string)->
     console.log '[router] show', title
-    @current = 'history'
+    @current = 'show'
     @title = title
     @query = querystring.parse(string)
 
