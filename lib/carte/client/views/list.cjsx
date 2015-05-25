@@ -94,16 +94,20 @@ module.exports = React.createClass
             </ul>
           </div>
           <div className="col-sm-4">
-                <a href="javascript:void(0)" className="center-block text-center">
-                  <span className="badge">
-                    {
-                      if @props.cards.pagination
-                        @props.cards.pagination.total_entries
-                      else
-                        <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
-                    }
-                  </span>
-                </a>
+                <ul className="nav nav-pills nav-justified">
+                  <li>
+                    <a href="javascript:void(0)" className="center-block text-center">
+                      <span className="badge">
+                        {
+                          if @props.cards.pagination
+                            @props.cards.pagination.total_entries
+                          else
+                            <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                        }
+                      </span>
+                    </a>
+                  </li>
+                </ul>
           </div>
           <div className="col-sm-4">
             {
