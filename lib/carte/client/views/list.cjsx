@@ -136,7 +136,7 @@ module.exports = React.createClass
           <div className="col-sm-12">
             <ul className="nav nav-pills">
               <li>
-                <a href={"#/" + title + '?context=title'}>
+                <a href={"#/" + encodeURIComponent(title) + '?context=title'}>
                   {
                     if @props.card && @props.card.query.context == 'title'
                       <strong>A to Z</strong>
@@ -146,7 +146,7 @@ module.exports = React.createClass
                 </a>
               </li>
               <li>
-                <a href={"#/" + title + '?context=updated_at'}>
+                <a href={"#/" + encodeURIComponent(title) + '?context=updated_at'}>
                   {
                     if @props.card && @props.card.query.context == 'updated_at'
                       <strong>Latest</strong>
@@ -156,7 +156,7 @@ module.exports = React.createClass
                 </a>
               </li>
               <li>
-                <a href={"#/" + title + '?context=none'}>
+                <a href={"#/" + encodeURIComponent(title) + '?context=none'}>
                   {
                     if @props.card && @props.card.query.context == 'none'
                       <strong>Detail</strong>
@@ -166,7 +166,7 @@ module.exports = React.createClass
                 </a>
               </li>
               <li>
-                <a href={"#/" + title + '/history'}>
+                <a href={"#/" + encodeURIComponent(title) + '/history'}>
                   {
                     if @props.cards.collectionName == 'CardHistories'
                       <strong>History</strong>

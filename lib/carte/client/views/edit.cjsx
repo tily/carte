@@ -53,7 +53,7 @@ module.exports = React.createClass
           else
             @props.onRequestHide()
             @props.card.set 'title', @state.title
-            location.hash = '/' + @state.title
+            location.hash = '/' + encodeURIComponent(@state.title)
         else
           @props.onRequestHide()
           @props.card = new CardModel()
