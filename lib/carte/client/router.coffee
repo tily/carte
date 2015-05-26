@@ -3,9 +3,14 @@ Backbone = require('backbone')
 
 module.exports = class Router extends Backbone.Router
   routes:
+    'tags': 'tags'
     '': 'list'
     ':title': 'show'
     ':title/history': 'history'
+
+  tags: ->
+    console.log '[router] tags'
+    @current = 'tags'
 
   list: (string)->
     console.log '[router] list', string

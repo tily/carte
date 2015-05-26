@@ -2,10 +2,12 @@
 $ = require('jquery')
 React = require('react')
 List = require('./list')
+Tags = require('./tags')
 Slideshow = require('./slideshow')
 CardCollection = require('../models/cards')
 CardHistoryCollection = require('../models/card_histories')
 CardModel = require('../models/card')
+TagCollection = require('../models/tags')
 String = require('string')
 config = require('../config')
 
@@ -73,6 +75,13 @@ module.exports = React.createClass
             cards.fetch success: ()-> cards.fetching = false
             document.title = config.title + '、ヒストリー'
             <List key='list' router={@props.router} cards={cards} />
+          when "tags"
+            console.log '[views/content] tags', @props
+            tags = new TagCollection()
+            tags.fetching = true
+            tags.fetch success: ()-> tags.fetching = false
+            document.title = config.title + '、タグ一覧'
+            <Tags tags={tags} />
           else
             null
       }

@@ -82,6 +82,11 @@ module.exports = React.createClass
                       </li>
               }
               <li>
+                <a href={"#/tags"}>
+                  <i className="glyphicon glyphicon-tag" />
+                </a>
+              </li>
+              <li>
                 <a href={config.root_path + config.api_path + "/cards.xml?" + @queryParam({}, [])}>
                   <i className="fa fa-rss" />
                 </a>

@@ -135,6 +135,23 @@ module Carte
       {tags: Card.all_tags}.to_json
     end
 
+    put '/tags/:name.json' do
+      # TODO: existence and length validation
+      if json_data['new_name']
+        cards = Card.collection.where(tags: params[:name])
+	cards.update( 
+          {'$push' => {tags: json_data['new_name']}},
+          {:multi => true}
+        )
+	cards.update( 
+          {'$pull' => {tags: params[:name]}},
+          {:multi => true}
+        )
+      end
+      status 201
+      {}.to_json
+    end
+
     error(404) do
       {}.to_json
     end
