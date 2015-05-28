@@ -2,12 +2,14 @@
 $ = require('jquery')
 Backbone = require('backbone')
 React = require('react')
+classnames = require('classnames')
 Cards = require('./cards')
 Card = require('./card')
 CardCollection = require('../models/cards')
 Pagination = require('./pagination')
 helpers = require('../helpers')
 config = require('../config')
+Glyphicon = require('react-bootstrap/lib/Glyphicon')
 
 module.exports = React.createClass
   displayName: 'List'
@@ -50,40 +52,25 @@ module.exports = React.createClass
                     when 'atoz'
                       <li key='atoz'>
                         <a onClick={helpers.reload} href={"#/?" + @atozParam()}>
-                          {
-                            if @props.cards.query.sort == 'title' and @props.cards.query.order != 'random'
-                              <strong>A to Z</strong>
-                            else
-                              <span>A to Z</span>
-                          }
+                          <span className={classnames('carte-strong': @props.cards.query.sort == 'title' and @props.cards.query.order != 'random')}>A to Z</span>
                         </a>
                       </li>
                     when 'latest'
                       <li key='latest'>
                         <a onClick={helpers.reload} href={"#/?" + @latestParam()}>
-                          {
-                            if @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random'
-                              <strong>Latest</strong>
-                            else
-                              <span>Latest</span>
-                          }
+                          <span className={classnames('carte-strong': @props.cards.query.sort == 'updated_at' and @props.cards.query.order != 'random')}>Latest</span>
                         </a>
                       </li>
                     when 'random'
                       <li key='random'>
                         <a onClick={helpers.reload} href={"#/?" + @randomParam()}>
-                          {
-                            if @props.cards.query.order == 'random'
-                              <strong>Random</strong>
-                            else
-                              <span>Random</span>
-                          }
+                          <span className={classnames('carte-strong': @props.cards.query.order == 'random')}>Random</span>
                         </a>
                       </li>
               }
               <li>
                 <a href={"#/tags"}>
-                  <i className="glyphicon glyphicon-tag" />
+                  <Glyphicon glyph='tag' />
                 </a>
               </li>
               <li>
@@ -99,20 +86,20 @@ module.exports = React.createClass
             </ul>
           </div>
           <div className="col-sm-4">
-                <ul className="nav nav-pills nav-justified">
-                  <li>
-                    <a href="javascript:void(0)" className="center-block text-center">
-                      <span className="badge">
-                        {
-                          if @props.cards.pagination
-                            @props.cards.pagination.total_entries
-                          else
-                            <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
-                        }
-                      </span>
-                    </a>
-                  </li>
-                </ul>
+             <ul className="nav nav-pills nav-justified">
+               <li>
+                 <a href="javascript:void(0)" className="center-block text-center">
+                   <span className="badge">
+                     {
+                       if @props.cards.pagination
+                         @props.cards.pagination.total_entries
+                       else
+                         <Glyphicon glyph='refresh' className='glyphicon-refresh-animate' />
+                     }
+                   </span>
+                 </a>
+               </li>
+             </ul>
           </div>
           <div className="col-sm-4">
             {
@@ -122,11 +109,11 @@ module.exports = React.createClass
                     {
                       if @props.cards.pagination
                         <a onClick={helpers.reload} href={"#/?" + @randomParam()}>
-                          <i className="glyphicon glyphicon-refresh" />
+                          <Glyphicon glyph='refresh' />
                         </a>
                       else
                         <a href="javascript:void(0)">
-                          <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
+                          <Glyphicon glyph='refresh' className='glyphicon-refresh-animate' />
                         </a>
                     }
                   </li>
@@ -146,42 +133,22 @@ module.exports = React.createClass
             <ul className="nav nav-pills">
               <li>
                 <a href={"#/" + encodeURIComponent(title) + '?context=title'}>
-                  {
-                    if @props.card && @props.card.query.context == 'title'
-                      <strong>A to Z</strong>
-                    else
-                      <span>A to Z</span>
-                  }
+                  <span className={classnames('carte-strong': @props.card && @props.card.query.context == 'title')}>A to Z</span>
                 </a>
               </li>
               <li>
                 <a href={"#/" + encodeURIComponent(title) + '?context=updated_at'}>
-                  {
-                    if @props.card && @props.card.query.context == 'updated_at'
-                      <strong>Latest</strong>
-                    else
-                      <span>Latest</span>
-                  }
+                  <span className={classnames('carte-strong': @props.card && @props.card.query.context == 'updated_at')}>Latest</span>
                 </a>
               </li>
               <li>
                 <a href={"#/" + encodeURIComponent(title) + '?context=none'}>
-                  {
-                    if @props.card && @props.card.query.context == 'none'
-                      <strong>Detail</strong>
-                    else
-                      <span>Detail</span>
-                  }
+                  <span className={classnames('carte-strong': @props.card && @props.card.query.context == 'none')}>Detail</span>
                 </a>
               </li>
               <li>
                 <a href={"#/" + encodeURIComponent(title) + '/history'}>
-                  {
-                    if @props.cards.collectionName == 'CardHistories'
-                      <strong>History</strong>
-                    else
-                      <span>History</span>
-                  }
+                  <span className={classnames('carte-strong': @props.cards.collectionName == 'CardHistories')}>History</span>
                 </a>
               </li>
             </ul>

@@ -2,6 +2,7 @@
 React = require('react')
 Edit = require('./edit')
 ModalTrigger = require('react-bootstrap/lib/ModalTrigger')
+Glyphicon = require('react-bootstrap/lib/Glyphicon')
 markdownIt = require('markdown-it')(linkify: true)
 helpers = require('../helpers')
 classnames = require('classnames')
@@ -46,7 +47,7 @@ module.exports = React.createClass
           <div className="carte-card-header">
             {
               if @props.card.get('focused') || @props.card.query.context == 'none'
-                <i className='glyphicon glyphicon-star' />
+                <Glyphicon glyph='star' />
             }
             <strong>
               {@props.card.get('title')}
@@ -56,13 +57,13 @@ module.exports = React.createClass
                 <span className={classnames('pull-right': true, 'tools': true, 'carte-hidden': !@showTools())}>
                   <ModalTrigger modal={<Edit card={@props.card} />}>
                     <a href="javascript:void(0)">
-                      <i className='glyphicon glyphicon-edit' />
+                      <Glyphicon glyph='edit' />
                     </a>
                   </ModalTrigger>
                   &nbsp;
                   &nbsp;
                   <a href={'#/' + encodeURIComponent(@props.card.get('title'))}>
-                    <i className='glyphicon glyphicon-link' />
+                    <Glyphicon glyph='link' />
                   </a>
                 </span>
               else
@@ -76,7 +77,7 @@ module.exports = React.createClass
           <div className="carte-card-content">
             {
               if @props.card.fetching
-                <i className='glyphicon glyphicon-refresh glyphicon-refresh-animate' />
+                <Glyphicon glyph='refresh' className='glyphicon-refresh-animate' />
               else
                 <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content') || ''} />
             }
@@ -88,7 +89,7 @@ module.exports = React.createClass
                 <span className="pull-right tools">
                   &nbsp;&nbsp;
                   <a href={"#/?tags=" + tag}>
-                    <i className="glyphicon glyphicon-tag" />
+                    <Glyphicon glyph='tag' />
                     &nbsp;{tag}
                   </a>
                 </span>

@@ -3,6 +3,7 @@ $ = require('jquery')
 React = require('react/addons')
 Modal = require('react-bootstrap/lib/Modal')
 Button = require('react-bootstrap/lib/Button')
+Glyphicon = require('react-bootstrap/lib/Glyphicon')
 TagsInput = require('react-tagsinput')
 CardModel = require('../models/card')
 
@@ -65,7 +66,7 @@ module.exports = React.createClass
         setTimeout (=> @setState shaking: false), 300
 
   render: ->
-    <Modal className={"animated infinite shake" if @state.shaking} {...@props} bsStyle='default' title={if @props.card.isNew() then <i className="glyphicon glyphicon-plus" /> else <i className="glyphicon glyphicon-edit" />} animation={false}>
+    <Modal className={"animated infinite shake" if @state.shaking} {...@props} bsStyle='default' title={if @props.card.isNew() then <Glyphicon glyph='plus' /> else <Glyphicon glyph='edit' />} animation={false}>
       <div className='modal-body'>
         {
           if @state.errors
@@ -80,7 +81,7 @@ module.exports = React.createClass
             </div>
           else if @state.createSuccess
             <div className="alert alert-success" role="alert">
-              <i className="glyphicon glyphicon-info-sign" />&nbsp;
+              <Glyphicon glyph='info-sign' />&nbsp;
               You created a card successfully. Let's create next one.
             </div>
         }
@@ -111,7 +112,7 @@ module.exports = React.createClass
             &nbsp;
             {
               if @state.updating
-                <i className='glyphicon glyphicon-refresh glyphicon-refresh-animate' />
+                <Glyphicon glyph='refresh' className='glyphicon-refresh-animate' />
             }
           </button>
         </div>

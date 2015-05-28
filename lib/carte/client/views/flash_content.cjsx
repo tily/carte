@@ -2,8 +2,6 @@
 $ = require('jquery')
 React = require('react')
 CardCollection = require('../models/cards')
-config = require('../config')
-helpers = require('../helpers')
 classnames = require('classnames')
 markdownIt = require('markdown-it')(linkify: true)
 DropdownButton = require('react-bootstrap').DropdownButton
@@ -13,11 +11,12 @@ Button = require('react-bootstrap').Button
 
 window.onerror = (error, url, line) -> alert error
 
-Flash = React.createClass
+module.exports = React.createClass
+  displayName: 'FlashContent'
   scrollEventNames: ['touchstart', 'touchmove', 'touchend', 'gesturestart', 'gesturechange', 'gestureend']
 
   componentDidMount: ->
-    console.log '[views/flash] componentDidMount', @props
+    console.log '[views/flash_content] componentDidMount', @props
     $(document).on 'keydown', @onKeyDown
     for eventName in @scrollEventNames
       $(document).on eventName, @preventScroll
@@ -37,7 +36,7 @@ Flash = React.createClass
           @forceUpdate.bind(@, null)
 
   componentWillUnmount: ->
-    console.log '[views/flash] FlashMain componentWillUnmount'
+    console.log '[views/flash_content] FlashMain componentWillUnmount'
     $(document).off 'keydown', @onKeyDown
     for eventName in @scrollEventNames
       $(document).off eventName, @preventScroll
@@ -64,23 +63,23 @@ Flash = React.createClass
 
   prevCard: ->
     _prevCard = @state.currCards.at(@currCardIndex() - 1)
-    console.log '[views/slideshow] prevCard', _prevCard
+    console.log '[views/flash_content] prevCard', _prevCard
     _prevCard
 
   nextCard: ->
     _nextCard = @state.currCards.at(@currCardIndex() + 1)
-    console.log '[views/slideshow] nextCard', _nextCard
+    console.log '[views/flash_content] nextCard', _nextCard
     _nextCard
 
   currCardIndex: ->
     _currCardIndex = @state.currCards.indexOf(@state.currCard)
-    console.log '[views/slideshow] currCardIndex, @state.currCard', @state.currCard
-    console.log '[views/slideshow] currCardIndex', _currCardIndex
+    console.log '[views/flash_content] currCardIndex, @state.currCard', @state.currCard
+    console.log '[views/flash_content] currCardIndex', _currCardIndex
     _currCardIndex
 
   currPage: ->
     _currPage = @state.currCards.pagination.current_page
-    console.log '[views/slideshow] currPage', _currPage
+    console.log '[views/flash_content] currPage', _currPage
     _currPage
 
   totalPages: ->
@@ -88,16 +87,16 @@ Flash = React.createClass
 
   nextPage: ->
     _nextPage = if @currPage() < @totalPages() then @currPage() + 1 else 1
-    console.log '[views/slideshow] nextPage', _nextPage
+    console.log '[views/flash_content] nextPage', _nextPage
     _nextPage
 
   prevPage: ->
     _prevPage = if @currPage() > 1 then @currPage() - 1 else @totalPages()
-    console.log '[views/slideshow] prevPage', _prevPage
+    console.log '[views/flash_content] prevPage', _prevPage
     _prevPage
 
   loadNextCards: ->
-    console.log '[views/slideshow] loadNextCards'
+    console.log '[views/flash_content] loadNextCards'
     nextCards = new CardCollection()
     nextCards.query = $.extend {}, @state.currCards.query, {page: @nextPage()}
     nextCards.fetching = true
@@ -105,7 +104,7 @@ Flash = React.createClass
     @setState nextCards: nextCards
 
   loadPrevCards: ->
-    console.log '[views/slideshow] loadPrevCards'
+    console.log '[views/flash_content] loadPrevCards'
     prevCards = new CardCollection()
     prevCards.query = $.extend {}, @state.currCards.query, {page: @prevPage()}
     prevCards.fetching = true
@@ -207,7 +206,7 @@ Flash = React.createClass
         when 'normal' then bpm = 60
         when 'slow' then bpm = 30 
       @interval = setInterval @onClickNext, 1000 * 60 / bpm
-    <div onTouchStart={@onTouchStart} onTouchMove={@onTouchMove} onTouchEnd={@onTouchEnd} style={overflow:'hidden',width:'100%',height:'100%'}>
+    <div onTouchStart={@onTouchStart} onTouchMove={@onTouchMove} onTouchEnd={@onTouchEnd} className="carte-flash">
       <div onTouchStart={@onTouchStartTools} style={position:'absolute',bottom:0,width:'100%',padding:'47px 0px 0px 0px'} onMouseOver={@onMouseOverTools} onMouseLeave={@onMouseLeaveTools}>
         <span className={classnames("pull-right":true, 'carte-hidden': !@state.showTools)}>
           <ButtonGroup>
@@ -253,34 +252,3 @@ Flash = React.createClass
         </div>
       </div>
     </div>
-
-flash = React.createFactory Flash
-
-module.exports = React.createClass
-  displayName: 'FlashWrapper'
-
-  componentDidMount: ->
-    console.log '[views/slideshow] componentDidMount'
-    @node = document.createElement('div')
-    @node.className = 'carte-slideshow'
-    document.body.appendChild(@node)
-    @renderSlideshow()
-
-  componentWillReceiveProps: (nextProps)->
-    console.log '[views/slideshow] componentWillReceiveProps', nextProps
-    document.body.removeChild(@node) if @node
-    @node = document.createElement('div')
-    @node.className = 'carte-slideshow'
-    document.body.appendChild(@node)
-    React.render(flash(nextProps), @node)
-
-  componentWillUnmount: ->
-    console.log '[views/slideshow] componentWillUnmount'
-    React.unmountComponentAtNode(@node)
-    document.body.removeChild(@node)
-
-  renderSlideshow: ->
-    React.render(flash(@props), @node)
-
-  render: ->
-    null

@@ -3,7 +3,7 @@ $ = require('jquery')
 React = require('react')
 List = require('./list')
 Tags = require('./tags')
-Slideshow = require('./slideshow')
+Flash = require('./flash')
 CardCollection = require('../models/cards')
 CardHistoryCollection = require('../models/card_histories')
 CardModel = require('../models/card')
@@ -38,7 +38,7 @@ module.exports = React.createClass
               cards.query.auto = 'off' if !cards.query.auto
               cards.query.hide = 'none' if !cards.query.hide
               document.title = config.title + '、フラッシュ'
-              <Slideshow key='slideshow' router={@props.router} cards={cards} />
+              <Flash key='flash' router={@props.router} cards={cards} />
             else
               document.title = config.title
               <List key='list' router={@props.router} cards={cards} />
