@@ -79,7 +79,7 @@ module.exports = React.createClass
               if @props.card.fetching
                 <Glyphicon glyph='refresh' className='glyphicon-refresh-animate' />
               else
-                <div dangerouslySetInnerHTML={__html: markdownIt.render @props.card.get('content') || ''} />
+                <div dangerouslySetInnerHTML={__html: helpers.parseCardLink markdownIt.render @props.card.get('content') || ''} />
             }
           </div>
           <div className={classnames('carte-hidden': !@showTools())}>

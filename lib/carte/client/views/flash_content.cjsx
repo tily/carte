@@ -2,6 +2,7 @@
 $ = require('jquery')
 React = require('react')
 CardCollection = require('../models/cards')
+helpers = require('../helpers')
 classnames = require('classnames')
 markdownIt = require('markdown-it')(linkify: true)
 DropdownButton = require('react-bootstrap').DropdownButton
@@ -245,7 +246,7 @@ module.exports = React.createClass
               if @props.cards.query.hide == 'content' && @state.hiding == true
                 '???????'
               else
-                <div dangerouslySetInnerHTML={__html: markdownIt.render @state.currCard.get('content')} />
+                <div dangerouslySetInnerHTML={__html: helpers.parseCardLink markdownIt.render @state.currCard.get('content')} />
             else
               <i className="glyphicon glyphicon-refresh glyphicon-refresh-animate" />
           }

@@ -60,7 +60,19 @@ module Carte
 
       def markdown2html(markdown)
         renderer = Redcarpet::Render::HTML.new(filter_html:true)
-        Redcarpet::Markdown.new(renderer, autolink: true).render(markdown)
+        html = Redcarpet::Markdown.new(renderer, autolink: true).render(markdown)
+        parse_card_link(html)
+      end
+
+      def parse_card_link(html)
+        html.gsub(/\[\[(.+?)\]\]/) do |match|
+          title = $1.dup
+          if title.match(/<("[^"]*"|'[^']*'|[^'">])*>/)
+            match
+          else
+	    %Q(<a href="http://#{request.host}/#/#{URI.escape(title)}">#{title}</a>)
+          end
+        end
       end
     end
 
