@@ -89,5 +89,5 @@ module.exports = class Carte
       .bundle()
       .pipe sourceStream file
       .pipe gulpIf(!@watching, streamify(uglify(compress: {drop_console: !@watching})))
-      #.pipe gulpIf(!@watching, gulpGzip())
+      .pipe gulpIf(!@watching, gulpGzip())
       .pipe gulp.dest dir
