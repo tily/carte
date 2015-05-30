@@ -1,4 +1,5 @@
 require 'carte/server'
+require 'rack/gzip_static'
 require 'json'
 
 $config = JSON.parse(File.read('config.json'))
@@ -11,8 +12,7 @@ class Carte::Server
 end
 
 map('/') do
-  use Rack::Deflater
-  use Rack::Static, urls: [""], root: $config['root_dir'], index: $config['html_path']
+  use Rack::GzipStatic, urls: [""], root: $config['root_dir'], index: $config['html_path']
   run lambda {}
 end
 
