@@ -19,5 +19,6 @@
   "apple_touch_icon_114_path": "images/apple-touch-icon-114x114.png",
   "apple_touch_icon_120_path": "images/apple-touch-icon-120x120.png",
   "apple_touch_icon_144_path": "images/apple-touch-icon-144x144.png",
-  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png"
+  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png",
+  "enable_apple_touch_startup_image": true
 }

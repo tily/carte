@@ -24,5 +24,16 @@
   "apple_touch_icon_114_path": "images/apple-touch-icon-114x114.png",
   "apple_touch_icon_120_path": "images/apple-touch-icon-120x120.png",
   "apple_touch_icon_144_path": "images/apple-touch-icon-144x144.png",
-  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png"
+  "apple_touch_icon_152_path": "images/apple-touch-icon-152x152.png",
+  "enable_apple_touch_startup_image": true,
+  "apple_touch_startup_image_1536x2008_path": "images/apple-touch-startup-image-1536x2008.png",
+  "apple_touch_startup_image_1496x2048_path": "images/apple-touch-startup-image-1496x2048.png",
+  "apple_touch_startup_image_768x1004_path": "images/apple-touch-startup-image-768x1004.png",
+  "apple_touch_startup_image_748x1024_path": "images/apple-touch-startup-image-748x1024.png",
+  "apple_touch_startup_image_1242x2148_path": "images/apple-touch-startup-image-1242x2148.png",
+  "apple_touch_startup_image_1182x2208_path": "images/apple-touch-startup-image-1182x2208.png",
+  "apple_touch_startup_image_750x1294_path": "images/apple-touch-startup-image-750x1294.png",
+  "apple_touch_startup_image_640x1096_path": "images/apple-touch-startup-image-640x1096.png",
+  "apple_touch_startup_image_640x920_path": "images/apple-touch-startup-image-640x920.png",
+  "apple_touch_startup_image_320x460_path": "images/apple-touch-startup-image-320x460.png"
 }
